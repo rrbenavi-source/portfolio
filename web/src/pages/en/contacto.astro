@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const c = t.contacto;
+---
+
+<BaseLayout lang={lang} title={t.meta.contactoTitle} description={t.meta.contactoDesc} path="/en/contacto">
+  <section class="contact" id="contacto" aria-labelledby="contacto-h">
+    <div class="wrap reveal">
+      <span class="sec-tag">{c.tag}</span>
+      <h2 id="contacto-h" style="margin-top:1rem">{c.heading}</h2>
+      <p class="lead">{c.lead}</p>
+      <div class="contact-links">
+        <a href={`mailto:${c.emailPrimary}`} class="btn btn-primary">{c.emailPrimary}</a>
+        <a href={`mailto:${c.emailSecondary}`} class="btn btn-ghost">{c.emailSecondary}</a>
+        <a href={c.linkedinHref} target="_blank" rel="noopener" class="btn btn-ghost">{c.linkedinLabel}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseCard from '../../../components/cases/CaseCard.astro';
+import { useTranslations } from '../../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t.meta.casosTitle} description={t.meta.casosDesc} path="/en/casos">
+  <section class="sec" aria-labelledby="casos-h">
+    <div class="wrap reveal">
+      <div class="sec-head">
+        <span class="sec-tag">{t.casos.tag}</span>
+        <h2 id="casos-h">{t.casos.heading}</h2>
+        <p class="lead">{t.casos.lead}</p>
+      </div>
+      <div class="grid-2">
+        {
+          t.casos.cards.map((c) => (
+            <CaseCard href={c.slug} tag={c.tag} title={c.title} summary={c.summary} cta={t.casos.readMore} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
