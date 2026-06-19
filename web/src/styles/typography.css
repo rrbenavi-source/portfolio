@@ -1,0 +1,42 @@
+/* Typography — font import + base type rules */
+/* Google Fonts: Inter (body) + Space Grotesk (display/headings) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mono {
+  font-family: 'Space Grotesk', monospace;
+  letter-spacing: -0.01em;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+h2 {
+  font-family: 'Space Grotesk';
+  font-weight: 600;
+  font-size: var(--text-h2);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-top: 0.8rem;
+}

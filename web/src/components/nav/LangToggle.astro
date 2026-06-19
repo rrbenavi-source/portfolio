@@ -1,0 +1,41 @@
+---
+import { getAlternatePath } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+const label = lang === 'es' ? 'EN' : 'ES';
+const alternatePath = getAlternatePath(path, otherLang);
+---
+
+<a
+  href={alternatePath}
+  class="lang-toggle"
+  aria-label={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+>
+  {label}
+</a>
+
+<style>
+  .lang-toggle {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    transition: color 200ms var(--ease), border-color 200ms var(--ease);
+  }
+
+  .lang-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+</style>

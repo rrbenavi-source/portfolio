@@ -1,0 +1,121 @@
+---
+import LangToggle from './LangToggle.astro';
+import { useTranslations } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+  { label: t.nav.inicio,      href: lang === 'en' ? '/en/'             : '/'             },
+  { label: t.nav.casos,       href: lang === 'en' ? '/en/casos/'       : '/casos/'       },
+  { label: t.nav.trayectoria, href: lang === 'en' ? '/en/trayectoria/' : '/trayectoria/' },
+  { label: t.nav.contacto,    href: lang === 'en' ? '/en/contacto/'    : '/contacto/'    },
+];
+---
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href={lang === 'en' ? '/en/' : '/'} class="brand" aria-label="Ricardo Benavides — inicio">
+      RB<span>.</span>
+    </a>
+    <nav class="nav-links" aria-label={lang === 'en' ? 'Main navigation' : 'Navegación principal'}>
+      {links.map(({ label, href }) => (
+        <a
+          href={href}
+          class:list={['nav-link', { active: path === href }]}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+    <div class="nav-actions">
+      <LangToggle lang={lang} path={path} />
+      <a
+        href="https://www.linkedin.com/in/rrbenavi"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nav-cta"
+      >
+        {t.nav.ctaLinkedin}
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: oklch(15% 0.012 250 / 0.72);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .brand {
+    font-family: 'Space Grotesk';
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 1.05rem;
+  }
+
+  .brand span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  .nav-link {
+    transition: color 200ms var(--ease);
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--accent);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nav-cta {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent-dim);
+    border-radius: 999px;
+    color: var(--accent);
+    transition: all 250ms var(--ease);
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 760px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>

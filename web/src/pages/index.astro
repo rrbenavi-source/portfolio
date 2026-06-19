@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n/ui';
+
+const lang = 'es';
+const path = '/';
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t.meta.homeTitle} description={t.meta.homeDesc} path={path}>
+  <section class="hero-placeholder">
+    <div class="wrap">
+      <h1>Ricardo Benavides</h1>
+      <p class="sub">Data Architect &amp; Data Engineering SAP Leader</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-placeholder {
+    padding-block: clamp(5rem, 4rem + 8vw, 10rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk';
+    font-weight: 700;
+    font-size: var(--text-hero);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .sub {
+    margin-top: 1.2rem;
+    font-size: clamp(1rem, 0.9rem + 0.8vw, 1.35rem);
+    color: var(--text-dim);
+  }
+</style>

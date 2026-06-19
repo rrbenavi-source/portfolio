@@ -1,0 +1,23 @@
+/* Design tokens — copied verbatim from github-page/index.html :root block */
+:root {
+  --bg: oklch(15% 0.012 250);
+  --bg-2: oklch(18% 0.014 250);
+  --surface: oklch(21% 0.016 250);
+  --surface-hi: oklch(25% 0.018 250);
+  --line: oklch(30% 0.015 250);
+  --text: oklch(95% 0.005 250);
+  --text-dim: oklch(72% 0.012 250);
+  --text-faint: oklch(56% 0.012 250);
+  --accent: oklch(82% 0.15 168);
+  --accent-dim: oklch(62% 0.11 168);
+  --gold: oklch(83% 0.12 85);
+
+  --text-hero: clamp(2.6rem, 1rem + 7.5vw, 6.5rem);
+  --text-h2: clamp(1.7rem, 1rem + 2.6vw, 2.9rem);
+  --text-metric: clamp(2.2rem, 1.2rem + 4vw, 4rem);
+  --space-section: clamp(4.5rem, 3rem + 7vw, 9rem);
+  --maxw: 1180px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 600ms;
+}

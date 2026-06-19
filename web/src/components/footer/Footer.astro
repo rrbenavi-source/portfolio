@@ -1,0 +1,37 @@
+---
+import { useTranslations } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© {year} Ricardo Benavides · {t.footer.role}</span>
+    <span class="mono">{t.footer.location}</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    padding-block: 2rem;
+    color: var(--text-faint);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+</style>
