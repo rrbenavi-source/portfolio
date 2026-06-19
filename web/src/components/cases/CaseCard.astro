@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../../i18n/ui';
+
 interface Props {
   href: string;
   tag: string;
@@ -10,7 +12,7 @@ interface Props {
 const { href, tag, title, summary, cta } = Astro.props;
 ---
 
-<a class="card case-card" href={href}>
+<a class="card case-card" href={withBase(href)}>
   <span class="case-tag">{tag}</span>
   <h3>{title}</h3>
   <p>{summary}</p>

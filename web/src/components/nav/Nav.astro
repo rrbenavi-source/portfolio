@@ -1,6 +1,6 @@
 ---
 import LangToggle from './LangToggle.astro';
-import { useTranslations } from '../../i18n/ui';
+import { useTranslations, withBase } from '../../i18n/ui';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 const { lang, path } = Astro.props;
 const t = useTranslations(lang);
 
+const home = lang === 'en' ? '/en/' : '/';
 const links = [
   { label: t.nav.inicio,      href: lang === 'en' ? '/en/'             : '/'             },
   { label: t.nav.casos,       href: lang === 'en' ? '/en/casos/'       : '/casos/'       },
@@ -21,14 +22,14 @@ const links = [
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a href={lang === 'en' ? '/en/' : '/'} class="brand" aria-label="Ricardo Benavides — inicio">
+    <a href={withBase(home)} class="brand" aria-label="Ricardo Benavides — inicio">
       RB<span>.</span>
     </a>
     <nav class="nav-links" aria-label={lang === 'en' ? 'Main navigation' : 'Navegación principal'}>
       {links.map(({ label, href }) => (
         <a
-          href={href}
-          class:list={['nav-link', { active: path === href }]}
+          href={withBase(href)}
+          class:list={['nav-link', { active: path === href || path + '/' === href }]}
         >
           {label}
         </a>

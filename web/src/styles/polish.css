@@ -1,0 +1,31 @@
+/* Premium polish layer — focus states, grain, smooth pointer transitions. */
+
+/* Accessible focus — visible only for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+a:focus-visible,
+.btn:focus-visible,
+.nav-cta:focus-visible {
+  outline-offset: 4px;
+}
+
+/* Smooth return for pointer-driven transforms (tilt / magnetic) */
+.card { transform-style: preserve-3d; transition: transform 250ms var(--ease), border-color 300ms var(--ease), background 300ms var(--ease); will-change: transform; }
+.btn-primary { transition: transform 200ms var(--ease), box-shadow 250ms var(--ease), background 250ms var(--ease); }
+
+/* Subtle film grain for atmosphere */
+body::after {
+  background-image:
+    linear-gradient(oklch(100% 0 0 / 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(100% 0 0 / 0.025) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 64px 64px, 64px 64px, 140px 140px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .btn-primary { transition: none; }
+}

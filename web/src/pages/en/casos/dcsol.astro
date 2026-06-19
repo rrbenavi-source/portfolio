@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CaseHeader from '../../../components/cases/CaseHeader.astro';
 import StatRow from '../../../components/cases/StatRow.astro';
-import { useTranslations } from '../../../i18n/ui';
+import { useTranslations, withBase } from '../../../i18n/ui';
 
 const lang = 'en' as const;
 const t = useTranslations(lang);
@@ -40,7 +40,7 @@ const labels = t.casos.labels;
       </div>
 
       <p style="margin-top:2.4rem">
-        <a href="/en/casos" class="btn btn-ghost">← {t.nav.casos}</a>
+        <a href={withBase('/en/casos')} class="btn btn-ghost">← {t.nav.casos}</a>
       </p>
     </div>
   </section>

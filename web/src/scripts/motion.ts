@@ -5,6 +5,39 @@ const REVEAL_THRESHOLD = 0.12;
 const COUNT_THRESHOLD = 0.5;
 const COUNT_DURATION = 1100;
 
+const TILT_MAX_DEG = 5;
+const MAGNET_STRENGTH = 0.25;
+
+function initTilt(): void {
+  const cards = document.querySelectorAll<HTMLElement>('.card');
+  cards.forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${(-py * TILT_MAX_DEG).toFixed(2)}deg) rotateY(${(px * TILT_MAX_DEG).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+function initMagnetic(): void {
+  const magnets = document.querySelectorAll<HTMLElement>('.btn-primary');
+  magnets.forEach((el) => {
+    el.addEventListener('pointermove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const mx = e.clientX - rect.left - rect.width / 2;
+      const my = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = `translate(${(mx * MAGNET_STRENGTH).toFixed(1)}px, ${(my * MAGNET_STRENGTH).toFixed(1)}px)`;
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.transform = '';
+    });
+  });
+}
+
 export function initMotion(): void {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -53,4 +86,11 @@ export function initMotion(): void {
     { threshold: COUNT_THRESHOLD }
   );
   counters.forEach((el) => countIO.observe(el));
+
+  // Premium pointer interactions — fine pointers only, never under reduced-motion
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!reduce && finePointer) {
+    initTilt();
+    initMagnetic();
+  }
 }

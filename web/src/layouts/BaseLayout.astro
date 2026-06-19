@@ -1,13 +1,14 @@
 ---
 import Nav from '../components/nav/Nav.astro';
 import Footer from '../components/footer/Footer.astro';
-import { getAlternatePath } from '../i18n/ui';
+import { getAlternatePath, withBase } from '../i18n/ui';
 import type { Lang } from '../i18n/ui';
 import '../styles/tokens.css';
 import '../styles/typography.css';
 import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/motion.css';
+import '../styles/polish.css';
 
 interface Props {
   lang: Lang;
@@ -22,8 +23,9 @@ const alternatePath = getAlternatePath(path, alternateLang);
 
 // Canonical and alternate absolute URLs — site is set in astro.config.mjs
 const siteBase = Astro.site?.toString().replace(/\/$/, '') ?? '';
-const canonicalUrl = siteBase + path;
+const canonicalUrl = siteBase + withBase(path);
 const alternateUrl = siteBase + alternatePath;
+const defaultUrl = siteBase + withBase('/');
 ---
 
 <html lang={lang}>
@@ -45,7 +47,7 @@ const alternateUrl = siteBase + alternatePath;
     <!-- hreflang alternates -->
     <link rel="alternate" hreflang={lang} href={canonicalUrl} />
     <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
-    <link rel="alternate" hreflang="x-default" href={siteBase + '/'} />
+    <link rel="alternate" hreflang="x-default" href={defaultUrl} />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

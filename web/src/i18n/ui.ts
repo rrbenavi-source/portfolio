@@ -9,22 +9,31 @@ export function getLangFromUrl(url: URL): Lang {
 }
 
 export function useTranslations(lang: Lang): Dict {
-  return lang === 'en' ? en : es;
+  return lang === 'en' ? (en as unknown as Dict) : es;
 }
 
 /**
- * Maps a path to its counterpart in the given target language.
- * ES root "/" <-> EN root "/en/"
- * ES "/casos/" <-> EN "/en/casos/"
+ * Prefixes a root-absolute app path with the configured base
+ * (e.g. "/portfolio/"), collapsing duplicate slashes. External URLs
+ * (http/mailto) and already-prefixed paths pass through unchanged.
+ */
+export function withBase(path: string): string {
+  if (/^(https?:|mailto:|#)/.test(path)) return path;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  if (base && path.startsWith(base + '/')) return path;
+  return (base + path).replace(/\/{2,}/g, '/');
+}
+
+/**
+ * Maps a root-absolute path to its counterpart language and returns it
+ * already base-prefixed. ES root "/" <-> EN root "/en/".
  */
 export function getAlternatePath(path: string, targetLang: Lang): string {
+  let mapped: string;
   if (targetLang === 'en') {
-    // ES -> EN: prepend /en
-    if (path === '/') return '/en/';
-    return '/en' + path;
+    mapped = path === '/' ? '/en/' : '/en' + path;
   } else {
-    // EN -> ES: strip /en prefix
-    if (path === '/en/' || path === '/en') return '/';
-    return path.replace(/^\/en/, '');
+    mapped = path === '/en/' || path === '/en' ? '/' : path.replace(/^\/en/, '');
   }
+  return withBase(mapped);
 }

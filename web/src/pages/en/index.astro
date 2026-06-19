@@ -4,7 +4,7 @@ import Hero from '../../components/hero/Hero.astro';
 import MetricBand from '../../components/metrics/MetricBand.astro';
 import ExpertiseGrid from '../../components/expertise/ExpertiseGrid.astro';
 import ClientMarquee from '../../components/clients/ClientMarquee.astro';
-import { useTranslations } from '../../i18n/ui';
+import { useTranslations, withBase } from '../../i18n/ui';
 
 const lang = 'en' as const;
 const t = useTranslations(lang);
@@ -64,7 +64,7 @@ const t = useTranslations(lang);
         }
       </div>
       <p style="margin-top:1.8rem">
-        <a href="/en/trayectoria" class="btn btn-ghost">{t.trayectoria.teaserCta}</a>
+        <a href={withBase('/en/trayectoria')} class="btn btn-ghost">{t.trayectoria.teaserCta}</a>
       </p>
     </div>
   </section>
@@ -85,7 +85,7 @@ const t = useTranslations(lang);
       <h2 id="cta-h" style="margin-top:1rem">{t.contacto.heading}</h2>
       <p class="lead">{t.contacto.lead}</p>
       <div class="contact-links">
-        <a href="/en/contacto" class="btn btn-primary">{t.hero.ctaPrimary.label}</a>
+        <a href={withBase('/en/contacto')} class="btn btn-primary">{t.hero.ctaPrimary.label}</a>
         <a href={t.contacto.linkedinHref} target="_blank" rel="noopener" class="btn btn-ghost">{t.contacto.linkedinLabel}</a>
       </div>
     </div>
