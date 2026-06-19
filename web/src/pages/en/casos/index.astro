@@ -15,7 +15,7 @@ const t = useTranslations(lang);
         <h2 id="casos-h">{t.casos.heading}</h2>
         <p class="lead">{t.casos.lead}</p>
       </div>
-      <div class="grid-2">
+      <div class="grid-3">
         {
           t.casos.cards.map((c) => (
             <CaseCard href={c.slug} tag={c.tag} title={c.title} summary={c.summary} cta={t.casos.readMore} />

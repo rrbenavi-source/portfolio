@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseHeader from '../../../components/cases/CaseHeader.astro';
+import ArticleBody from '../../../components/publications/ArticleBody.astro';
+import { useTranslations, withBase } from '../../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const p = t.publicaciones;
+
+export function getStaticPaths() {
+  return useTranslations('en').publicaciones.items.map((item) => ({ params: { slug: item.slug } }));
+}
+
+const { slug } = Astro.params;
+const item = p.items.find((i) => i.slug === slug)!;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${item.title} — Ricardo Benavides`}
+  description={item.summary}
+  path={`/en/publicaciones/${item.slug}`}
+>
+  <section class="sec" aria-labelledby="art-h">
+    <div class="wrap reveal">
+      <CaseHeader eyebrow={`Publication · ${item.subtitle}`} title={item.title} lead={item.lead} />
+      <p class="art-byline">{item.role} &nbsp;·&nbsp; {item.meta}</p>
+
+      <ArticleBody sections={item.body} />
+
+      <p style="margin-top:2.4rem">
+        <a href={withBase('/en/publicaciones')} class="btn btn-ghost">{p.backLabel}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .art-byline {
+    color: var(--text-dim);
+    font-size: 0.86rem;
+    margin: 0.4rem 0 0;
+  }
+</style>

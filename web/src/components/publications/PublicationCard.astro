@@ -1,0 +1,111 @@
+---
+import { withBase } from '../../i18n/ui';
+
+interface Props {
+  idx: string;
+  title: string;
+  subtitle: string;
+  role: string;
+  meta: string;
+  summary: string;
+  tags: readonly string[];
+  href: string;
+  readLabel: string;
+}
+
+const { idx, title, subtitle, role, meta, summary, tags, href, readLabel } = Astro.props;
+---
+
+<article class="pub">
+  <div class="pub-idx">{idx}</div>
+  <div class="pub-body">
+    <p class="pub-sub">{subtitle}</p>
+    <h2 class="pub-title">{title}</h2>
+    <p class="pub-meta">{role} &nbsp;·&nbsp; {meta}</p>
+    <p class="pub-summary">{summary}</p>
+    <ul class="pub-tags" aria-label="Temas">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <a href={withBase(href)} class="btn btn-ghost pub-cta">
+      {readLabel}
+    </a>
+  </div>
+</article>
+
+<style>
+  .pub {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1rem, 3vw, 2.4rem);
+    padding: clamp(1.6rem, 3vw, 2.6rem) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .pub-idx {
+    font-family: 'Space Grotesk';
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-dim);
+    letter-spacing: -0.03em;
+  }
+
+  .pub-sub {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.74rem;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .pub-title {
+    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.7rem;
+    max-width: 28ch;
+  }
+
+  .pub-meta {
+    font-size: 0.84rem;
+    color: var(--text-dim);
+    margin: 0 0 1.1rem;
+  }
+
+  .pub-summary {
+    color: var(--text-dim);
+    max-width: 62ch;
+    margin: 0 0 1.4rem;
+  }
+
+  .pub-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.8rem;
+  }
+
+  .pub-tags li {
+    font-size: 0.78rem;
+    padding: 0.32rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-dim);
+  }
+
+  .pub-cta {
+    transition: all 250ms var(--ease);
+  }
+
+  @media (max-width: 640px) {
+    .pub {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    .pub-idx {
+      font-size: 1.6rem;
+    }
+  }
+</style>

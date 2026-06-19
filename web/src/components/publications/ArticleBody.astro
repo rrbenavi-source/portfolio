@@ -1,0 +1,231 @@
+---
+interface ProseBlock {
+  type: 'prose';
+  heading?: string;
+  body: readonly string[];
+}
+interface QuoteBlock {
+  type: 'quote';
+  text: string;
+}
+interface ListBlock {
+  type: 'list';
+  heading?: string;
+  items: readonly string[];
+}
+interface StepsBlock {
+  type: 'steps';
+  heading: string;
+  items: readonly { n: string; title: string; desc: string }[];
+}
+interface DomainsBlock {
+  type: 'domains';
+  heading: string;
+  items: readonly { title: string; role: string; body: string }[];
+}
+
+type Block = ProseBlock | QuoteBlock | ListBlock | StepsBlock | DomainsBlock;
+
+interface Props {
+  sections: readonly Block[];
+}
+
+const { sections } = Astro.props;
+---
+
+<div class="article">
+  {
+    sections.map((s) =>
+      s.type === 'prose' ? (
+        <section class="art-block">
+          {s.heading && <h2>{s.heading}</h2>}
+          {s.body.map((p) => (
+            <p set:html={p} />
+          ))}
+        </section>
+      ) : s.type === 'quote' ? (
+        <blockquote class="art-quote" set:html={s.text} />
+      ) : s.type === 'list' ? (
+        <section class="art-block">
+          {s.heading && <h2>{s.heading}</h2>}
+          <ul class="art-list">
+            {s.items.map((it) => (
+              <li set:html={it} />
+            ))}
+          </ul>
+        </section>
+      ) : s.type === 'steps' ? (
+        <section class="art-block">
+          <h2>{s.heading}</h2>
+          <ol class="art-steps">
+            {s.items.map((it) => (
+              <li class="art-step">
+                <span class="art-step-n">{it.n}</span>
+                <div>
+                  <h3>{it.title}</h3>
+                  <p set:html={it.desc} />
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : s.type === 'domains' ? (
+        <section class="art-block">
+          <h2>{s.heading}</h2>
+          <div class="art-domains">
+            {s.items.map((it) => (
+              <div class="art-domain">
+                <h3>{it.title}</h3>
+                <span class="art-domain-role">{it.role}</span>
+                <p set:html={it.body} />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null
+    )
+  }
+</div>
+
+<style>
+  .article {
+    max-width: 70ch;
+  }
+
+  .art-block {
+    margin: 2.6rem 0;
+  }
+
+  .art-block h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+  }
+
+  .art-block p {
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .art-block p :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .art-quote {
+    margin: 2.6rem 0;
+    padding: 0.4rem 0 0.4rem 1.6rem;
+    border-left: 3px solid var(--accent);
+    font-family: 'Space Grotesk';
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .art-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .art-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .art-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .art-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .art-step {
+    display: flex;
+    gap: 0.9rem;
+    padding: 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: oklch(20% 0.01 250 / 0.4);
+  }
+
+  .art-step-n {
+    font-family: 'Space Grotesk';
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .art-step h3 {
+    font-size: 0.98rem;
+    margin: 0 0 0.3rem;
+  }
+
+  .art-step p {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .art-domains {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .art-domain {
+    padding: 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    border-top: 2px solid var(--accent);
+  }
+
+  .art-domain h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.2rem;
+  }
+
+  .art-domain-role {
+    display: block;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+  }
+
+  .art-domain p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 680px) {
+    .art-steps,
+    .art-domains {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

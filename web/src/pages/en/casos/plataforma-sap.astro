@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseHeader from '../../../components/cases/CaseHeader.astro';
+import { useTranslations, withBase } from '../../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const c = t.plataforma;
+const labels = t.casos.labels;
+---
+
+<BaseLayout lang={lang} title={t.meta.plataformaTitle} description={t.meta.plataformaDesc} path="/en/casos/plataforma-sap">
+  <section class="sec" aria-labelledby="case-h">
+    <div class="wrap reveal">
+      <CaseHeader eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
+
+      <div class="case-block">
+        <h2>{labels.problem}</h2>
+        <p class="case-prose">{c.problem}</p>
+      </div>
+
+      <div class="case-block">
+        <h2>{labels.approach}</h2>
+        <ul class="case-list">
+          {c.approach.map((step) => <li set:html={step} />)}
+        </ul>
+      </div>
+
+      <div class="case-block">
+        <h2>{labels.results}</h2>
+        <div class="case">
+          <div>
+            {c.results.map((r) => (
+              <div class="case-stat">
+                <div class="v">{r.v}</div>
+                <div class="k">{r.k}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:2.4rem">
+        <a href={withBase('/en/casos')} class="btn btn-ghost">← {t.nav.casos}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
