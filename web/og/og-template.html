@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Design tokens — verbatim from web/src/styles/tokens.css */
+      :root {
+        --bg: oklch(15% 0.012 250);
+        --bg-2: oklch(18% 0.014 250);
+        --surface: oklch(21% 0.016 250);
+        --surface-hi: oklch(25% 0.018 250);
+        --line: oklch(30% 0.015 250);
+        --text: oklch(95% 0.005 250);
+        --text-dim: oklch(72% 0.012 250);
+        --text-faint: oklch(56% 0.012 250);
+        --accent: oklch(82% 0.15 168);
+        --accent-dim: oklch(62% 0.11 168);
+        --gold: oklch(83% 0.12 85);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+      }
+
+      body {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Atmosphere: accent glow top-right + faint dot grid */
+      .glow {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            620px 420px at 88% -8%,
+            oklch(82% 0.15 168 / 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            520px 360px at -6% 108%,
+            oklch(83% 0.12 85 / 0.1),
+            transparent 60%
+          ),
+          linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+      }
+
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          oklch(95% 0.005 250 / 0.05) 1px,
+          transparent 1.4px
+        );
+        background-size: 30px 30px;
+        mask-image: linear-gradient(120deg, #000 0%, transparent 72%);
+        -webkit-mask-image: linear-gradient(120deg, #000 0%, transparent 72%);
+      }
+
+      .frame {
+        position: absolute;
+        inset: 0;
+        padding: 64px 72px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* Eyebrow */
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 18px 2px oklch(82% 0.15 168 / 0.7);
+      }
+
+      /* Identity block */
+      .name {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 78px;
+        line-height: 1.0;
+        letter-spacing: -0.02em;
+        margin-top: 6px;
+      }
+      .role {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 31px;
+        line-height: 1.15;
+        color: var(--accent);
+        margin-top: 18px;
+      }
+      .stack {
+        font-size: 19px;
+        font-weight: 500;
+        color: var(--text-faint);
+        margin-top: 16px;
+        letter-spacing: 0.01em;
+      }
+
+      /* KPI row */
+      .kpis {
+        display: flex;
+        gap: 16px;
+      }
+      .kpi {
+        flex: 1;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px 20px 16px;
+      }
+      .kpi .n {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 1;
+        color: var(--text);
+      }
+      .kpi.gold .n {
+        color: var(--gold);
+      }
+      .kpi.accent .n {
+        color: var(--accent);
+      }
+      .kpi .l {
+        font-size: 14.5px;
+        font-weight: 500;
+        color: var(--text-dim);
+        margin-top: 9px;
+        line-height: 1.25;
+      }
+
+      /* Footer */
+      .foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+        margin-top: 26px;
+      }
+      .url {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .url span {
+        color: var(--accent);
+      }
+      .badge {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--text-dim);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow"></div>
+    <div class="grid"></div>
+
+    <div class="frame">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>Portafolio · Data Engineering SAP</div>
+        <div class="name">Ricardo Benavides</div>
+        <div class="role">Data Engineering SAP Leader &amp; Arquitecto de Datos</div>
+        <div class="stack">SAP BW/4HANA · SAP Analytics Cloud · BPC · Databricks AI/BI Genie</div>
+      </div>
+
+      <div>
+        <div class="kpis">
+          <div class="kpi gold"><div class="n">€1.5M</div><div class="l">en valor de negocio generado</div></div>
+          <div class="kpi accent"><div class="n">−50%</div><div class="l">costo de licencias SAC</div></div>
+          <div class="kpi"><div class="n">300+</div><div class="l">reportes migrados a SAC</div></div>
+          <div class="kpi"><div class="n">+20</div><div class="l">años · equipo de ~15</div></div>
+        </div>
+
+        <div class="foot">
+          <div class="url">rrbenavi-source.github.io/<span>portfolio</span></div>
+          <div class="badge">SAP &amp; Databricks · IA</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
