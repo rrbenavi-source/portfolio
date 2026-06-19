@@ -6,6 +6,7 @@ import type { Lang } from '../i18n/ui';
 import '../styles/tokens.css';
 import '../styles/typography.css';
 import '../styles/global.css';
+import '../styles/components.css';
 import '../styles/motion.css';
 
 interface Props {
@@ -60,5 +61,9 @@ const alternateUrl = siteBase + alternatePath;
       <slot />
     </main>
     <Footer lang={lang} />
+    <script>
+      import { initMotion } from '../scripts/motion';
+      initMotion();
+    </script>
   </body>
 </html>

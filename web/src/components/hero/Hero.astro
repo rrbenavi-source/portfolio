@@ -1,0 +1,27 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  hero: Dict['hero'];
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-name">
+  <div class="wrap">
+    <span class="eyebrow"><span class="pulse"></span> {hero.eyebrow}</span>
+    <h1 class="hero-name" id="hero-name">
+      {hero.name}<br /><span class="line2">{hero.line2}</span>
+    </h1>
+    <p class="hero-sub" set:html={hero.sub}></p>
+    <div class="hero-tags">
+      {hero.tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <div class="hero-cta">
+      <a href={hero.ctaPrimary.href} class="btn btn-primary">{hero.ctaPrimary.label}</a>
+      <a href={hero.ctaGhost.href} target="_blank" rel="noopener" class="btn btn-ghost">{hero.ctaGhost.label}</a>
+    </div>
+    <slot name="metrics" />
+  </div>
+</section>

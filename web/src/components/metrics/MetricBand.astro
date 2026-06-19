@@ -1,0 +1,24 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  metrics: Dict['metrics'];
+}
+
+const { metrics } = Astro.props;
+---
+
+<div class="metrics reveal">
+  {
+    metrics.map((m) => (
+      <div class="metric">
+        {'html' in m ? (
+          <div class:list={['num', m.gold && 'gold']} set:html={m.html} />
+        ) : (
+          <div class="num" data-count={m.count} data-suffix={m.suffix}>0</div>
+        )}
+        <div class="lbl">{m.label}</div>
+      </div>
+    ))
+  }
+</div>

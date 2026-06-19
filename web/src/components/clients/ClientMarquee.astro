@@ -1,0 +1,11 @@
+---
+interface Props {
+  clients: readonly string[];
+}
+
+const { clients } = Astro.props;
+---
+
+<div class="clients">
+  {clients.map((client) => <span>{client}</span>)}
+</div>

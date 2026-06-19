@@ -1,0 +1,15 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<div class="sec-head">
+  <span class="sec-tag">{eyebrow}</span>
+  <h2 set:html={title} />
+  <p class="lead" set:html={lead}></p>
+</div>

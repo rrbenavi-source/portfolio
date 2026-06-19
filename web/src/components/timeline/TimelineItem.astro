@@ -1,0 +1,30 @@
+---
+interface Props {
+  role: string;
+  company: string;
+  dates: string;
+  intro?: string;
+  desc?: string;
+  bullets?: readonly string[];
+}
+
+const { role, company, dates, intro, desc, bullets } = Astro.props;
+---
+
+<div class="tl-item">
+  <div class="tl-top">
+    <span class="tl-role">{role} <span class="tl-co">— {company}</span></span>
+    <span class="tl-date">{dates}</span>
+  </div>
+  <div class="tl-desc">
+    {intro && <span set:html={intro} />}
+    {desc && <span set:html={desc} />}
+    {
+      bullets && bullets.length > 0 && (
+        <ul>
+          {bullets.map((b) => <li set:html={b} />)}
+        </ul>
+      )
+    }
+  </div>
+</div>

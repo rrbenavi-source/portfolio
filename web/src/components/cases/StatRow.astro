@@ -1,0 +1,23 @@
+---
+interface Stat {
+  v: string;
+  k: string;
+}
+
+interface Props {
+  stats: readonly Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div>
+  {
+    stats.map((stat) => (
+      <div class="case-stat">
+        <div class="v">{stat.v}</div>
+        <div class="k">{stat.k}</div>
+      </div>
+    ))
+  }
+</div>

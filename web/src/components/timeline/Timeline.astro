@@ -1,0 +1,25 @@
+---
+import TimelineItem from './TimelineItem.astro';
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  items: Dict['trayectoria']['items'];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="timeline">
+  {
+    items.map((item) => (
+      <TimelineItem
+        role={item.role}
+        company={item.company}
+        dates={item.dates}
+        intro={'intro' in item ? item.intro : undefined}
+        desc={'desc' in item ? item.desc : undefined}
+        bullets={'bullets' in item ? item.bullets : undefined}
+      />
+    ))
+  }
+</div>

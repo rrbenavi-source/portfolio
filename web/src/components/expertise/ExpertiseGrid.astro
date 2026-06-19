@@ -1,0 +1,23 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  groups: Dict['expertise']['groups'];
+}
+
+const { groups } = Astro.props;
+---
+
+<div class="grid-3">
+  {
+    groups.map((group) => (
+      <div class="card">
+        <div class="idx">{group.idx}</div>
+        <h3 set:html={group.title} />
+        <div class="chips">
+          {group.chips.map((chip) => <span class="chip" set:html={chip} />)}
+        </div>
+      </div>
+    ))
+  }
+</div>
