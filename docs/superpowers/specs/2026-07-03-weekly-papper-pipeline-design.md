@@ -72,7 +72,7 @@ pappers/
 
 ## 5. Flujo — Fase 1 (Lunes, autónoma)
 
-Trigger: `launchd` los lunes (con `StartCalendarInterval`; si la Mac está apagada, corre al próximo arranque via `RunAtLoad` de respaldo). Ejecuta `claude` headless con el comando `/papper-digest`.
+Trigger: `launchd` los **lunes 9:30 AM** (`StartCalendarInterval` con `Weekday=1, Hour=9, Minute=30`; si la Mac está apagada a esa hora, corre al próximo arranque via `RunAtLoad` de respaldo). Ejecuta `claude` headless con el comando `/papper-digest`.
 
 1. **Barrido de fuentes:** por cada categoría de `sources.yaml`, busca lo publicado en los últimos 7 días usando Exa (`web_search_exa`) y WebSearch. Prioriza relevancia al stack (Databricks, SAP, GenBI, IA para datos).
 2. **Síntesis:** produce `pappers/2026-Www/digest.md` con **3-5 ideas**, cada una con: título tentativo, ángulo/tesis, formato sugerido (deep-dive u opinión), y 2-4 fuentes citadas (URL + por qué importa).
