@@ -1,0 +1,44 @@
+# Fuentes curadas para el barrido semanal de ideas. Editable por Ricardo.
+# El barrido prioriza publicaciones de los últimos 7 días y la afinidad al stack
+# (Databricks, SAP, Generative BI, IA para datos, automatización de datos).
+
+vendors:
+  - name: Databricks Blog
+    url: https://www.databricks.com/blog
+    why: Releases, AI/BI Genie, patrones de data products y lakehouse.
+  - name: Microsoft Azure — Data & AI Blog
+    url: https://azure.microsoft.com/en-us/blog/
+    why: Fabric, Synapse, Copilot para datos; complementa el stack cloud.
+  - name: SAP News & Community (BW/4HANA, Datasphere, BDC)
+    url: https://news.sap.com/
+    why: Núcleo del stack de Ricardo; evolución analítica SAP.
+  - name: dbt Labs Blog
+    url: https://www.getdbt.com/blog
+    why: Semantic layer, transformación y prácticas de modern data stack.
+
+research:
+  - name: arXiv cs.DB
+    url: https://arxiv.org/list/cs.DB/recent
+    why: Text-to-SQL, semantic layers, sistemas analíticos.
+  - name: arXiv cs.AI / cs.CL
+    url: https://arxiv.org/list/cs.CL/recent
+    why: LLMs, RAG y Generative BI aplicados a datos.
+
+newsletters:
+  - name: Data Engineering Weekly
+    url: https://www.dataengineeringweekly.com/
+    why: Pulso semanal de tendencias en data engineering.
+  - name: Seattle Data Guy
+    url: https://seattledataguy.substack.com/
+    why: Perspectiva práctica de arquitectura y carrera en datos.
+  - name: Modern Data Stack voices (Benn Stancil / dbt / MDS)
+    url: https://benn.substack.com/
+    why: Opinión de fondo para artículos de tesis.
+
+news:
+  - name: VentureBeat AI
+    url: https://venturebeat.com/category/ai/
+    why: Anuncios de producto, adquisiciones y debates de IA/datos.
+  - name: LinkedIn — debates de líderes Data/Analytics
+    url: https://www.linkedin.com/feed/
+    why: Temas "de la semana" con gancho de actualidad y red de Ricardo.

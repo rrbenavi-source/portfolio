@@ -3,3 +3,6 @@ dist/
 .astro/
 .DS_Store
 web/dist/
+
+# PDFs fuente sueltos en la raíz de pappers/ (material de referencia, no deliverables)
+pappers/*.pdf
