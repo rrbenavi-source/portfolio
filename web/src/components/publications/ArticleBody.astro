@@ -113,6 +113,27 @@ const { sections } = Astro.props;
     font-weight: 600;
   }
 
+  .article :global(code) {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 0.84em;
+    padding: 0.12em 0.42em;
+    border-radius: 6px;
+    background: oklch(20% 0.01 250 / 0.6);
+    border: 1px solid var(--line);
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .article :global(a) {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+  }
+
+  .article :global(a:hover) {
+    border-bottom-color: var(--accent);
+  }
+
   .art-quote {
     margin: 2.6rem 0;
     padding: 0.4rem 0 0.4rem 1.6rem;
