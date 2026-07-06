@@ -11,7 +11,13 @@ Líder de Data Engineering SAP y Arquitecto de Datos (HEINEKEN México · D&C So
 - Práctico y value-driven: conecta cada idea técnica con decisiones y ahorros reales.
 - Autoridad tranquila: afirma con postura, sin grandilocuencia ni hype.
 - Claridad para negocio + precisión técnica; traduce lo complejo sin diluirlo.
-- Español profesional latinoamericano (México). El EN mantiene la misma voz, no es traducción literal.
+- Español formal pero sencillo: palabras formales y explicaciones fáciles de entender.
+  Sin jerga regional/mexicana difícil de entender (nada de "jala", "un montón", "chamba",
+  "cae el veinte"), pero sin sonar acartonado, aburrido ni innecesariamente complejo.
+  El EN mantiene la misma voz, no es traducción literal.
+- **Términos técnicos en inglés** dentro del texto en español (semantic layer, text-to-SQL,
+  query, view, generative BI, lakehouse, data warehouse, dashboard, zero-copy, Delta Sharing,
+  Unity Catalog, pipeline, etc.). No los traduzcas.
 
 ## Firmas de estilo
 - Primera persona cuando hay experiencia concreta ("cuando migramos 300+ reportes…").
