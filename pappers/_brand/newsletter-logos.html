@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --teal:#2BBD8F; --teal-d:#1f8f6c; --text:#ECEAE4; --dim:#A2A6AD; --gold:#CDA25A; --ink:#101216; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ background:#0c0d10; font-family:Inter,sans-serif; padding:60px; }
+  .sheet{ display:flex; gap:56px; align-items:flex-start; }
+  .col{ width:520px; }
+  .tile{ width:520px; height:520px; border-radius:36px; overflow:hidden; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px; }
+  .tile.dark{ background:radial-gradient(700px 460px at 50% -10%, rgba(43,189,143,.16), transparent 60%), var(--bg); }
+  .tile.teal{ background:radial-gradient(700px 460px at 50% -20%, #35d6a4, var(--teal)); }
+  .tile.light{ background:radial-gradient(700px 460px at 50% -10%, #ffffff, #eef0ee); }
+  .wm{ text-align:center; line-height:1; }
+  .wm .name{ display:block; }
+  .wm .tag{ display:block; margin-top:16px; font-size:19px; letter-spacing:.02em; }
+
+  /* A — Contexto */
+  .a .name{ font-family:Fraunces,serif; font-weight:600; font-size:62px; letter-spacing:-.02em; color:var(--text); }
+  .a .tag{ font-family:Inter; color:var(--dim); font-weight:500; }
+  .a .accent{ color:var(--teal); }
+
+  /* B — Ground Truth (on teal) */
+  .b .name{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:52px; letter-spacing:-.01em; color:var(--ink); }
+  .b .tag{ font-family:'Space Grotesk'; color:rgba(16,18,22,.72); font-weight:500; font-size:18px; letter-spacing:.06em; text-transform:uppercase; }
+
+  /* C — Anticipar (light) */
+  .c .name{ font-family:Fraunces,serif; font-weight:600; font-size:60px; letter-spacing:-.02em; color:var(--ink); }
+  .c .tag{ font-family:Inter; color:#5b5f66; font-weight:500; }
+  .c .accent{ color:var(--teal-d); }
+
+  .cap{ margin-top:26px; text-align:center; }
+  .cap .k{ font-family:'Space Grotesk'; font-weight:600; font-size:16px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--teal); }
+  .cap .n{ font-family:Inter; font-size:20px; color:var(--text); font-weight:600; margin-top:8px; }
+  .cap .d{ font-family:Inter; font-size:16px; color:var(--dim); margin-top:6px; line-height:1.5; }
+</style></head>
+<body>
+  <div class="sheet">
+
+    <!-- DIRECTION A: CONTEXTO — layered stack mark, dark -->
+    <div class="col">
+      <div class="tile dark a">
+        <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
+          <rect x="27" y="30" width="96" height="26" rx="9" fill="#2c3038"/>
+          <rect x="37" y="62" width="76" height="26" rx="9" fill="#3a4552"/>
+          <rect x="47" y="94" width="56" height="26" rx="9" fill="#2BBD8F"/>
+        </svg>
+        <div class="wm"><span class="name">Con<span class="accent">texto</span></span>
+          <span class="tag">Datos que deciden.</span></div>
+      </div>
+      <div class="cap"><div class="k">Dirección A</div><div class="n">Contexto</div>
+        <div class="d">Español-first · sobre la tesis del papper.<br/>Mark: capas semánticas apiladas.</div></div>
+    </div>
+
+    <!-- DIRECTION B: GROUND TRUTH — target/point mark, teal invert -->
+    <div class="col">
+      <div class="tile teal b">
+        <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
+          <circle cx="75" cy="75" r="60" stroke="#101216" stroke-width="6" opacity=".28"/>
+          <circle cx="75" cy="75" r="40" stroke="#101216" stroke-width="6" opacity=".5"/>
+          <circle cx="75" cy="75" r="17" fill="#101216"/>
+        </svg>
+        <div class="wm"><span class="name">Ground&nbsp;Truth</span>
+          <span class="tag">Datos · IA · SAP</span></div>
+      </div>
+      <div class="cap"><div class="k">Dirección B</div><div class="n">Ground Truth</div>
+        <div class="d">Bilingüe, data-native · eco de "dicen la verdad".<br/>Mark: el punto verdadero (target).</div></div>
+    </div>
+
+    <!-- DIRECTION C: ANTICIPAR — forward node mark, light -->
+    <div class="col">
+      <div class="tile light c">
+        <svg width="160" height="150" viewBox="0 0 160 150" fill="none">
+          <circle cx="42" cy="75" r="15" fill="#1f8f6c"/>
+          <path d="M74 75 H120" stroke="#101216" stroke-width="7" stroke-linecap="round"/>
+          <path d="M104 57 L124 75 L104 93" stroke="#101216" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="wm"><span class="name">Antici<span class="accent">par</span></span>
+          <span class="tag">De observar a anticipar.</span></div>
+      </div>
+      <div class="cap"><div class="k">Dirección C</div><div class="n">Anticipar</div>
+        <div class="d">Voz de tu portfolio · orientado al beneficio.<br/>Mark: dato → decisión (flujo).</div></div>
+    </div>
+
+  </div>
+</body></html>

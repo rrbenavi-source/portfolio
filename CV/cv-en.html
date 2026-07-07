@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<title>Ricardo Benavides — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root[data-theme="light"]{
+    --paper:#fbfbf9; --panel:#f4f2ec; --ink:#15171a; --graphite:#3a4048; --muted:#6b727b;
+    --line:#e4e2db; --card:#ffffff; --card2:#fbfaf6;
+    --chip-bg:#ffffff; --chip-border:#e0ddd4; --chip-text:#3a4048;
+    --accent:#0f7a5a; --teal:#11936f; --gold:#b9893f; --accent-soft:#0f7a5a30;
+    --header-grad:linear-gradient(180deg,#ffffff,#f1efe8);
+    --header-text:#5a616a; --header-eyebrow:#0f7a5a; --header-name:#15171a;
+    --header-role:#3a4048; --header-role-b:#0f7a5a; --header-icon:#0f7a5a;
+    --header-line:linear-gradient(90deg,#0f7a5a,#11936f); --aside-line:#dcd9d0;
+  }
+  :root[data-theme="dark"]{
+    --paper:#15181c; --panel:#1b1f24; --ink:#f3f1ea; --graphite:#c7cdd3; --muted:#878f97;
+    --line:#2b3037; --card:#1e2329; --card2:#1a1e23;
+    --chip-bg:#20252b; --chip-border:#343b43; --chip-text:#c7cdd3;
+    --accent:#2bbd8f; --teal:#46d3ab; --gold:#cda25a; --accent-soft:#2bbd8f40;
+    --header-grad:radial-gradient(120% 140% at 100% 0%, #20262c 0%, #16191d 55%, #101316 100%);
+    --header-text:#aab2b9; --header-eyebrow:#8b958f; --header-name:#ffffff;
+    --header-role:#cfe6db; --header-role-b:#46d3ab; --header-icon:#46d3ab;
+    --header-line:linear-gradient(90deg,#2bbd8f,#46d3ab); --aside-line:#2b3037;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  @page{ size:A4; margin:0; }
+  html,body{ background:var(--paper); }
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    color:var(--graphite); font-size:9.1px; line-height:1.46;
+    -webkit-font-smoothing:antialiased; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{ width:210mm; margin:0 auto; background:var(--paper); position:relative; }
+
+  header{
+    background:var(--header-grad); color:var(--header-text);
+    padding:13mm 13mm 9.5mm 13mm; position:relative; overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  header::after{ content:""; position:absolute; left:13mm; bottom:6.5mm; width:46px; height:3px;
+    background:var(--header-line); border-radius:3px; }
+  .eyebrow{ font-size:8px; letter-spacing:.22em; text-transform:uppercase; color:var(--header-eyebrow); font-weight:600; margin-bottom:5px; }
+  h1{ font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:40px; line-height:.98; letter-spacing:-.01em; color:var(--header-name); }
+  .role{ font-family:'Fraunces',Georgia,serif; font-style:italic; font-weight:400; font-size:14.5px; color:var(--header-role); margin-top:7px; letter-spacing:.005em; }
+  .role b{ color:var(--header-role-b); font-style:normal; font-weight:600; }
+  .contact{ margin-top:13px; display:flex; flex-wrap:wrap; gap:5px 14px; font-size:8.3px; color:var(--header-text); letter-spacing:.01em; }
+  .contact span{ display:inline-flex; align-items:center; gap:5px; }
+  .contact i{ color:var(--header-icon); font-style:normal; font-weight:700; }
+
+  .body{ display:grid; grid-template-columns:62mm 1fr; align-items:stretch; }
+  aside{ background:var(--panel); padding:8mm 7mm 8mm 13mm; }
+  main{ padding:8mm 13mm 8mm 8mm; }
+
+  .sec{ margin-bottom:6.5mm; }
+  .sec:last-child{ margin-bottom:0; }
+  .sec-h{ font-size:8.3px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+    padding-bottom:3px; margin-bottom:6px; border-bottom:1px solid var(--line); }
+  aside .sec-h{ border-bottom-color:var(--aside-line); }
+
+  .skill-group{ margin-bottom:6px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-t{ font-weight:700; color:var(--ink); font-size:8.6px; margin-bottom:2px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:3px; }
+  .chip{ background:var(--chip-bg); border:1px solid var(--chip-border); color:var(--chip-text); border-radius:20px;
+    padding:1.5px 6px; font-size:7.6px; font-weight:500; }
+  .lead-chip{ border-color:var(--accent-soft); color:var(--accent); }
+
+  .kv{ font-size:8.5px; }
+  .kv .t{ font-weight:700; color:var(--ink); }
+  .kv .s{ color:var(--muted); }
+  .kv + .kv{ margin-top:5px; }
+
+  .clients{ display:flex; flex-wrap:wrap; gap:3px; }
+  .clients .chip{ font-size:7.4px; }
+
+  .lang-row{ display:flex; justify-content:space-between; font-size:8.5px; margin-top:3px; }
+  .lang-row .t{ font-weight:600; color:var(--ink); }
+  .lang-row .s{ color:var(--muted); }
+
+  .lead{ font-size:9.6px; line-height:1.5; color:var(--graphite); }
+  .lead strong{ color:var(--ink); font-weight:600; }
+  .metrics{ display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:7px; }
+  .metric{ border:1px solid var(--line); border-radius:7px; padding:7px 7px 6px; background:var(--card); }
+  .metric .n{ font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:18px; line-height:1; color:var(--accent); letter-spacing:-.01em; }
+  .metric.gold .n{ color:var(--gold); }
+  .metric .l{ font-size:7.3px; color:var(--muted); margin-top:4px; line-height:1.25; }
+
+  .job{ margin-bottom:5mm; break-inside:avoid; }
+  .job:last-child{ margin-bottom:0; }
+  .job-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .job-role{ font-weight:700; color:var(--ink); font-size:10px; }
+  .job-co{ color:var(--accent); font-weight:700; }
+  .job-date{ font-size:7.8px; color:var(--muted); white-space:nowrap; font-weight:500; letter-spacing:.02em; }
+  .job-intro{ font-size:8.8px; color:var(--graphite); margin:2px 0 4px; }
+  .job-intro strong{ color:var(--ink); font-weight:600; }
+  ul.b{ list-style:none; }
+  ul.b li{ position:relative; padding-left:11px; font-size:8.7px; line-height:1.4; margin-bottom:2.5px; color:var(--graphite); }
+  ul.b li::before{ content:""; position:absolute; left:1px; top:5px; width:4px; height:4px; border-radius:50%; background:var(--accent); }
+  ul.b li strong{ color:var(--ink); font-weight:600; }
+  .job.compact ul.b li{ margin-bottom:1.5px; }
+
+  .cases{ padding:8mm 13mm 9mm; background:var(--paper); border-top:1px solid var(--line); }
+  .cases > .sec-h{ font-size:9px; margin-bottom:7px; }
+  .cases-lead{ font-size:9px; color:var(--graphite); margin:-3px 0 7px; }
+  .case-card{ border:1px solid var(--line); border-radius:9px; background:var(--card); padding:6mm 6mm; margin-bottom:5mm; break-inside:avoid; }
+  .case-card:last-child{ margin-bottom:0; }
+  .case-eyebrow{ font-size:7.4px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:700; }
+  .case-title{ font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:15.5px; color:var(--ink); margin:3px 0 3px; line-height:1.1; }
+  .case-lead{ font-size:8.9px; color:var(--graphite); margin-bottom:6px; }
+  .case-lead strong{ color:var(--ink); font-weight:600; }
+  .case-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:8mm; }
+  .case-label{ font-size:7.2px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:3px; }
+  .case-problem{ font-size:8.6px; color:var(--graphite); margin-bottom:6px; }
+  ul.a{ list-style:none; }
+  ul.a li{ position:relative; padding-left:12px; font-size:8.6px; line-height:1.4; margin-bottom:3px; color:var(--graphite); }
+  ul.a li::before{ content:""; position:absolute; left:1px; top:5px; width:4px; height:4px; border-radius:1px; background:var(--accent); transform:rotate(45deg); }
+  ul.a li strong{ color:var(--ink); font-weight:600; }
+  .res{ display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+  .res .r{ border:1px solid var(--line); border-radius:7px; padding:7px 8px; background:var(--card2); }
+  .res .v{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:12px; color:var(--accent); line-height:1; }
+  .res .r.gold .v{ color:var(--gold); }
+  .res .k{ font-size:7.1px; color:var(--muted); margin-top:3px; line-height:1.25; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Data Engineering SAP Leader &amp; Data Architect · Monterrey, MX</div>
+    <h1>Ricardo Benavides</h1>
+    <div class="role">Data Architect &amp; <b>Data Engineering SAP Leader</b></div>
+    <div class="contact">
+      <span><i>◦</i> Monterrey, Nuevo León · Mexico</span>
+      <span><i>✉</i> rbenavides@dcsol.com.mx</span>
+      <span><i>✉</i> rrbenavi@gmail.com</span>
+      <span><i>in</i> linkedin.com/in/rrbenavi</span>
+    </div>
+  </header>
+
+  <div class="body">
+    <aside>
+      <div class="sec">
+        <div class="sec-h">Core competencies</div>
+        <div class="skill-group">
+          <div class="skill-t">Strategy &amp; Leadership</div>
+          <div class="chips">
+            <span class="chip lead-chip">Team leadership</span>
+            <span class="chip lead-chip">Project management</span>
+            <span class="chip lead-chip">Data governance</span>
+            <span class="chip lead-chip">Cost optimization</span>
+            <span class="chip lead-chip">Business–IT alignment</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-t">SAP Architecture &amp; Platforms</div>
+          <div class="chips">
+            <span class="chip">BW/4HANA</span><span class="chip">SAP Analytics Cloud</span>
+            <span class="chip">BPC</span><span class="chip">BusinessObjects</span>
+            <span class="chip">Data Intelligence</span><span class="chip">Analysis for Office</span>
+            <span class="chip">ABAP</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-t">Advanced Analytics &amp; Cloud</div>
+          <div class="chips">
+            <span class="chip">Databricks</span><span class="chip">Databricks AI/BI Genie</span>
+            <span class="chip">Microsoft Azure</span><span class="chip">Data products</span>
+            <span class="chip">Generative AI &amp; NLP</span><span class="chip">Prescriptive intelligence</span>
+            <span class="chip">Data modeling</span><span class="chip">Executive dashboards</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h">Languages</div>
+        <div class="lang-row"><span class="t">Spanish</span><span class="s">Native</span></div>
+        <div class="lang-row"><span class="t">English</span><span class="s">Intermediate</span></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h">Certification</div>
+        <div class="kv">
+          <div class="t">SAP NetWeaver 2004s — Business Intelligence</div>
+          <div class="s">SAP · 2008 · ID 0006064683</div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h">Education</div>
+        <div class="kv">
+          <div class="t">B.Sc. in Computer Science (IT)</div>
+          <div class="s">Universidad Autónoma de Nuevo León — Faculty of Physics and Mathematics · 2002–2006</div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h">Clients &amp; organizations</div>
+        <div class="clients">
+          <span class="chip">CEMEX</span><span class="chip">NEMAK</span><span class="chip">VITRO</span>
+          <span class="chip">Grupo AlEn</span><span class="chip">Fibra Inn</span><span class="chip">Pueblo Bonito</span>
+          <span class="chip">Papel San Francisco</span><span class="chip">SADM</span><span class="chip">Mega Alimentos</span>
+          <span class="chip">Peñafiel</span><span class="chip">HEINEKEN</span><span class="chip">Minera México</span>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="sec">
+        <div class="sec-h">Professional profile</div>
+        <p class="lead">Data &amp; Analytics leader and SAP data architect with a <strong>business mindset</strong> and <strong>20+ years</strong> of experience. I lead multidisciplinary teams and critical migrations that turn data into <strong>measurable decisions and tangible savings</strong>, across industry, consumer goods, hospitality and government. Today I lead the Data Engineering SAP team and data architecture at HEINEKEN Mexico, driving the <strong>SAP–Databricks integration</strong>.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">20+</div><div class="l">Years of experience</div></div>
+          <div class="metric gold"><div class="n">€1.5M</div><div class="l">Economic value generated</div></div>
+          <div class="metric"><div class="n">~15</div><div class="l">Professionals led</div></div>
+          <div class="metric"><div class="n">−50%</div><div class="l">SAC licensing savings</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h">Professional experience</div>
+
+        <div class="job">
+          <div class="job-top">
+            <div class="job-role">SAP BW/4HANA · SAC Architect <span class="job-co">— HEINEKEN Mexico</span></div>
+            <div class="job-date">2019 – Present</div>
+          </div>
+          <div class="job-intro">I lead the Data Engineering SAP team and the analytics architecture, driving the <strong>SAP–Databricks</strong> convergence toward AI-augmented analytics.</div>
+          <ul class="b">
+            <li>Built <strong>Genie Sales Assistant</strong> on Databricks AI/BI Genie: sales insights in <strong>natural language</strong>, without waiting for a report.</li>
+            <li>Designed the <strong>sales data product</strong>: data extracted from SAP ECC and modeled in Databricks to automate daily OpCo-level tracking.</li>
+            <li><strong>SAC → Analysis for Office</strong> redesign: <strong>−50% in licensing cost</strong> (2024 and 2025).</li>
+            <li>Leading a <strong>~15-person team</strong>: <strong>300+ reports</strong> migrated to SAC.</li>
+            <li>Critical <strong>BW/4HANA 2023</strong> and SAP Data Intelligence migrations delivered smoothly; <strong>−50%</strong> database storage and <strong>−33%</strong> application servers (DVM).</li>
+            <li>SAP BO → SAC migration with planning-license optimization.</li>
+          </ul>
+        </div>
+
+        <div class="job compact">
+          <div class="job-top">
+            <div class="job-role">Sr. SAP BW Consultant <span class="job-co">— Grupo AlEn</span></div>
+            <div class="job-date">2018 – 2019</div>
+          </div>
+          <ul class="b"><li>BW solutions for Nielsen indicators (Scantrack), Picture of Success (profitability) and Human Resources on BW on HANA.</li></ul>
+        </div>
+
+        <div class="job compact">
+          <div class="job-top">
+            <div class="job-role">BI/BPC Technical Lead · Project Manager <span class="job-co">— Grupo Pueblo Bonito</span></div>
+            <div class="job-date">2016 – 2018</div>
+          </div>
+          <ul class="b"><li>End-to-end financial consolidation, hotel operations reporting (P&amp;L), IFRS and a Mobile solution; project management for FI/CO/MM, Supplier Portal and Electronic Accounting.</li></ul>
+        </div>
+
+        <div class="job compact">
+          <div class="job-top">
+            <div class="job-role">SAP BPC Technical Lead · Senior BW <span class="job-co">— Fibra Inn</span></div>
+            <div class="job-date">2015 – 2017</div>
+          </div>
+          <ul class="b"><li>Hotel operations budget planning and BI development for financial modules, BMV reporting and a Mobile solution.</li></ul>
+        </div>
+
+        <div class="job compact">
+          <div class="job-top">
+            <div class="job-role">Senior SAP BW Consultant <span class="job-co">— CEMEX</span></div>
+            <div class="job-date">2014 – 2015</div>
+          </div>
+          <ul class="b"><li>Profitability models (Mexico and Colombia), legal/overdue receivables and HR indicators integrating SAP and non-SAP sources.</li></ul>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ CASE STUDIES (full width) ============ -->
+  <section class="cases">
+    <div class="sec-h">Case studies · HEINEKEN Mexico — D&amp;C Solutions</div>
+    <p class="cases-lead">Three stories where data architecture translated into decisions, savings and new capabilities.</p>
+
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-eyebrow">Case 01 · HEINEKEN Mexico · D&amp;C Solutions</div>
+      <div class="case-title">Genie Sales Assistant: sales insights in natural language</div>
+      <div class="case-lead">From SAP–Databricks integration to AI-augmented analytics: a <strong>governed sales data product</strong> and an assistant that answers in natural language.</div>
+      <div class="case-grid">
+        <div>
+          <div class="case-label">The challenge</div>
+          <div class="case-problem">Daily OpCo-level sales tracking relied on fragmented reports and processes. Sales data lived in SAP ECC, far from modern analytics capabilities, and getting a concrete answer meant waiting for someone to build a report.</div>
+          <div class="case-label">The approach</div>
+          <ul class="a">
+            <li>Extraction of sales data from <strong>SAP ECC</strong> and modeling it as a governed <strong>data product</strong> in Databricks.</li>
+            <li>Automation of <strong>daily OpCo-level sales tracking</strong> on top of that data product.</li>
+            <li>Built <strong>Genie Sales Assistant</strong> on <strong>Databricks AI/BI Genie</strong>, answering business questions in <strong>natural language</strong>.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="case-label">Results</div>
+          <div class="res">
+            <div class="r"><div class="v">Natural language</div><div class="k">Sales insights without waiting for a report</div></div>
+            <div class="r"><div class="v">SAP ECC → Databricks</div><div class="k">Governed sales data product</div></div>
+            <div class="r"><div class="v">Daily · OpCo</div><div class="k">Automated sales tracking</div></div>
+            <div class="r"><div class="v">AI/BI Genie</div><div class="k">AI-augmented generative analytics</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-eyebrow">Case 02 · HEINEKEN Mexico · D&amp;C Solutions</div>
+      <div class="case-title">SAP analytics platform modernization</div>
+      <div class="case-lead">Consolidating and modernizing the entire SAP analytics platform: critical migrations, licensing optimization and leadership of a <strong>~15-person team</strong>.</div>
+      <div class="case-grid">
+        <div>
+          <div class="case-label">The challenge</div>
+          <div class="case-problem">Analytics ran on a legacy SAP landscape, with scattered reporting and a high SAC licensing cost. Sustaining growth required consolidating the platform, modernizing base versions and standardizing executive reporting.</div>
+          <div class="case-label">The approach</div>
+          <ul class="a">
+            <li><strong>SAC → Analysis for Office</strong> redesign with license optimization: <strong>−50% in licensing cost</strong>.</li>
+            <li>Migration of <strong>300+ reports</strong> to SAC, standardizing executive reporting.</li>
+            <li>Critical <strong>BW/4HANA 2023</strong> and <strong>SAP Data Intelligence</strong> migrations delivered smoothly.</li>
+            <li><strong>SAP BO → SAC</strong> migration with planning-license optimization.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="case-label">Results</div>
+          <div class="res">
+            <div class="r gold"><div class="v">−50%</div><div class="k">Licensing cost (SAC → Analysis for Office)</div></div>
+            <div class="r"><div class="v">300+</div><div class="k">Reports migrated to SAC</div></div>
+            <div class="r"><div class="v">~15</div><div class="k">People on the team led</div></div>
+            <div class="r"><div class="v">BW/4HANA 2023</div><div class="k">Critical migration delivered smoothly</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-eyebrow">Case 03 · HEINEKEN Mexico · D&amp;C Solutions</div>
+      <div class="case-title">Data intelligence for manufacturing: €1.5M of value</div>
+      <div class="case-lead">The multi-plant operation managed fragmented supply contracts; we moved it from manual, reactive management to <strong>full, proactive control</strong>.</div>
+      <div class="case-grid">
+        <div>
+          <div class="case-label">The challenge</div>
+          <div class="case-problem">The multi-plant operation managed its supply contracts in a fragmented, manual way. Without a unified view, control was reactive and contractual coverage hard to standardize.</div>
+          <div class="case-label">The approach</div>
+          <ul class="a">
+            <li>Designed a tool that <strong>unifies and standardizes</strong> the entire supply-contract process.</li>
+            <li>Moved from manual, reactive management to <strong>full, proactive control</strong>, with standardized annual contractual coverage.</li>
+            <li>All achieved with <strong>no additional infrastructure investment</strong>.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="case-label">Results</div>
+          <div class="res">
+            <div class="r gold"><div class="v">€1.5M</div><div class="k">Total economic value generated</div></div>
+            <div class="r"><div class="v">€1.4M</div><div class="k">Direct savings</div></div>
+            <div class="r"><div class="v">€100k</div><div class="k">Costs avoided</div></div>
+            <div class="r"><div class="v">€0</div><div class="k">Additional infrastructure investment</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

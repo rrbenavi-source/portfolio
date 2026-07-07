@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Design tokens — verbatim from web/src/styles/tokens.css */
+      :root {
+        --bg: oklch(15% 0.012 250);
+        --bg-2: oklch(18% 0.014 250);
+        --surface: oklch(21% 0.016 250);
+        --line: oklch(30% 0.015 250);
+        --text: oklch(95% 0.005 250);
+        --text-dim: oklch(72% 0.012 250);
+        --text-faint: oklch(56% 0.012 250);
+        --accent: oklch(82% 0.15 168);
+        --accent-dim: oklch(62% 0.11 168);
+        --gold: oklch(83% 0.12 85);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1584px; height: 396px; }
+
+      body {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .glow {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(700px 460px at 96% 0%, oklch(82% 0.15 168 / 0.18), transparent 62%),
+          radial-gradient(560px 400px at 50% 130%, oklch(83% 0.12 85 / 0.08), transparent 60%),
+          linear-gradient(105deg, var(--bg) 0%, var(--bg-2) 55%, var(--bg) 100%);
+      }
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(oklch(95% 0.005 250 / 0.05) 1px, transparent 1.4px);
+        background-size: 28px 28px;
+        mask-image: linear-gradient(100deg, transparent 24%, #000 60%, transparent 100%);
+        -webkit-mask-image: linear-gradient(100deg, transparent 24%, #000 60%, transparent 100%);
+      }
+
+      /* Decorative sparkline / bar motif, upper-left, away from avatar */
+      .motif {
+        position: absolute;
+        left: 92px;
+        top: 56px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        height: 70px;
+        opacity: 0.55;
+      }
+      .motif i {
+        display: block;
+        width: 12px;
+        border-radius: 3px 3px 0 0;
+        background: linear-gradient(180deg, var(--accent), var(--accent-dim));
+      }
+
+      /* Avatar safe-zone hint marker is purely conceptual — kept clear, no element. */
+
+      .content {
+        position: absolute;
+        left: 470px;
+        right: 84px;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+      .dot {
+        width: 10px; height: 10px; border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 16px 2px oklch(82% 0.15 168 / 0.7);
+      }
+
+      .head {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 44px;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+        max-width: 980px;
+      }
+      .head em {
+        font-style: normal;
+        color: var(--accent);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 2px;
+      }
+      .chip {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-dim);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 16px;
+      }
+      .chip.hot { color: var(--accent); border-color: oklch(62% 0.11 168 / 0.5); }
+
+      .url {
+        position: absolute;
+        right: 84px;
+        bottom: 40px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-faint);
+      }
+      .url span { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div class="glow"></div>
+    <div class="grid"></div>
+
+    <div class="motif">
+      <i style="height: 28%"></i>
+      <i style="height: 46%"></i>
+      <i style="height: 38%"></i>
+      <i style="height: 64%"></i>
+      <i style="height: 54%"></i>
+      <i style="height: 82%"></i>
+      <i style="height: 100%"></i>
+    </div>
+
+    <div class="content">
+      <div class="eyebrow"><span class="dot"></span>Data Engineering SAP Leader · Arquitecto de Datos</div>
+      <div class="head">Convierto datos en <em>ahorros reales</em> y decisiones estratégicas.</div>
+      <div class="chips">
+        <span class="chip">SAP BW/4HANA</span>
+        <span class="chip">SAP Analytics Cloud</span>
+        <span class="chip">BPC</span>
+        <span class="chip hot">Databricks AI/BI Genie</span>
+        <span class="chip hot">IA generativa</span>
+      </div>
+    </div>
+
+    <div class="url">rrbenavi-source.github.io/<span>portfolio</span></div>
+  </body>
+</html>

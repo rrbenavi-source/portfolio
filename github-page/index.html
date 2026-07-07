@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricardo Benavides — Data Architect & Data Engineering SAP Leader</title>
+  <meta name="description" content="Ricardo Benavides — Arquitecto de Datos SAP & Data Engineering SAP Leader. 20+ años en SAP BW/4HANA, SAP Analytics Cloud, BPC, Azure y Databricks. Convierto datos en ahorros y decisiones." />
+  <meta property="og:title" content="Ricardo Benavides — Data Architect & Data Engineering SAP Leader" />
+  <meta property="og:description" content="20+ años transformando datos en ventaja competitiva. SAP BW/4HANA · SAC · Azure · Databricks." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: oklch(15% 0.012 250);
+      --bg-2: oklch(18% 0.014 250);
+      --surface: oklch(21% 0.016 250);
+      --surface-hi: oklch(25% 0.018 250);
+      --line: oklch(30% 0.015 250);
+      --text: oklch(95% 0.005 250);
+      --text-dim: oklch(72% 0.012 250);
+      --text-faint: oklch(56% 0.012 250);
+      --accent: oklch(82% 0.15 168);
+      --accent-dim: oklch(62% 0.11 168);
+      --gold: oklch(83% 0.12 85);
+
+      --text-hero: clamp(2.6rem, 1rem + 7.5vw, 6.5rem);
+      --text-h2: clamp(1.7rem, 1rem + 2.6vw, 2.9rem);
+      --text-metric: clamp(2.2rem, 1.2rem + 4vw, 4rem);
+      --space-section: clamp(4.5rem, 3rem + 7vw, 9rem);
+      --maxw: 1180px;
+
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 600ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Atmospheric layers */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(70% 50% at 80% -5%, oklch(30% 0.06 168 / 0.35), transparent 70%),
+        radial-gradient(60% 45% at 0% 10%, oklch(28% 0.04 250 / 0.5), transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: "";
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(oklch(100% 0 0 / 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, oklch(100% 0 0 / 0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 80%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1.25rem, 1rem + 2vw, 2.5rem); }
+    section { position: relative; z-index: 1; }
+
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: 'Space Grotesk', monospace; letter-spacing: -0.01em; }
+    .accent { color: var(--accent); }
+
+    /* Nav */
+    header.nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: oklch(15% 0.012 250 / 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { font-family: 'Space Grotesk'; font-weight: 700; letter-spacing: -0.02em; font-size: 1.05rem; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; font-size: 0.9rem; color: var(--text-dim); }
+    .nav-links a { transition: color 200ms var(--ease); }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      font-size: 0.85rem; padding: 0.5rem 1rem; border: 1px solid var(--accent-dim);
+      border-radius: 999px; color: var(--accent); transition: all 250ms var(--ease);
+    }
+    .nav-cta:hover { background: var(--accent); color: var(--bg); transform: translateY(-1px); }
+    @media (max-width: 760px) { .nav-links { display: none; } }
+
+    /* Hero */
+    .hero { padding-block: clamp(3.5rem, 2rem + 9vw, 8rem) var(--space-section); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Space Grotesk'; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.6rem;
+    }
+    .eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--accent); display: inline-block; }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2.4s var(--ease) infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 oklch(82% 0.15 168 / 0.6); } 70%,100% { box-shadow: 0 0 0 12px oklch(82% 0.15 168 / 0); } }
+
+    h1.hero-name {
+      font-family: 'Space Grotesk'; font-weight: 700; font-size: var(--text-hero);
+      line-height: 0.98; letter-spacing: -0.03em; margin-bottom: 1.4rem;
+    }
+    h1.hero-name .line2 { color: var(--text-dim); }
+    .hero-sub { font-size: clamp(1.05rem, 0.9rem + 0.8vw, 1.4rem); color: var(--text-dim); max-width: 60ch; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+    .tag {
+      font-family: 'Space Grotesk'; font-size: 0.82rem; padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line); border-radius: 8px; color: var(--text-dim); background: var(--surface);
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.6rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 500;
+      padding: 0.8rem 1.4rem; border-radius: 10px; transition: all 250ms var(--ease); font-size: 0.95rem;
+    }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px oklch(82% 0.15 168 / 0.25); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+    .btn-ghost:hover { border-color: var(--accent-dim); color: var(--accent); transform: translateY(-2px); }
+
+    /* Metric band */
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-top: clamp(3rem, 2rem + 4vw, 5rem); }
+    .metric { background: var(--bg-2); padding: clamp(1.4rem, 1rem + 2vw, 2.2rem); }
+    .metric .num { font-family: 'Space Grotesk'; font-weight: 700; font-size: var(--text-metric); line-height: 1; color: var(--accent); letter-spacing: -0.02em; }
+    .metric .num.gold { color: var(--gold); }
+    .metric .lbl { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.6rem; }
+    @media (max-width: 760px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Generic section */
+    .sec { padding-block: var(--space-section); }
+    .sec-head { margin-bottom: clamp(2.5rem, 2rem + 2vw, 3.5rem); }
+    .sec-tag { font-family: 'Space Grotesk'; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-dim); }
+    h2 { font-family: 'Space Grotesk'; font-weight: 600; font-size: var(--text-h2); letter-spacing: -0.02em; line-height: 1.1; margin-top: 0.8rem; }
+    .lead { color: var(--text-dim); max-width: 70ch; margin-top: 1.2rem; font-size: 1.05rem; }
+    .lead strong { color: var(--text); }
+
+    /* Expertise grid */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    @media (max-width: 880px) { .grid-3 { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.8rem;
+      transition: transform 300ms var(--ease), border-color 300ms var(--ease), background 300ms var(--ease);
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent-dim); background: var(--surface-hi); }
+    .card h3 { font-family: 'Space Grotesk'; font-size: 1.15rem; margin-bottom: 0.8rem; }
+    .card .idx { font-family: 'Space Grotesk'; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.1em; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .chip { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--bg-2); border: 1px solid var(--line); border-radius: 7px; color: var(--text-dim); }
+
+    /* Timeline */
+    .timeline { position: relative; }
+    .timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(var(--accent-dim), transparent); }
+    .tl-item { position: relative; padding-left: 2.6rem; padding-bottom: 2.6rem; }
+    .tl-item::before { content: ""; position: absolute; left: 0; top: 6px; width: 15px; height: 15px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1rem; }
+    .tl-role { font-family: 'Space Grotesk'; font-weight: 600; font-size: 1.2rem; }
+    .tl-co { color: var(--accent); font-weight: 600; }
+    .tl-date { font-family: 'Space Grotesk'; font-size: 0.82rem; color: var(--text-faint); margin-left: auto; }
+    .tl-desc { color: var(--text-dim); margin-top: 0.7rem; }
+    .tl-desc ul { list-style: none; margin-top: 0.6rem; display: grid; gap: 0.45rem; }
+    .tl-desc li { position: relative; padding-left: 1.2rem; font-size: 0.97rem; }
+    .tl-desc li::before { content: "▸"; position: absolute; left: 0; color: var(--accent-dim); }
+
+    /* Case study */
+    .case {
+      background: linear-gradient(135deg, var(--surface-hi), var(--bg-2));
+      border: 1px solid var(--line); border-radius: 20px; padding: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+      position: relative; overflow: hidden;
+    }
+    .case::after { content: ""; position: absolute; right: -60px; top: -60px; width: 320px; height: 320px; background: radial-gradient(circle, oklch(82% 0.15 168 / 0.18), transparent 65%); }
+    .case .big { font-family: 'Space Grotesk'; font-weight: 700; font-size: clamp(2.8rem, 1.5rem + 6vw, 5rem); color: var(--gold); line-height: 1; letter-spacing: -0.03em; }
+    .case .ctx { color: var(--text-dim); max-width: 65ch; margin-top: 1.4rem; }
+    .case-split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; align-items: center; }
+    @media (max-width: 820px) { .case-split { grid-template-columns: 1fr; } }
+    .case-stat { border-top: 1px solid var(--line); padding-top: 1rem; }
+    .case-stat .v { font-family: 'Space Grotesk'; font-weight: 600; font-size: 1.6rem; color: var(--text); }
+    .case-stat .k { font-size: 0.85rem; color: var(--text-faint); }
+    .case-stat + .case-stat { margin-top: 1.2rem; }
+
+    /* Clients */
+    .clients { display: flex; flex-wrap: wrap; gap: 0.8rem 1.6rem; }
+    .clients span { font-family: 'Space Grotesk'; font-size: clamp(1.1rem, 0.9rem + 1vw, 1.5rem); color: var(--text-faint); transition: color 250ms var(--ease); }
+    .clients span:hover { color: var(--text); }
+
+    /* Edu / cert */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Contact */
+    .contact { text-align: center; padding-block: var(--space-section); }
+    .contact h2 { max-width: 16ch; margin-inline: auto; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.4rem; }
+
+    footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--text-faint); font-size: 0.85rem; }
+    .foot-inner { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">RB<span>.</span></a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#perfil">Perfil</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#caso">Caso de éxito</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a href="https://www.linkedin.com/in/rrbenavi" target="_blank" rel="noopener" class="nav-cta">LinkedIn ↗</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow"><span class="pulse"></span> Líder de Data Engineering SAP &amp; Arquitecto de Datos · Monterrey, MX</span>
+        <h1 class="hero-name">Ricardo Benavides<br /><span class="line2">Data Engineering SAP Leader</span></h1>
+        <p class="hero-sub">Data Architect &amp; BI Strategist enfocado en la integración de <strong>SAP &amp; Databricks</strong> y el desarrollo de soluciones value-driven con <strong>más de 20 años</strong> de experiencia. Actualmente dirigiendo equipos y soluciones que se traducen en <strong>ahorros reales y decisiones estratégicas</strong>. SAP BW/4HANA · SAC · BPC · Databricks.</p>
+        <div class="hero-tags">
+          <span class="tag">Liderazgo de equipos</span>
+          <span class="tag">SAP BW/4HANA</span>
+          <span class="tag">SAP Analytics Cloud</span>
+          <span class="tag">SAP BPC</span>
+          <span class="tag">Databricks</span>
+          <span class="tag">Estrategia de datos</span>
+        </div>
+        <div class="hero-cta">
+          <a href="#contacto" class="btn btn-primary">Conversemos →</a>
+          <a href="https://www.linkedin.com/in/rrbenavi" target="_blank" rel="noopener" class="btn btn-ghost">Ver LinkedIn</a>
+        </div>
+
+        <div class="metrics reveal">
+          <div class="metric"><div class="num" data-count="20" data-suffix="+">0</div><div class="lbl">Años de experiencia</div></div>
+          <div class="metric"><div class="num gold">€1.5<span style="font-size:.5em">M</span></div><div class="lbl">Valor económico generado</div></div>
+          <div class="metric"><div class="num" data-count="12" data-suffix="">0</div><div class="lbl">Profesionales liderados</div></div>
+          <div class="metric"><div class="num" data-count="50" data-suffix="%">0</div><div class="lbl">Ahorro en licenciamiento SAC</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFIL -->
+    <section class="sec" id="perfil">
+      <div class="wrap reveal">
+        <div class="sec-head">
+          <span class="sec-tag">01 — Perfil</span>
+          <h2>De observar… a anticipar.<br />Datos que se vuelven ventaja competitiva.</h2>
+          <p class="lead">Líder de Data &amp; Analytics y arquitecto de datos SAP con <strong>visión de negocio</strong>. Dirijo equipos multidisciplinarios y lidero migraciones críticas que convierten los datos en <strong>decisiones medibles y ahorros tangibles</strong>, en sectores como industria, consumo masivo, hotelería y gobierno. Hoy encabezo el equipo de Data Engineering SAP y la arquitectura de datos de HEINEKEN México, impulsando la <strong>integración SAP–Databricks</strong>.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><div class="idx">+40%</div><h3>Más rápido</h3><p style="color:var(--text-dim)">Reducción de tiempos de análisis mediante modelos y tableros ejecutivos optimizados.</p></div>
+          <div class="card"><div class="idx">12+ áreas</div><h3>Más preciso</h3><p style="color:var(--text-dim)">Mejora de la precisión de indicadores clave para múltiples áreas de negocio.</p></div>
+          <div class="card"><div class="idx">−50% / −33%</div><h3>Más eficiente</h3><p style="color:var(--text-dim)">Data Volume Management: menos espacio en base de datos y menos servidores aplicativos.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERTISE -->
+    <section class="sec" id="expertise">
+      <div class="wrap reveal">
+        <div class="sec-head">
+          <span class="sec-tag">02 — Expertise</span>
+          <h2>Arquitectura, analítica y liderazgo</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="idx">A</div><h3>Arquitectura &amp; Plataformas SAP</h3>
+            <div class="chips"><span class="chip">BW/4HANA</span><span class="chip">SAP Analytics Cloud</span><span class="chip">BPC</span><span class="chip">BusinessObjects</span><span class="chip">Data Intelligence</span><span class="chip">Analysis for Office</span><span class="chip">ABAP</span></div>
+          </div>
+          <div class="card">
+            <div class="idx">B</div><h3>Analítica avanzada &amp; Cloud</h3>
+            <div class="chips"><span class="chip">Microsoft Azure</span><span class="chip">Databricks</span><span class="chip">Databricks AI/BI Genie</span><span class="chip">Productos de datos</span><span class="chip">IA generativa &amp; NLP</span><span class="chip">Inteligencia prescriptiva</span><span class="chip">Modelado de datos</span><span class="chip">Tableros ejecutivos</span></div>
+          </div>
+          <div class="card">
+            <div class="idx">C</div><h3>Estrategia &amp; Liderazgo</h3>
+            <div class="chips"><span class="chip">Dirección de equipos</span><span class="chip">Gestión de proyectos</span><span class="chip">Gobierno de datos</span><span class="chip">Optimización de costos</span><span class="chip">Alineación negocio–TI</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section class="sec" id="experiencia">
+      <div class="wrap reveal">
+        <div class="sec-head">
+          <span class="sec-tag">03 — Trayectoria</span>
+          <h2>20 años, una constante: impacto medible</h2>
+        </div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-top"><span class="tl-role">Arquitecto SAP BW/4HANA · SAC <span class="tl-co">— HEINEKEN México</span></span><span class="tl-date">2019 – Actualidad</span></div>
+            <div class="tl-desc">
+              Lidero el equipo de Data Engineering SAP y la arquitectura analítica, impulsando la convergencia <strong>SAP–Databricks</strong> hacia una analítica aumentada con IA.
+              <ul>
+                <li>Construí <strong>Genie Sales Assistant</strong> sobre Databricks AI/BI Genie: insights de ventas en <strong>lenguaje natural</strong>, sin esperar a un reporte.</li>
+                <li>Diseñé el <strong>producto de datos de ventas</strong>: información extraída de SAP ECC y modelada en Databricks para automatizar el seguimiento diario a nivel OpCo.</li>
+                <li>Rediseño SAC → Analysis for Office: <strong>−50% en costo de licenciamiento</strong>.</li>
+                <li>Al frente de un equipo de <strong>12 personas</strong>: <strong>300+ reportes</strong> migrados a SAC.</li>
+                <li>Migraciones críticas <strong>BW/4HANA 2023</strong> y SAP Data Intelligence ejecutadas sin contratiempos.</li>
+                <li>Migración SAP BO → SAC con optimización de licencias de planning.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-top"><span class="tl-role">Consultor SAP BW Sr. <span class="tl-co">— Grupo AlEn</span></span><span class="tl-date">2018 – 2019</span></div>
+            <div class="tl-desc">Soluciones BW para indicadores Nielsen (Scantrack), Foto del Éxito y Recursos Humanos sobre BW on HANA.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-top"><span class="tl-role">Líder Técnico BI/BPC · Project Manager <span class="tl-co">— Grupo Pueblo Bonito</span></span><span class="tl-date">2016 – 2018</span></div>
+            <div class="tl-desc">Solución integral de consolidación financiera, reportes de operación hotelera, IFRS y solución Mobile; gestión de proyectos FI/CO/MM, Portal de Proveedores y Contabilidad Electrónica.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-top"><span class="tl-role">SAP BPC Technical Lead · Senior BW <span class="tl-co">— Fibra Inn</span></span><span class="tl-date">2015 – 2017</span></div>
+            <div class="tl-desc">Planeación de presupuesto de operaciones hoteleras y desarrollo BI para módulos financieros, reportes BMV y Mobile.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-top"><span class="tl-role">Senior SAP BW Consultant <span class="tl-co">— CEMEX</span></span><span class="tl-date">2014 – 2015</span></div>
+            <div class="tl-desc">Modelos de rentabilidad (México y Colombia), cartera legal/vencida e indicadores de RH integrando fuentes SAP y no SAP.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASO -->
+    <section class="sec" id="caso">
+      <div class="wrap reveal">
+        <div class="sec-head">
+          <span class="sec-tag">04 — Caso de éxito · D&amp;C Solutions</span>
+          <h2>Inteligencia de datos para manufactura</h2>
+        </div>
+        <div class="case">
+          <div class="case-split">
+            <div>
+              <div class="big">€1.5M</div>
+              <p class="ctx">Cliente del sector manufacturero con múltiples plantas y contratos de suministro fragmentados. Diseñamos una herramienta que unifica y estandariza todo el proceso, pasando de una gestión manual y reactiva a un <strong style="color:var(--text)">control total y proactivo</strong>, con cobertura contractual anual estandarizada.</p>
+            </div>
+            <div>
+              <div class="case-stat"><div class="v">€1.4M</div><div class="k">Ahorros directos</div></div>
+              <div class="case-stat"><div class="v">€100k</div><div class="k">Costos evitados</div></div>
+              <div class="case-stat"><div class="v">€0</div><div class="k">Inversión adicional en infraestructura</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="sec" id="clientes">
+      <div class="wrap reveal">
+        <div class="sec-head"><span class="sec-tag">05 — Confianza</span><h2>Organizaciones con las que he colaborado</h2></div>
+        <div class="clients">
+          <span>CEMEX</span><span>NEMAK</span><span>VITRO</span><span>Grupo AlEn</span><span>Fibra Inn</span><span>Pueblo Bonito</span><span>Papel San Francisco</span><span>SADM</span><span>Mega Alimentos</span><span>Peñafiel</span><span>HEINEKEN</span><span>Minera México</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDU + CERT -->
+    <section class="sec">
+      <div class="wrap reveal">
+        <div class="grid-2">
+          <div class="card">
+            <div class="idx">Formación</div>
+            <h3>Lic. en Ciencias Computacionales (TI)</h3>
+            <p style="color:var(--text-dim)">Universidad Autónoma de Nuevo León — Facultad de Ciencias Físico Matemáticas · 2002–2006</p>
+          </div>
+          <div class="card">
+            <div class="idx">Certificación</div>
+            <h3>SAP NetWeaver 2004s — Business Intelligence</h3>
+            <p style="color:var(--text-dim)">SAP · 2008 · ID 0006064683 &nbsp;|&nbsp; Idiomas: Español (nativo), Inglés (intermedio)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact" id="contacto">
+      <div class="wrap reveal">
+        <span class="sec-tag">06 — Contacto</span>
+        <h2 style="margin-top:1rem">¿Un reto de datos en tu organización?</h2>
+        <p class="lead" style="margin-inline:auto;text-align:center">Hablemos sobre cómo convertir tus datos en decisiones, ahorros y ventaja competitiva.</p>
+        <div class="contact-links">
+          <a href="mailto:rbenavides@dcsol.com.mx" class="btn btn-primary">rbenavides@dcsol.com.mx</a>
+          <a href="mailto:rrbenavi@gmail.com" class="btn btn-ghost">rrbenavi@gmail.com</a>
+          <a href="https://www.linkedin.com/in/rrbenavi" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© <span id="year"></span> Ricardo Benavides · Data Architect &amp; Data Engineering SAP Leader</span>
+      <span class="mono">Monterrey, Nuevo León · México</span>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el) => io.observe(el));
+
+    // Count-up metrics
+    const counters = document.querySelectorAll('[data-count]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        if (reduce) { el.textContent = target + suffix; countIO.unobserve(el); return; }
+        const dur = 1100; const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countIO.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach((el) => countIO.observe(el));
+  </script>
+</body>
+</html>

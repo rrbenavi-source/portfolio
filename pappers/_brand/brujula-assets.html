@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --bg2:#191c22; --teal:#2BBD8F; --teal-d:#1f8f6c;
+    --text:#ECEAE4; --dim:#A2A6AD; --faint:#71767f; --line:#2c3038; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ width:1600px; font-family:Inter,sans-serif; background:#0c0d10; }
+  .grain::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.03'/></svg>"); }
+
+  /* BANNER 1600x900 */
+  .banner{ width:1600px; height:900px; position:relative; overflow:hidden; padding:110px 120px;
+    display:flex; flex-direction:column; justify-content:center;
+    background:
+      radial-gradient(1200px 760px at 88% -12%, rgba(43,189,143,.16), transparent 58%),
+      radial-gradient(1000px 700px at -8% 112%, rgba(43,189,143,.06), transparent 55%),
+      var(--bg); }
+  .banner .eyebrow{ font-family:'Space Grotesk'; color:var(--teal); font-weight:600;
+    font-size:24px; letter-spacing:.24em; text-transform:uppercase; margin-bottom:34px;
+    display:flex; align-items:center; gap:20px; }
+  .banner .eyebrow .ln{ width:56px; height:2px; background:var(--teal); }
+  .banner .name{ font-family:Fraunces,serif; font-weight:600; font-size:168px; letter-spacing:-.03em;
+    line-height:.9; color:var(--text); display:flex; align-items:center; gap:40px; }
+  .banner .sub{ font-size:38px; color:var(--dim); margin-top:40px; font-weight:400; max-width:24ch; line-height:1.35; }
+  .banner .foot{ position:absolute; left:120px; right:120px; bottom:70px; display:flex;
+    justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:30px; }
+  .banner .foot .l{ font-family:'Space Grotesk'; font-size:22px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .banner .foot .l b{ color:var(--dim); }
+  .banner .foot .r{ font-family:'Space Grotesk'; font-size:22px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--teal); font-weight:600; }
+
+  /* AVATAR row (1600 wide, centered 1000x1000 tile) */
+  .avwrap{ width:1600px; height:1000px; display:flex; align-items:center; justify-content:center;
+    background:#0c0d10; }
+  .avatar{ width:1000px; height:1000px; border-radius:0; position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:60px;
+    background:
+      radial-gradient(760px 520px at 50% -6%, rgba(43,189,143,.18), transparent 60%),
+      var(--bg); }
+  .avatar .name{ font-family:Fraunces,serif; font-weight:600; font-size:132px; letter-spacing:-.02em; color:var(--text); }
+
+  .mark{ display:block; }
+</style></head>
+<body>
+
+  <!-- ============ BANNER 1600x900 ============ -->
+  <section class="banner grain">
+    <div class="eyebrow"><span class="ln"></span>Newsletter semanal · Data &amp; Analytics</div>
+    <div class="name">
+      <svg class="mark" width="150" height="150" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="47" stroke="#2BBD8F" stroke-width="2.5" stroke-dasharray="3 297" stroke-dashoffset="-72" transform="rotate(-90 50 50)"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="2.5"/>
+      </svg>
+      Brújula
+    </div>
+    <p class="sub">De los datos a las decisiones, sin perder el norte.</p>
+    <div class="foot">
+      <div class="l">Ricardo Benavides · <b>Data Engineering SAP</b></div>
+      <div class="r">Generative BI · Agentes de IA · Estrategia</div>
+    </div>
+  </section>
+
+  <!-- ============ AVATAR 1000x1000 ============ -->
+  <div class="avwrap">
+    <div class="avatar grain">
+      <svg class="mark" width="420" height="420" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="47" stroke="#2BBD8F" stroke-width="2.5" stroke-dasharray="4 296" stroke-dashoffset="-71" transform="rotate(-90 50 50)"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="2.5"/>
+      </svg>
+      <div class="name">Brújula</div>
+    </div>
+  </div>
+
+</body></html>
