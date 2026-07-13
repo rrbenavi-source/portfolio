@@ -447,6 +447,102 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '04',
+        slug: 'diseno-es-la-migracion',
+        subtitle: 'Data Architecture · ECC → S/4HANA',
+        title: 'Design is the migration',
+        role: 'Author: Ricardo Benavides',
+        meta: '2026',
+        lead: 'Why, in an ECC → S/4HANA jump, the specifications decide whether your data is born right.',
+        summary:
+          'Migrating from ECC to S/4HANA is not "just moving the extractors to CDS views": it is a chain of architecture decisions that live or die in the functional specification. Through the case of a balances extractor that looked trivial (0FI_GL_10) and the real cost of getting it wrong late, this piece argues that design —not development— decides whether your data is born right.',
+        tags: ['S/4HANA', 'CDS Views', 'Clean Core', 'Data migration', 'SAP BW'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'There is a phrase I hear in almost every S/4HANA migration project, and it hides the most expensive mistake: <em>"the extractors just need to be moved to CDS views"</em>.',
+              'It sounds mechanical. A classic extractor goes in, a CDS view comes out, the BW transformation is repointed, and done. It is the lift-and-shift promise: same data, new platform, zero thinking. And it is precisely there, in that "zero thinking", that a migration loses months before anyone writes a line of code.',
+              'My thesis is simple, and I hold it from the architect\'s seat: <strong>design is the foundation of the change, and the functional specification is the guarantee that the migration turns out right.</strong> Not development. Not the tools. Design. Everything else merely executes a decision that was already made —well or badly— when the spec was written.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Extraction to CDS is not a rename, it is a chain of decisions',
+            body: [
+              'When SAP moved the world to S/4HANA, it also changed how data is pulled into BW. Classic S-API extraction stopped being the strategic path; its replacement is <strong>CDS view-based extraction over the ODP context (ODP-CDS)</strong>, enabled with the <code>@Analytics.dataExtraction.enabled</code> annotation. In the public cloud, the classic RFC path does not even exist anymore. So far, everyone nods.',
+              'The problem begins with three truths the mechanical spec ignores:',
+              '<strong>First: released does not mean extractable.</strong> That a CDS view exists, is released, and even carries the data you want does not imply you can use it as a DataSource. Many released views —especially master-data views and several cubes— do not carry <code>@Analytics.dataExtraction.enabled</code>. SAP even publishes a system view, <code>I_DataExtractionEnabledView</code>, precisely so you <em>verify</em> which ones extract out of the box and which do not. If your spec assumes "there is a CDS for that", it is not designing: it is guessing.',
+              '<strong>Second: it is not a 1:1 mapping.</strong> The delta technique changes —from the classic timestamp to trigger-based Change Data Capture— and that conditions the design of the view itself: a view with too many joins or aggregations can end up with no delta. CDS extractor coverage grew release after release, but only a fraction is delta-capable. Choosing the view is an architecture decision, not a catalog lookup.',
+              '<strong>Third: extensibility has rules, and those rules are clean core.</strong> The principle SAP calls <em>clean core</em> is not a maintenance slogan: it is the doctrine that <strong>the way you decide to extend</strong> —which released API you consume, what you decouple from standard— determines whether your solution survives the next upgrade. An object can be released for <em>key user extensibility</em> and still <strong>not</strong> be released for <em>developer extensibility</em>; and without that contract, you cannot consume it in a <code>select from</code> inside a Z CDS under ABAP Cloud. That is not discovered by coding. It is decided in design.',
+              'Three decisions. None of them is solved by typing. All of them live or die in the spec.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'A balances extractor that looked trivial',
+            body: [
+              'Let me ground it with the case that teaches this best: migrating a <strong>general-ledger balances extractor, <code>0FI_GL_10</code></strong>. On paper, the perfect lift-and-shift candidate: a standard, well-known extractor with its "obvious" equivalent in the CDS world. The initial spec treated it as a direct swap. Three things proved it wrong.',
+              '<strong>One: the object class.</strong> <code>0FI_GL_10</code> extracts <em>balances</em> (accumulated totals). Its sibling <code>0FI_GL_14</code> extracts <em>line items</em>. They are not the same, and confusing them is lethal. In S/4HANA the heart is <strong>ACDOCA</strong>, the Universal Journal, which stores documents —line items—, not balances. Balances are derived. And the balance carryforward <strong>is not reproduced by summing the period\'s line items</strong>: it is materialized as technical "Period 0" documents generated by the carryforward process. A spec that maps a balances extractor against a line-item view produces the worst possible error in financial BI: <strong>a plausible, wrong number</strong>. It reconciles at a glance, goes unnoticed, and shows up wrong in the opening balance of a board report.',
+              '<strong>Two: extraction capability.</strong> The balances cube that looked like the answer, <code>I_GLAcctBalanceCube</code>, <strong>is not enabled for extraction</strong>. It is a data provider for <em>analytical queries</em>, not an <em>extraction source</em>. SAP documents in a specific KBA how to enable it. It is the First Truth made flesh: released, useful, and still not extractable.',
+              '<strong>Three: clean core.</strong> To expose it to BW you had to wrap it in a Z CDS that added the extraction annotation. But that cube is not released for developer extensibility. The decision was no longer technical, it was architectural: <strong>wrap it in a Z-wrapper via classic ABAP</strong> —pragmatic, it works, but it steps outside clean core and SAP does not guarantee its stability across upgrades— <strong>or rebuild the balances logic on top of ACDOCA</strong> —clean, sustainable, heavier—. There is no universal answer. There is an answer that is documented, justified, and signed off. Or one that someone improvises in the development phase, late and without context.',
+              'The point is not <code>0FI_GL_10</code>. The point is that <strong>the extractor that looked like a one-minute swap hid three architecture decisions</strong>, and all three belong to design. If the spec does not resolve them, they do not disappear: they are deferred to the wrong moment and the wrong person.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'What getting it wrong late costs',
+            body: [
+              'This is not philosophy: there are numbers. That a defect costs more the later it is fixed is one of the oldest rules in engineering, and NASA measured it. Taking as base 1 the cost of fixing an error in the phase where it is born —requirements—, catching it in design costs 3 to 8 times more; in integration and testing, tens of times more; and in production, hundreds of times more. Put plainly: fixing in UAT what should have been decided in a design workshop is not an isolated setback, it is the cost compounding against you.',
+              'And it is not lab theory. A 2025 Horváth study on S/4HANA transformations found that <strong>more than 60% overrun budget and schedule</strong>, with <strong>data migration and testing phases</strong> among the most underestimated causes. Translation: the work people treat as "mechanical" —moving data, moving extractors— is exactly what derails the projects.',
+              'The most telling part is that SAP itself treats <strong>reconciliation as the proof of success</strong> of a financial migration. It ships dedicated tools —the Data Transition Validation Tool, data validation frameworks, pre-checks for consistency— whose sole purpose is to hunt exactly the failure I am describing: a balance that does not reconcile, a carryforward that was not reproduced. That these tools exist is the industry\'s confession: the wrong number is so common that an entire discipline had to be built to catch it. The right spec is how you avoid needing it in panic mode.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The specification as a contract, not paperwork',
+            body: [
+              'If design is the foundation, the specification is where that design becomes enforceable: it is the document that forces what gets built to be exactly what was decided. A good extractor spec does not describe, it contracts; and it contracts with <strong>traceability</strong>: it links the business requirement to the chosen CDS object, that object to each field, each field to its derivation rule, and that rule to the test that validates it. When the chain is complete, development merely executes. When a link is missing, development guesses —and it guesses while spending budget.',
+              'The practices that separate a migration born healthy from one born in debt are not exotic:',
+            ],
+          },
+          {
+            type: 'list',
+            items: [
+              '<strong>Fit-to-standard first.</strong> Before designing a Z, ask whether a released CDS already extracts what you need. Most of the time there is one; sometimes there is not, and then the decision to build is <em>deliberate</em>, not a default.',
+              '<strong>Verify capability and release, do not assume them.</strong> <code>I_DataExtractionEnabledView</code> exists for that. "I think there is a view for this" is not a spec.',
+              '<strong>Validate the object class field by field.</strong> Balance or line item. Total or line item. Header or item. Most of the expensive errors I have seen live in this confusion, and they are caught by reading, not by compiling.',
+              '<strong>Decide clean core with your eyes open.</strong> If there is no released path, choose between the pragmatic shortcut and the sustainable rebuild —and write down why. Technical debt taken on knowingly is a decision; debt incurred by carelessness is a trap.',
+              '<strong>Reconciliation as the definition of "done".</strong> An extractor is not finished when it runs. It is finished when the data in S/4HANA reconciles against the source.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'True north',
+            body: [
+              'An S/4HANA migration is not won in the build. It is won —or lost— in design, and the specification is the document where that bet is put in writing. The extractor that looks trivial is usually the one hiding the hardest decision. Treating it as a rename is the quietest way to inherit, on the new platform, the very errors you came to leave behind.',
+              'Technology almost always works exactly as you configured it. The architect\'s job is to make sure the configuration —the design, the spec— is the right one <em>before</em> it works. That is the north worth keeping.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Sources',
+            items: [
+              'SAP Learning — <em>Working with ODP Context: CDS view based extraction</em> (ODP-CDS replaces S-API). <a href="https://learning.sap.com/courses/upgrading-your-sap-bw-skills-to-sap-bw-4hana/working-with-odp-context-cds-view-based-extraction_f01df9a0-0e79-4d76-be38-d2cfac4dde42" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Community (F. Riesner) — <em>Finding the right CDS Extractor in SAP S/4HANA</em> (<code>I_DataExtractionEnabledView</code>, released vs. delta-capable). <a href="https://community.sap.com/t5/technology-blog-posts-by-sap/finding-the-right-cds-extractor-in-sap-s-4hana/ba-p/13521296" target="_blank" rel="noopener">community.sap.com</a>',
+              'SAP Help — <em>ABAP CDS: Analytics annotations</em> (<code>@Analytics.dataExtraction.enabled</code>, delta). <a href="https://help.sap.com/doc/abapdocu_752_index_htm/7.52/en-us/abencds_annotations_frmwrk_ddla.htm" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP KBA 3036772 — <em>Extract CDS view I_GLAcctBalanceCube</em> (the balances cube is not enabled for extraction). <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3036772" target="_blank" rel="noopener">support.sap.com</a>',
+              'SAP Community (T. Schneider) — <em>Layering of Key User and Developer Extensibility</em>. <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/layering-of-key-user-extensibility-and-developer-extensibility/ba-p/13577852" target="_blank" rel="noopener">community.sap.com</a>',
+              'SAP — <em>Clean Core</em> whitepaper (5 dimensions; design decisions and upgrade stability). <a href="https://d.dam.sap.com/a/juG2xVj/99719_White_paper_96262_1.pdf" target="_blank" rel="noopener">sap.com</a>',
+              'SAP Community — <em>S/4HANA Finance Balance Carryforward technical tip</em> (ACDOCA; carryforward as Period 0 documents). <a href="https://community.sap.com/t5/enterprise-resource-planning-blogs-by-members/s-4hana-finance-balance-carryforward-technical-tip/ba-p/13367327" target="_blank" rel="noopener">community.sap.com</a>',
+              'SAP Community (RIG) — <em>An Introduction to the Data Transition Validation Tool</em> (source-to-target reconciliation as proof of success). <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/an-introduction-to-the-data-transition-validation-tool/ba-p/13541524" target="_blank" rel="noopener">community.sap.com</a>',
+              'NASA — <em>Error Cost Escalation Through the Project Life Cycle</em> (defect cost by phase). <a href="https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20100036670.pdf" target="_blank" rel="noopener">ntrs.nasa.gov</a>',
+              'Horváth (2025) — <em>SAP S/4HANA transformations rarely go as planned</em> (60%+ overruns; data migration and testing underestimated). <a href="https://www.horvath-partners.com/en/press/detail/study-shows-sap-s-4hana-transformations-rarely-go-as-planned-60-percent-exceed-budget-and-schedule-two-thirds-dissatisfied-with-result-quality" target="_blank" rel="noopener">horvath-partners.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {

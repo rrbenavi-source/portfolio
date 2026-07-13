@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>El diseño es la migración — Ricardo Benavides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ---- tokens (verbatim from portfolio tokens.css) ---- */
+:root{
+  --bg: oklch(15% 0.012 250);
+  --bg-2: oklch(18% 0.014 250);
+  --surface: oklch(21% 0.016 250);
+  --surface-hi: oklch(25% 0.018 250);
+  --line: oklch(30% 0.015 250);
+  --text: oklch(95% 0.005 250);
+  --text-dim: oklch(72% 0.012 250);
+  --text-faint: oklch(56% 0.012 250);
+  --accent: oklch(82% 0.15 168);
+  --accent-dim: oklch(62% 0.11 168);
+  --text-h2: clamp(1.7rem, 1rem + 2.6vw, 2.9rem);
+  --maxw: 1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{ background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif;
+  line-height:1.65; -webkit-font-smoothing:antialiased; position:relative; min-height:100vh; }
+body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(1100px 720px at 82% -8%, oklch(82% 0.15 168 / 0.10), transparent 60%),
+    radial-gradient(900px 600px at -6% 108%, oklch(82% 0.15 168 / 0.04), transparent 58%); }
+body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+  background-image:linear-gradient(oklch(30% 0.015 250 / .35) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(30% 0.015 250 / .35) 1px, transparent 1px);
+  background-size:64px 64px; -webkit-mask-image:radial-gradient(circle at 50% 30%, #000, transparent 80%);
+  mask-image:radial-gradient(circle at 50% 30%, #000, transparent 80%); }
+
+/* ---- preview annotation (not part of the real page) ---- */
+.pv-note{ position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:14px 40px;
+  font-family:'Space Grotesk'; font-size:12.5px; letter-spacing:.04em; color:var(--text-faint);
+  border-bottom:1px dashed var(--line); display:flex; gap:10px; align-items:center; }
+.pv-note b{ color:var(--accent-dim); font-weight:600; }
+
+/* ---- faux nav ---- */
+.nav{ position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:22px 40px;
+  display:flex; align-items:center; gap:14px; }
+.nav .logo{ font-family:'Space Grotesk'; font-weight:700; font-size:17px; letter-spacing:-.01em; color:var(--text); }
+.nav .logo span{ color:var(--accent); }
+.nav .links{ margin-left:auto; display:flex; gap:26px; font-size:13.5px; color:var(--text-dim);
+  font-weight:500; letter-spacing:.01em; }
+.nav .links a{ color:inherit; }
+.nav .links a.on{ color:var(--accent); }
+
+/* ---- article page ---- */
+.wrap{ position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 40px; }
+.sec{ padding:clamp(2.4rem,1.5rem+4vw,4.5rem) 0 5rem; }
+
+.hero-img{ width:100%; border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  margin-bottom:2.8rem; box-shadow:0 20px 60px oklch(10% 0.02 250 / .5); }
+.hero-img img{ display:block; width:100%; height:auto; }
+
+.sec-tag{ display:inline-flex; align-items:center; gap:12px; font-family:'Space Grotesk';
+  font-size:.8rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:1.1rem; }
+.sec-tag::before{ content:""; width:30px; height:1px; background:var(--accent); display:inline-block; }
+h1.title{ font-family:'Space Grotesk'; font-weight:600; font-size:var(--text-h2); letter-spacing:-.02em;
+  line-height:1.1; color:var(--text); max-width:22ch; }
+.lead{ color:var(--text-dim); font-size:clamp(1.05rem,1rem+.6vw,1.28rem); line-height:1.55;
+  margin-top:1.1rem; max-width:60ch; }
+.lead strong{ color:var(--text); }
+.art-byline{ color:var(--text-dim); font-size:.86rem; margin:1.1rem 0 0;
+  font-family:'Space Grotesk'; letter-spacing:.02em; }
+.art-byline .dot{ color:var(--text-faint); margin:0 .5rem; }
+
+/* article body (verbatim from ArticleBody.astro) */
+.article{ max-width:70ch; margin-top:2.6rem; }
+.art-block{ margin:2.6rem 0; }
+.art-block h2{ font-family:'Space Grotesk'; font-weight:600; font-size:clamp(1.3rem,2.4vw,1.8rem);
+  letter-spacing:-.02em; line-height:1.15; margin:0 0 1rem; color:var(--text); }
+.art-block p{ color:var(--text-dim); line-height:1.7; margin:0 0 1rem; }
+.art-block p strong{ color:var(--text); font-weight:600; }
+.art-block p em{ font-style:italic; }
+.article code{ font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:.84em;
+  padding:.12em .42em; border-radius:6px; background:oklch(20% 0.01 250 / .6); border:1px solid var(--line);
+  color:var(--text); overflow-wrap:anywhere; }
+.article a{ color:var(--accent); text-decoration:none;
+  border-bottom:1px solid color-mix(in oklch, var(--accent) 35%, transparent); }
+.art-quote{ margin:2.6rem 0; padding:.4rem 0 .4rem 1.6rem; border-left:3px solid var(--accent);
+  font-family:'Space Grotesk'; font-size:clamp(1.15rem,2.2vw,1.5rem); line-height:1.4;
+  letter-spacing:-.01em; color:var(--text); }
+.art-list{ list-style:none; padding:0; margin:1.2rem 0 0; display:grid; gap:.7rem; max-width:70ch; }
+.art-list li{ position:relative; padding-left:1.4rem; color:var(--text-dim); line-height:1.6; }
+.art-list li strong{ color:var(--text); font-weight:600; }
+.art-list li::before{ content:""; position:absolute; left:0; top:.62em; width:6px; height:6px;
+  border-radius:50%; background:var(--accent); }
+
+/* inline figures */
+.art-fig{ margin:2.4rem 0; }
+.art-fig img{ display:block; width:100%; max-width:560px; height:auto; margin:0 auto;
+  border:1px solid var(--line); border-radius:14px; box-shadow:0 14px 44px oklch(10% 0.02 250 / .45); }
+.art-fig figcaption{ text-align:center; color:var(--text-faint); font-size:.8rem; margin-top:.8rem;
+  font-family:'Space Grotesk'; letter-spacing:.02em; }
+
+.sources{ max-width:70ch; margin-top:3rem; padding-top:1.6rem; border-top:1px solid var(--line); }
+.sources h2{ font-family:'Space Grotesk'; font-size:.82rem; text-transform:uppercase; letter-spacing:.14em;
+  color:var(--text-faint); margin-bottom:1rem; }
+.sources ul{ list-style:none; padding:0; display:grid; gap:.5rem; }
+.sources li{ font-size:.82rem; color:var(--text-dim); line-height:1.5; }
+.sources a{ color:var(--accent-dim); }
+
+.btn-ghost{ display:inline-block; margin-top:2.6rem; padding:.7rem 1.3rem; border:1px solid var(--line);
+  border-radius:8px; color:var(--text); background:var(--surface); font-size:.9rem; font-weight:500;
+  transition:.25s; }
+.btn-ghost:hover{ border-color:var(--accent-dim); color:var(--accent); }
+
+@media (max-width:680px){ .wrap,.nav,.pv-note{ padding-left:22px; padding-right:22px; }
+  .nav .links{ display:none; } }
+</style></head>
+<body>
+  <div class="pv-note"><b>PREVIEW</b> · así se vería en <b>/publicaciones/diseno-es-la-migracion</b> — tema real del portfolio (Space Grotesk + Inter, acento teal). La portada como hero requiere una línea extra en el template actual.</div>
+
+  <nav class="nav">
+    <span class="logo">Ricardo Benavides<span>.</span></span>
+    <span class="links"><a>Trayectoria</a><a>Casos</a><a class="on">Publicaciones</a><a>Contacto</a></span>
+  </nav>
+
+  <section class="sec">
+    <div class="wrap">
+
+      <div class="hero-img"><img src="brujula-cover-02.png" alt="El diseño es la migración"/></div>
+
+      <span class="sec-tag">Publicación · Arquitectura de Datos · ECC → S/4HANA</span>
+      <h1 class="title">El diseño es la migración</h1>
+      <p class="lead">Por qué en un salto ECC → S/4HANA las especificaciones deciden si tus datos nacen bien.</p>
+      <p class="art-byline">Ricardo Benavides · Data Engineering SAP <span class="dot">·</span> Brújula · Edición 02 · 2026-W29</p>
+
+      <div class="article">
+
+        <section class="art-block">
+          <p>Hay una frase que escucho en casi todos los proyectos de migración a S/4HANA y que esconde el error más caro: <em>"los extractores solo hay que pasarlos a CDS views"</em>.</p>
+          <p>Suena a tarea mecánica. Un extractor clásico entra, una CDS view sale, se reapunta la transformación de BW y listo. Es la promesa del lift-and-shift: mismo dato, nueva plataforma, cero pensamiento. Y es justo ahí, en ese "cero pensamiento", donde una migración se pierde meses antes de que alguien escriba una línea de código.</p>
+          <p>Mi tesis es simple y la sostengo desde el rol de arquitecto: <strong>el diseño es la base del cambio, y la especificación funcional es la garantía de que la migración salga bien.</strong> No el desarrollo. No las herramientas. El diseño. Todo lo demás ejecuta una decisión que ya se tomó —bien o mal— cuando se redactó la spec.</p>
+        </section>
+
+        <section class="art-block">
+          <h2>La extracción a CDS no es un renombre, es una cadena de decisiones</h2>
+          <p>Cuando SAP movió el mundo a S/4HANA, también cambió la forma de sacar datos hacia BW. La extracción clásica por S-API dejó de ser la vía estratégica; su reemplazo es la <strong>extracción basada en CDS views sobre el contexto ODP (ODP-CDS)</strong>, habilitada con la anotación <code>@Analytics.dataExtraction.enabled</code>. En la nube pública, el camino clásico por RFC ya ni siquiera existe. Hasta aquí, todo el mundo asiente.</p>
+          <p>El problema empieza con tres verdades que la spec mecánica ignora:</p>
+          <p><strong>Primera: released no significa extractora.</strong> Que una CDS view exista, esté liberada y hasta lleve el dato que buscas no implica que puedas usarla como DataSource. Muchas released views —sobre todo las de datos maestros y varios cubos— no traen <code>@Analytics.dataExtraction.enabled</code>. SAP incluso publica una vista de sistema, <code>I_DataExtractionEnabledView</code>, precisamente para que <em>verifiques</em> cuáles extraen de fábrica y cuáles no. Si tu spec asume que "hay una CDS para eso", no está diseñando: está adivinando.</p>
+          <p><strong>Segunda: no es un mapeo 1:1.</strong> La técnica de delta cambia —del timestamp clásico al Change Data Capture por triggers— y eso condiciona el diseño de la propia vista: una vista con demasiados joins o agregaciones puede quedar sin delta. La cobertura de extractores CDS creció release tras release, pero solo una fracción es delta-capable. Elegir la vista es una decisión de arquitectura, no una búsqueda en un catálogo.</p>
+          <p><strong>Tercera: la extensibilidad tiene reglas, y esas reglas son clean core.</strong> El principio que SAP llama <em>clean core</em> no es un eslogan de mantenimiento: es la doctrina de que la <strong>forma en que decides extender</strong> —qué API released consumes, qué desacoplas del estándar— determina si tu solución sobrevive al próximo upgrade. Un objeto puede estar liberado para <em>key user extensibility</em> y aun así <strong>no</strong> estar liberado para <em>developer extensibility</em>; y sin ese contrato, no lo puedes consumir en un <code>select from</code> dentro de una CDS Z bajo ABAP Cloud. Eso no se descubre programando. Se decide en el diseño.</p>
+          <p>Tres decisiones. Ninguna se resuelve tecleando. Todas viven o mueren en la spec.</p>
+        </section>
+
+        <section class="art-block">
+          <h2>Un extractor de saldos que parecía trivial</h2>
+          <p>Déjame aterrizarlo con el caso que mejor enseña esto: la migración de un extractor de <strong>saldos de contabilidad general, <code>0FI_GL_10</code></strong>. En el papel, el candidato perfecto para el lift-and-shift: un extractor estándar, conocido, con su equivalente "obvio" en el mundo CDS. La spec inicial lo trataba como un swap directo. Tres cosas la desmentían.</p>
+          <p><strong>Uno: la clase de objeto.</strong> <code>0FI_GL_10</code> extrae <em>saldos</em> (totales acumulados). Su hermano <code>0FI_GL_14</code> extrae <em>partidas</em> (line items). No son lo mismo, y confundirlos es letal. En S/4HANA el corazón es <strong>ACDOCA</strong>, el Universal Journal, que guarda documentos —partidas—, no saldos. Los saldos se derivan. Y el saldo de arrastre (<em>balance carryforward</em>) <strong>no se reproduce sumando las partidas del período</strong>: se materializa como documentos técnicos de "Período 0" que genera el proceso de arrastre. Una spec que mapea un extractor de saldos contra una vista de partidas produce el peor error posible en BI financiera: <strong>un número plausible y equivocado</strong>. Cuadra a la vista, pasa desapercibido, y aparece mal en el saldo inicial de un reporte de directorio.</p>
+          <p><strong>Dos: la capacidad de extracción.</strong> El cubo de saldos que parecía la respuesta, <code>I_GLAcctBalanceCube</code>, <strong>no viene habilitado para extracción</strong>. Es un proveedor de datos para <em>consultas analíticas</em>, no una <em>fuente de extracción</em>. SAP lo documenta en una KBA específica sobre cómo habilitarlo. Es la Primera Verdad, hecha carne: released, útil, y aun así no extractora.</p>
+          <p><strong>Tres: el clean core.</strong> Para exponerlo a BW hacía falta envolverlo en una CDS Z que añadiera la anotación de extracción. Pero ese cubo no está liberado para developer extensibility. La decisión ya no era técnica, era de arquitectura: <strong>envolverlo en un Z-wrapper por ABAP clásico</strong> —pragmático, funciona, pero se sale de clean core y SAP no garantiza su estabilidad en upgrades— <strong>o reconstruir la lógica de saldos sobre ACDOCA</strong> —limpio, sostenible, más pesado—. No hay respuesta universal. Hay una respuesta que se documenta, se justifica y se firma. O una que alguien improvisa en la fase de desarrollo, tarde y sin contexto.</p>
+          <figure class="art-fig"><img src="fig-3-trampas.png" alt="Las 3 decisiones de arquitectura ocultas en 0FI_GL_10"/><figcaption>El extractor que parecía trivial escondía tres decisiones de arquitectura.</figcaption></figure>
+          <p>El punto no es <code>0FI_GL_10</code>. El punto es que <strong>el extractor que parecía un swap de un minuto escondía tres decisiones de arquitectura</strong>, y las tres pertenecen al diseño. Si la spec no las resuelve, no desaparecen: se posponen al momento y a la persona equivocados.</p>
+        </section>
+
+        <section class="art-block">
+          <h2>Lo que cuesta equivocarse tarde</h2>
+          <p>Aquí no estoy filosofando: hay números. Que un defecto cueste más mientras más tarde se corrige es una de las reglas más viejas de la ingeniería, y la NASA la midió. Tomando como base 1 el costo de corregir un error en la fase donde nace —la de requisitos—, atraparlo en diseño cuesta de 3 a 8 veces más; en integración y pruebas, decenas de veces más; y en producción, cientos de veces más. Dicho simple: arreglar en UAT lo que se debió decidir en un workshop de diseño no es un contratiempo aislado, es el costo multiplicándose en tu contra.</p>
+          <figure class="art-fig"><img src="fig-costo-defecto.png" alt="Costo de corregir un defecto por fase (NASA)"/><figcaption>Costo de corregir un defecto según la fase — NASA, Error Cost Escalation.</figcaption></figure>
+          <p>Y no es teoría de laboratorio. Un estudio de Horváth de 2025 sobre transformaciones S/4HANA encontró que <strong>más del 60% se desvía en presupuesto y plazo</strong>, con la <strong>migración de datos y las fases de prueba</strong> entre las causas más subestimadas. Traducción: el trabajo que la gente trata como "mecánico" —mover datos, mover extractores— es justo el que descarrila los proyectos.</p>
+          <p>Lo más revelador es que SAP mismo trata la <strong>reconciliación como la prueba de éxito</strong> de una migración financiera. Entrega herramientas dedicadas —el Data Transition Validation Tool, los frameworks de validación de datos, los checks de consistencia previos— cuyo único propósito es cazar exactamente el fallo del que hablo: un saldo que no cuadra, un carryforward que no se reprodujo. Que esas herramientas existan es la confesión de la industria: el número equivocado es tan común que hubo que construir una disciplina entera para atraparlo. La spec correcta es cómo evitas necesitarla en modo pánico.</p>
+        </section>
+
+        <section class="art-block">
+          <h2>La especificación como contrato, no como papeleo</h2>
+          <p>Si el diseño es la base, la especificación es donde ese diseño se vuelve exigible: es el documento que obliga a que lo construido sea exactamente lo que se decidió. Una buena spec de extractor no describe, contrata; y contrata con <strong>trazabilidad</strong>: enlaza el requisito de negocio con el objeto CDS elegido, ese objeto con cada campo, cada campo con su regla de derivación, y esa regla con la prueba que la valida. Cuando la cadena está completa, el desarrollo solo ejecuta. Cuando falta un eslabón, el desarrollo adivina —y adivina gastando presupuesto.</p>
+          <p>Las prácticas que separan una migración que nace bien de una que nace endeudada no son exóticas:</p>
+          <ul class="art-list">
+            <li><strong>Fit-to-standard primero.</strong> Antes de diseñar un Z, pregunta si ya existe una CDS released que extraiga lo que necesitas. La mayoría de las veces la hay; a veces no, y entonces la decisión de construir es <em>consciente</em>, no un default.</li>
+            <li><strong>Verifica capacidad y release, no las asumas.</strong> <code>I_DataExtractionEnabledView</code> existe para eso. "Creo que hay una vista para esto" no es una spec.</li>
+            <li><strong>Valida la clase de objeto campo por campo.</strong> Saldo o partida. Total o line item. Cabecera o posición. La mayoría de los errores caros que he visto viven en esta confusión, y se atrapan leyendo, no compilando.</li>
+            <li><strong>Decide el clean core con los ojos abiertos.</strong> Si no hay camino released, elige entre el atajo pragmático y la reconstrucción sostenible —y escribe por qué. La deuda técnica aceptada a conciencia es una decisión; la contraída por descuido es una trampa.</li>
+            <li><strong>Reconciliación como definición de "hecho".</strong> Un extractor no está terminado cuando corre. Está terminado cuando el dato en S/4HANA cuadra contra el origen.</li>
+          </ul>
+        </section>
+
+        <section class="art-block">
+          <h2>El norte</h2>
+          <p>Una migración a S/4HANA no se gana en el build. Se gana —o se pierde— en el diseño, y la especificación es el documento donde esa apuesta queda por escrito. El extractor que parece trivial suele ser el que esconde la decisión más difícil. Tratarlo como un renombre es la forma más silenciosa de heredar, a la nueva plataforma, los errores que veníamos a dejar atrás.</p>
+          <p>La tecnología casi siempre funciona exactamente como la configuraste. El trabajo del arquitecto es asegurarse de que la configuración —el diseño, la spec— sea la correcta <em>antes</em> de que funcione. Ese es el norte que no conviene perder.</p>
+        </section>
+
+        <div class="sources">
+          <h2>Fuentes</h2>
+          <ul>
+            <li>SAP Learning — <a>Working with ODP Context: CDS view based extraction</a></li>
+            <li>SAP Community (F. Riesner) — <a>Finding the right CDS Extractor in SAP S/4HANA</a></li>
+            <li>SAP Help — <a>ABAP CDS: Analytics annotations (<code>@Analytics.dataExtraction.enabled</code>)</a></li>
+            <li>SAP KBA 3036772 — <a>Extract CDS view I_GLAcctBalanceCube</a></li>
+            <li>SAP Community (T. Schneider) — <a>Layering of Key User and Developer Extensibility</a></li>
+            <li>SAP — <a>Clean Core</a> whitepaper</li>
+            <li>NASA — <a>Error Cost Escalation Through the Project Life Cycle</a></li>
+            <li>Horváth (2025) — <a>SAP S/4HANA transformations rarely go as planned</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <a class="btn-ghost" href="#">← Volver a Publicaciones</a>
+    </div>
+  </section>
+</body></html>

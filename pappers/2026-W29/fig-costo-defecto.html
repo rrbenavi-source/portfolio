@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --teal:#2BBD8F; --teal-d:#1f8f6c; --text:#ECEAE4; --dim:#A2A6AD;
+    --faint:#71767f; --line:#2c3038; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ width:1080px; height:1350px; }
+  .fig{ width:1080px; height:1350px; position:relative; overflow:hidden; padding:80px 76px 64px;
+    display:flex; flex-direction:column; font-family:Inter,sans-serif;
+    background:
+      radial-gradient(900px 640px at 108% -8%, rgba(43,189,143,.15), transparent 58%),
+      radial-gradient(760px 560px at -10% 110%, rgba(43,189,143,.05), transparent 55%),
+      var(--bg); }
+  .fig::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.03'/></svg>"); }
+
+  .top{ position:relative; z-index:2; display:flex; align-items:center; gap:16px; margin-bottom:40px; }
+  .top .wm{ font-family:Fraunces,serif; font-weight:600; font-size:30px; color:var(--text); }
+  .top .ed{ margin-left:auto; font-family:'Space Grotesk'; font-size:16px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+
+  .eyebrow{ position:relative; z-index:2; font-family:'Space Grotesk'; color:var(--teal); font-weight:600;
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .eyebrow .ln{ width:44px; height:2px; background:var(--teal); }
+  h1{ position:relative; z-index:2; font-family:Fraunces,serif; font-weight:600; font-size:58px; line-height:1.05;
+    letter-spacing:-.02em; color:var(--text); margin-bottom:16px; max-width:18ch; }
+  h1 .em{ color:var(--teal); }
+  .lead{ position:relative; z-index:2; font-size:23px; color:var(--dim); line-height:1.4; max-width:42ch; margin-bottom:38px; }
+
+  /* chart */
+  .chart{ position:relative; z-index:2; flex:1; display:flex; align-items:flex-end; gap:22px;
+    border-bottom:2px solid var(--line); padding-bottom:0; min-height:0; }
+  .bar{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .bar .mult{ font-family:'Space Grotesk'; font-weight:700; color:var(--text); font-size:30px; margin-bottom:12px; white-space:nowrap; }
+  .bar .col{ width:100%; border-radius:10px 10px 0 0; background:linear-gradient(180deg,var(--teal),var(--teal-d));
+    box-shadow:0 0 0 1px rgba(43,189,143,.25) inset; }
+  .bar .col.faint{ background:linear-gradient(180deg,#38414a,#242a30); box-shadow:none; }
+  .bar .mult.faint{ color:var(--dim); }
+  .labels{ position:relative; z-index:2; display:flex; gap:22px; margin-top:18px; }
+  .labels .lb{ flex:1; text-align:center; }
+  .labels .lb .ph{ font-family:'Space Grotesk'; font-weight:600; font-size:19px; color:var(--text); letter-spacing:-.01em; }
+  .labels .lb .sub{ font-size:14px; color:var(--faint); margin-top:3px; }
+
+  .foot{ position:relative; z-index:2; margin-top:34px; padding-top:26px; border-top:1px solid var(--line);
+    display:flex; align-items:center; }
+  .foot .l{ font-family:'Space Grotesk'; font-size:17px; letter-spacing:.05em; color:var(--dim); font-weight:500; }
+  .foot .l b{ color:var(--text); }
+  .foot .r{ margin-left:auto; font-family:'Space Grotesk'; font-size:15px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+</style></head>
+<body>
+  <div class="fig">
+    <div class="top">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="4"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="4"/>
+      </svg>
+      <span class="wm">Brújula</span>
+      <span class="ed">W29 · ECC → S/4HANA</span>
+    </div>
+
+    <div class="eyebrow"><span class="ln"></span>Costo de corregir un defecto, por fase</div>
+    <h1>Equivocarse en el diseño se paga en <span class="em">producción</span></h1>
+    <p class="lead">Un error que cuesta ×1 corregir en su fase se encarece hasta cientos de veces si se descubre tarde. Por eso la spec correcta es la inversión más barata.</p>
+
+    <div class="chart">
+      <div class="bar"><span class="mult faint">×1</span><div class="col faint" style="height:5%"></div></div>
+      <div class="bar"><span class="mult">×3–8</span><div class="col" style="height:16%"></div></div>
+      <div class="bar"><span class="mult">×7–16</span><div class="col" style="height:30%"></div></div>
+      <div class="bar"><span class="mult">×21–78</span><div class="col" style="height:56%"></div></div>
+      <div class="bar"><span class="mult">×29–1500+</span><div class="col" style="height:100%"></div></div>
+    </div>
+    <div class="labels">
+      <div class="lb"><div class="ph">Requisitos</div><div class="sub">se detecta aquí</div></div>
+      <div class="lb"><div class="ph">Diseño</div><div class="sub">la spec</div></div>
+      <div class="lb"><div class="ph">Build</div><div class="sub">código</div></div>
+      <div class="lb"><div class="ph">Pruebas</div><div class="sub">UAT / QA</div></div>
+      <div class="lb"><div class="ph">Producción</div><div class="sub">en operación</div></div>
+    </div>
+
+    <div class="foot">
+      <div class="l">Fuente: <b>NASA</b> · Error Cost Escalation Through the Project Life Cycle</div>
+      <div class="r">Ricardo Benavides</div>
+    </div>
+  </div>
+</body></html>

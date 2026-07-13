@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --card:#191c21; --teal:#2BBD8F; --text:#ECEAE4; --dim:#A2A6AD;
+    --faint:#71767f; --line:#2c3038; --red:#E0725F; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ width:1080px; height:1350px; }
+  .fig{ width:1080px; height:1350px; position:relative; overflow:hidden; padding:80px 76px 64px;
+    display:flex; flex-direction:column; font-family:Inter,sans-serif;
+    background:
+      radial-gradient(900px 640px at 108% -8%, rgba(43,189,143,.15), transparent 58%),
+      radial-gradient(760px 560px at -10% 110%, rgba(43,189,143,.05), transparent 55%),
+      var(--bg); }
+  .fig::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.03'/></svg>"); }
+
+  .top{ position:relative; z-index:2; display:flex; align-items:center; gap:16px; margin-bottom:40px; }
+  .top .wm{ font-family:Fraunces,serif; font-weight:600; font-size:30px; color:var(--text); }
+  .top .ed{ margin-left:auto; font-family:'Space Grotesk'; font-size:16px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+
+  .eyebrow{ position:relative; z-index:2; font-family:'Space Grotesk'; color:var(--teal); font-weight:600;
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .eyebrow .ln{ width:44px; height:2px; background:var(--teal); }
+  h1{ position:relative; z-index:2; font-family:Fraunces,serif; font-weight:600; font-size:56px; line-height:1.06;
+    letter-spacing:-.02em; color:var(--text); margin-bottom:44px; max-width:20ch; }
+  h1 .em{ color:var(--teal); }
+
+  .cards{ position:relative; z-index:2; display:flex; flex-direction:column; gap:22px; }
+  .c{ background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 34px;
+    display:flex; gap:28px; align-items:flex-start; position:relative; overflow:hidden; }
+  .c::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--teal); }
+  .c .n{ font-family:'Space Grotesk'; font-weight:700; font-size:52px; line-height:1; color:var(--teal);
+    min-width:64px; opacity:.9; }
+  .c .b h3{ font-family:'Space Grotesk'; font-weight:600; font-size:29px; color:var(--text); margin-bottom:6px; letter-spacing:-.01em; }
+  .c .b .tag{ font-family:'Space Grotesk'; font-size:15px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--teal); font-weight:600; margin-bottom:14px; }
+  .c .b p{ font-size:21px; line-height:1.4; color:var(--dim); max-width:44ch; }
+  .c .b p b{ color:var(--text); font-weight:600; }
+  .c .b p .warn{ color:var(--red); font-weight:600; }
+  code{ font-family:'Space Grotesk',monospace; background:#22262c; color:#cfe9df; padding:1px 8px;
+    border-radius:6px; font-size:.92em; }
+
+  .foot{ position:relative; z-index:2; margin-top:auto; padding-top:30px; border-top:1px solid var(--line);
+    display:flex; align-items:center; }
+  .foot .l{ font-family:'Space Grotesk'; font-size:18px; letter-spacing:.06em; color:var(--text); font-weight:600; }
+  .foot .l span{ color:var(--teal); }
+  .foot .r{ margin-left:auto; font-family:'Space Grotesk'; font-size:15px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+</style></head>
+<body>
+  <div class="fig">
+    <div class="top">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="4"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="4"/>
+      </svg>
+      <span class="wm">Brújula</span>
+      <span class="ed">W29 · ECC → S/4HANA</span>
+    </div>
+
+    <div class="eyebrow"><span class="ln"></span>Caso · extractor <code>0FI_GL_10</code></div>
+    <h1>El extractor que parecía trivial escondía <span class="em">3 decisiones de arquitectura</span></h1>
+
+    <div class="cards">
+      <div class="c">
+        <div class="n">01</div>
+        <div class="b">
+          <div class="tag">Clase de objeto</div>
+          <h3>¿Saldo o partida?</h3>
+          <p>Mapear un extractor de <b>saldos</b> contra una vista de <b>partidas</b> no cuadra: el <b>carryforward</b> no se reproduce sumando line items. Resultado: <span class="warn">un número plausible y equivocado.</span></p>
+        </div>
+      </div>
+      <div class="c">
+        <div class="n">02</div>
+        <div class="b">
+          <div class="tag">Capacidad de extracción</div>
+          <h3>Released ≠ extractora</h3>
+          <p>El cubo <code>I_GLAcctBalanceCube</code> existe y está liberado, pero <b>no viene habilitado para extracción</b> (KBA 3036772). Es proveedor analítico, no DataSource.</p>
+        </div>
+      </div>
+      <div class="c">
+        <div class="n">03</div>
+        <div class="b">
+          <div class="tag">Clean core</div>
+          <h3>Z-wrapper o ACDOCA</h3>
+          <p>Sin release para <i>developer extensibility</i>, la elección —atajo pragmático con riesgo de upgrade vs. reconstruir sobre <code>ACDOCA</code>— <b>es de arquitectura, no de código.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="l">El diseño es la base. <span>La spec, la garantía.</span></div>
+      <div class="r">Ricardo Benavides</div>
+    </div>
+  </div>
+</body></html>
