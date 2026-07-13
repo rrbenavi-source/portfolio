@@ -454,6 +454,7 @@ export const dict = {
         title: 'El diseño es la migración',
         role: 'Autor: Ricardo Benavides',
         meta: '2026',
+        hero: 'brujula-cover-02.png',
         lead: 'Por qué en un salto ECC → S/4HANA las especificaciones deciden si tus datos nacen bien.',
         summary:
           'Migrar de ECC a S/4HANA no es "pasar los extractores a CDS views": es una cadena de decisiones de arquitectura que viven o mueren en la especificación funcional. Con el caso de un extractor de saldos que parecía trivial (0FI_GL_10) y el costo real de equivocarse tarde, este escrito sostiene que el diseño —no el desarrollo— decide si tus datos nacen bien.',
@@ -487,6 +488,17 @@ export const dict = {
               '<strong>Uno: la clase de objeto.</strong> <code>0FI_GL_10</code> extrae <em>saldos</em> (totales acumulados). Su hermano <code>0FI_GL_14</code> extrae <em>partidas</em> (line items). No son lo mismo, y confundirlos es letal. En S/4HANA el corazón es <strong>ACDOCA</strong>, el Universal Journal, que guarda documentos —partidas—, no saldos. Los saldos se derivan. Y el saldo de arrastre (<em>balance carryforward</em>) <strong>no se reproduce sumando las partidas del período</strong>: se materializa como documentos técnicos de "Período 0" que genera el proceso de arrastre. Una spec que mapea un extractor de saldos contra una vista de partidas produce el peor error posible en BI financiera: <strong>un número plausible y equivocado</strong>. Cuadra a la vista, pasa desapercibido, y aparece mal en el saldo inicial de un reporte de directorio.',
               '<strong>Dos: la capacidad de extracción.</strong> El cubo de saldos que parecía la respuesta, <code>I_GLAcctBalanceCube</code>, <strong>no viene habilitado para extracción</strong>. Es un proveedor de datos para <em>consultas analíticas</em>, no una <em>fuente de extracción</em>. SAP lo documenta en una KBA específica sobre cómo habilitarlo. Es la Primera Verdad, hecha carne: released, útil, y aun así no extractora.',
               '<strong>Tres: el clean core.</strong> Para exponerlo a BW hacía falta envolverlo en una CDS Z que añadiera la anotación de extracción. Pero ese cubo no está liberado para developer extensibility. La decisión ya no era técnica, era de arquitectura: <strong>envolverlo en un Z-wrapper por ABAP clásico</strong> —pragmático, funciona, pero se sale de clean core y SAP no garantiza su estabilidad en upgrades— <strong>o reconstruir la lógica de saldos sobre ACDOCA</strong> —limpio, sostenible, más pesado—. No hay respuesta universal. Hay una respuesta que se documenta, se justifica y se firma. O una que alguien improvisa en la fase de desarrollo, tarde y sin contexto.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-3-trampas.png',
+            alt: 'Las 3 decisiones de arquitectura ocultas en 0FI_GL_10',
+            caption: 'El extractor que parecía trivial escondía tres decisiones de arquitectura.',
+          },
+          {
+            type: 'prose',
+            body: [
               'El punto no es <code>0FI_GL_10</code>. El punto es que <strong>el extractor que parecía un swap de un minuto escondía tres decisiones de arquitectura</strong>, y las tres pertenecen al diseño. Si la spec no las resuelve, no desaparecen: se posponen al momento y a la persona equivocados.',
             ],
           },
@@ -495,6 +507,17 @@ export const dict = {
             heading: 'Lo que cuesta equivocarse tarde',
             body: [
               'Aquí no estoy filosofando: hay números. Que un defecto cueste más mientras más tarde se corrige es una de las reglas más viejas de la ingeniería, y la NASA la midió. Tomando como base 1 el costo de corregir un error en la fase donde nace —la de requisitos—, atraparlo en diseño cuesta de 3 a 8 veces más; en integración y pruebas, decenas de veces más; y en producción, cientos de veces más. Dicho simple: arreglar en UAT lo que se debió decidir en un workshop de diseño no es un contratiempo aislado, es el costo multiplicándose en tu contra.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-costo-defecto.png',
+            alt: 'Costo de corregir un defecto por fase (NASA)',
+            caption: 'Costo de corregir un defecto según la fase — NASA, Error Cost Escalation.',
+          },
+          {
+            type: 'prose',
+            body: [
               'Y no es teoría de laboratorio. Un estudio de Horváth de 2025 sobre transformaciones S/4HANA encontró que <strong>más del 60% se desvía en presupuesto y plazo</strong>, con la <strong>migración de datos y las fases de prueba</strong> entre las causas más subestimadas. Traducción: el trabajo que la gente trata como "mecánico" —mover datos, mover extractores— es justo el que descarrila los proyectos.',
               'Lo más revelador es que SAP mismo trata la <strong>reconciliación como la prueba de éxito</strong> de una migración financiera. Entrega herramientas dedicadas —el Data Transition Validation Tool, los frameworks de validación de datos, los checks de consistencia previos— cuyo único propósito es cazar exactamente el fallo del que hablo: un saldo que no cuadra, un carryforward que no se reprodujo. Que esas herramientas existan es la confesión de la industria: el número equivocado es tan común que hubo que construir una disciplina entera para atraparlo. La spec correcta es cómo evitas necesitarla en modo pánico.',
             ],

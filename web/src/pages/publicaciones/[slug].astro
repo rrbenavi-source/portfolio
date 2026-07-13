@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseHeader from '../../components/cases/CaseHeader.astro';
 import ArticleBody from '../../components/publications/ArticleBody.astro';
+import PublicationHero from '../../components/publications/PublicationHero.astro';
 import { useTranslations, withBase } from '../../i18n/ui';
 
 const lang = 'es' as const;
@@ -14,6 +15,7 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 const item = p.items.find((i) => i.slug === slug)!;
+const hero = 'hero' in item ? (item.hero as string) : undefined;
 ---
 
 <BaseLayout
@@ -24,6 +26,7 @@ const item = p.items.find((i) => i.slug === slug)!;
 >
   <section class="sec" aria-labelledby="art-h">
     <div class="wrap reveal">
+      {hero && <PublicationHero src={hero} alt={item.title} />}
       <CaseHeader eyebrow={`Publicación · ${item.subtitle}`} title={item.title} lead={item.lead} />
       <p class="art-byline">{item.role} &nbsp;·&nbsp; {item.meta}</p>
 

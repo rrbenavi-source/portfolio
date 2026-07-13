@@ -1,8 +1,29 @@
 ---
+import { Image } from 'astro:assets';
+
+const pubImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/publicaciones/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true }
+);
+
+function resolveImage(src: string): ImageMetadata {
+  const entry = pubImages[`/src/assets/publicaciones/${src}`];
+  if (!entry) {
+    throw new Error(`ArticleBody: image not found in src/assets/publicaciones: ${src}`);
+  }
+  return entry.default;
+}
+
 interface ProseBlock {
   type: 'prose';
   heading?: string;
   body: readonly string[];
+}
+interface FigureBlock {
+  type: 'figure';
+  src: string;
+  alt: string;
+  caption?: string;
 }
 interface QuoteBlock {
   type: 'quote';
@@ -24,7 +45,7 @@ interface DomainsBlock {
   items: readonly { title: string; role: string; body: string }[];
 }
 
-type Block = ProseBlock | QuoteBlock | ListBlock | StepsBlock | DomainsBlock;
+type Block = ProseBlock | FigureBlock | QuoteBlock | ListBlock | StepsBlock | DomainsBlock;
 
 interface Props {
   sections: readonly Block[];
@@ -43,6 +64,11 @@ const { sections } = Astro.props;
             <p set:html={p} />
           ))}
         </section>
+      ) : s.type === 'figure' ? (
+        <figure class="art-fig">
+          <Image src={resolveImage(s.src)} alt={s.alt} loading="lazy" />
+          {s.caption && <figcaption set:html={s.caption} />}
+        </figure>
       ) : s.type === 'quote' ? (
         <blockquote class="art-quote" set:html={s.text} />
       ) : s.type === 'list' ? (
@@ -132,6 +158,30 @@ const { sections } = Astro.props;
 
   .article :global(a:hover) {
     border-bottom-color: var(--accent);
+  }
+
+  .art-fig {
+    margin: 2.4rem 0;
+  }
+
+  .art-fig :global(img) {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 14px 44px oklch(10% 0.02 250 / 0.45);
+  }
+
+  .art-fig figcaption {
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    margin-top: 0.8rem;
+    font-family: 'Space Grotesk';
+    letter-spacing: 0.02em;
   }
 
   .art-quote {

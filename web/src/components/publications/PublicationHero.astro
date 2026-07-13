@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+
+const pubImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/publicaciones/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true }
+);
+
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+const entry = pubImages[`/src/assets/publicaciones/${src}`];
+if (!entry) {
+  throw new Error(`PublicationHero: image not found in src/assets/publicaciones: ${src}`);
+}
+---
+
+<div class="pub-hero">
+  <Image src={entry.default} alt={alt} loading="eager" fetchpriority="high" />
+</div>
+
+<style>
+  .pub-hero {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2.8rem;
+    box-shadow: 0 20px 60px oklch(10% 0.02 250 / 0.5);
+  }
+
+  .pub-hero :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
