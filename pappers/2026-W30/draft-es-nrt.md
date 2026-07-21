@@ -79,7 +79,7 @@ comercial de cada usuario, y —el detalle que casi rompe cualquier atajo—
 no se materializan como entrega. Toda esa lógica ya estaba construida y gobernada
 en el data warehouse.
 
-## Lo que cuesta servir eso desde un lake
+## El último kilómetro: donde el near real time se muere
 
 Para servir eso desde un lake, el trabajo de verdad no es "conectar Databricks".
 Es replicar el stream hacia el object store, rearmar las capas Medallion y
