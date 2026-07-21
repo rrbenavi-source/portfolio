@@ -81,39 +81,39 @@ en el data warehouse.
 
 ## Lo que cuesta servir eso desde un lake
 
-Para servir eso desde un lake, el trabajo real no es "conectar Databricks". Es
-replicar el stream hacia el object store, reconstruir las capas Medallion, y
-**volver a implementar la semántica SAP** en una segunda plataforma. Y ese "último
-kilómetro" es donde los proyectos se atoran — y no lo dice un vendor de
-transformación, lo dice la propia SAP. En un blog técnico de su comunidad sobre
-cómo Datasphere preserva el business context, SAP admite sin rodeos que "el
-business context —conversiones de moneda, unidades de medida, jerarquías y
-configuraciones de seguridad— puede perderse al replicar hacia afuera, por lo que
-necesitarás trabajo extra en el sistema destino para reconstruir ese contexto
-perdido". Y sobre las autorizaciones es todavía más tajante: "al replicar hacia
-afuera, todas las configuraciones de seguridad y los controles de acceso se
-pierden, dejando la necesidad ineludible de recrear el control de acceso en el
-sistema destino de terceros". Eso —conversión de moneda, jerarquías, seguridad
-row-level— es exactamente la lógica que mi requerimiento necesitaba y que ya
-vivía gobernada en el warehouse.
+Para servir eso desde un lake, el trabajo de verdad no es "conectar Databricks".
+Es replicar el stream hacia el object store, rearmar las capas Medallion y
+**volver a implementar la semántica de SAP** en una segunda plataforma. Y ese
+"último kilómetro" es donde los proyectos se atoran — y no lo dice un vendor que
+vive de venderte la transformación, lo dice la mismísima SAP. En un blog técnico
+de su comunidad sobre cómo Datasphere conserva el business context, SAP lo
+reconoce con todas sus letras: "el business context —conversiones de moneda,
+unidades de medida, jerarquías y configuraciones de seguridad— se puede perder al
+replicar hacia afuera, así que vas a necesitar trabajo extra en el sistema destino
+para reconstruir ese contexto que se perdió". Y con las autorizaciones es todavía
+más claro: "al replicar hacia afuera se pierden todas las configuraciones de
+seguridad y los controles de acceso, y no queda más que volver a crear el control
+de acceso en el sistema destino de terceros". Eso —conversión de moneda,
+jerarquías, seguridad row-level— es justo la lógica que mi requerimiento
+necesitaba y que ya vivía gobernada en el warehouse.
 
-Hay algo más, y es la parte que más me gusta del argumento porque no es mía. En un
-análisis de junio de 2026 sobre SAP Business Data Cloud —el mundo del *zero-copy*—
-un arquitecto lo plantea exactamente como la decisión que tomamos: *"el error que
-muchos programas van a cometer es tratar el zero-copy como la arquitectura por
-defecto para todo caso. No lo es."* Y da el ejemplo casi textual: **"un workload
-de analítica que sirve a usuarios de negocio a través de SAP Analytics Cloud debe
-quedarse compartido — semántica gobernada, en tiempo real, sin duplicación"**,
-mientras que el mismo dato alimentando un modelo de ML sí se persiste en el lake.
-No es SAP vs. Databricks. Es *shared vs. persisted*, y elegir mal el default es lo
-que sale caro.
+Hay algo más, y es la parte del argumento que más me gusta, precisamente porque no
+es mía. En un análisis de junio de 2026 sobre SAP Business Data Cloud —el mundo
+del *zero-copy*— un arquitecto lo pone en los mismos términos en que lo decidimos
+nosotros: *"el error que van a cometer muchos programas es tratar el zero-copy como
+la arquitectura por defecto para todo. No lo es."* Y da el ejemplo casi calcado:
+**"un workload de analítica que le sirve a usuarios de negocio a través de SAP
+Analytics Cloud debe quedarse compartido — semántica gobernada, en tiempo real,
+sin duplicar nada"**, mientras que ese mismo dato, alimentando un modelo de ML, sí
+se persiste en el lake. No es SAP contra Databricks. Es *shared vs. persisted*, y
+equivocarte de default es lo que te sale caro.
 
-En la práctica, la rama de lake ni se acercaba. En el mejor de los casos —con
-todo optimizado— la latencia end-to-end a través del lake caía en **dos a tres
-horas**; el plan, de forma realista, la fijó en **dos cargas diarias**. En
-cualquiera de los dos escenarios son entre cuatro y seis veces la ventana de
-treinta minutos que el negocio necesitaba. El near real time se evaporaba
-precisamente en la capa que se suponía iba a modernizarlo.
+En la práctica, la rama del lake ni se acercaba. En el mejor de los casos —con
+todo afinado— la latencia end-to-end a través del lake se iba a **dos o tres
+horas**; y siendo francos, el plan la dejó en **dos cargas al día**. En cualquiera
+de los dos escenarios estamos hablando de cuatro a seis veces la ventana de
+treinta minutos que el negocio necesitaba. El near real time se esfumaba justo en
+la capa que, se suponía, venía a modernizarlo.
 
 ## El tiempo real no lo pone el destino, lo pone el extractor
 
