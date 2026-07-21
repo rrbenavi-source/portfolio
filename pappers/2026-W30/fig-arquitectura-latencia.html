@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --teal:#2BBD8F; --teal-d:#1f8f6c; --text:#ECEAE4; --dim:#A2A6AD;
+    --faint:#71767f; --line:#2c3038; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ width:1080px; height:1350px; }
+  .fig{ width:1080px; height:1350px; position:relative; overflow:hidden; padding:80px 76px 60px;
+    display:flex; flex-direction:column; font-family:Inter,sans-serif;
+    background:
+      radial-gradient(900px 640px at 108% -8%, rgba(43,189,143,.15), transparent 58%),
+      radial-gradient(760px 560px at -10% 110%, rgba(43,189,143,.05), transparent 55%),
+      var(--bg); }
+  .fig::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.03'/></svg>"); }
+
+  .top{ position:relative; z-index:2; display:flex; align-items:center; gap:16px; margin-bottom:44px; }
+  .top .wm{ font-family:Fraunces,serif; font-weight:600; font-size:30px; color:var(--text); }
+  .top .ed{ margin-left:auto; font-family:'Space Grotesk'; font-size:16px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+
+  .eyebrow{ position:relative; z-index:2; font-family:'Space Grotesk'; color:var(--teal); font-weight:600;
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .eyebrow .ln{ width:44px; height:2px; background:var(--teal); }
+  h1{ position:relative; z-index:2; font-family:Fraunces,serif; font-weight:600; font-size:56px; line-height:1.06;
+    letter-spacing:-.02em; color:var(--text); margin-bottom:14px; max-width:20ch; }
+  h1 .em{ color:var(--teal); }
+  .lead{ position:relative; z-index:2; font-size:22px; color:var(--dim); line-height:1.4; max-width:44ch; margin-bottom:20px; }
+
+  .routes{ position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:center; gap:40px; min-height:0; }
+  .route{ display:flex; flex-direction:column; gap:20px; }
+  .rhead{ display:flex; align-items:center; gap:16px; }
+  .rname{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; letter-spacing:-.01em; }
+  .route--on .rname{ color:var(--text); }
+  .route--off .rname{ color:var(--faint); }
+  .badge{ margin-left:auto; font-family:'Space Grotesk'; font-weight:700; font-size:18px; letter-spacing:.02em;
+    padding:9px 18px; border-radius:999px; white-space:nowrap; }
+  .badge--live{ color:#0c130f; background:linear-gradient(180deg,var(--teal),var(--teal-d)); }
+  .badge--batch{ color:var(--dim); background:transparent; border:1.5px solid var(--line); }
+
+  .chain{ display:flex; align-items:stretch; gap:0; }
+  .node{ flex:1; border-radius:14px; padding:20px 14px; text-align:center; display:flex; flex-direction:column; gap:5px;
+    border:1.5px solid var(--line); }
+  .node b{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; letter-spacing:-.01em; }
+  .node span{ font-size:14.5px; line-height:1.3; }
+  .route--on .node{ border-color:rgba(43,189,143,.5); background:rgba(43,189,143,.08); }
+  .route--on .node b{ color:var(--text); } .route--on .node span{ color:var(--dim); }
+  .route--on .node--end{ background:linear-gradient(180deg,rgba(43,189,143,.22),rgba(43,189,143,.10)); border-color:var(--teal); }
+  .route--off .node b{ color:var(--dim); } .route--off .node span{ color:var(--faint); }
+  .arr{ display:flex; align-items:center; padding:0 12px; font-size:26px; font-weight:700; }
+  .route--on .arr{ color:var(--teal); } .route--off .arr{ color:var(--line); }
+
+  .verdict{ position:relative; z-index:2; margin-top:30px; font-family:Fraunces,serif; font-style:italic;
+    font-size:26px; color:var(--text); line-height:1.35; }
+  .verdict b{ color:var(--teal); font-style:normal; font-weight:600; }
+
+  .foot{ position:relative; z-index:2; margin-top:30px; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; align-items:center; }
+  .foot .l{ font-family:'Space Grotesk'; font-size:16px; letter-spacing:.04em; color:var(--dim); font-weight:500; }
+  .foot .l b{ color:var(--text); }
+  .foot .r{ margin-left:auto; font-family:'Space Grotesk'; font-size:15px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+</style></head>
+<body>
+  <div class="fig">
+    <div class="top">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="4"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="4"/>
+      </svg>
+      <span class="wm">Brújula</span>
+      <span class="ed">W30 · Near Real Time</span>
+    </div>
+
+    <div class="eyebrow"><span class="ln"></span>Dos caminos al mismo dato</div>
+    <h1>El tiempo real no lo pone el destino. Lo pone el <span class="em">extractor</span>.</h1>
+    <p class="lead">Misma fuente transaccional, dos arquitecturas. La latencia no la decide la herramienta de reporte: la decide dónde replicas el dato.</p>
+
+    <div class="routes">
+      <div class="route route--on">
+        <div class="rhead"><span class="rname">Ruta corta · la que se ejecutó</span><span class="badge badge--live">≈ 30 min · near real time</span></div>
+        <div class="chain">
+          <div class="node"><b>ECC</b><span>captura de pedido</span></div>
+          <span class="arr">→</span>
+          <div class="node"><b>ODP</b><span>streaming · queued delta</span></div>
+          <span class="arr">→</span>
+          <div class="node"><b>BW/4HANA</b><span>ADSO · streaming chains</span></div>
+          <span class="arr">→</span>
+          <div class="node node--end"><b>SAC Live</b><span>InA · dashboard móvil</span></div>
+        </div>
+      </div>
+
+      <div class="route route--off">
+        <div class="rhead"><span class="rname">Ruta lake · la propuesta por defecto</span><span class="badge badge--batch">≥ 2–3 h · batch</span></div>
+        <div class="chain">
+          <div class="node"><b>ECC</b><span>captura de pedido</span></div>
+          <span class="arr">→</span>
+          <div class="node"><b>Data Lake</b><span>réplica del stream</span></div>
+          <span class="arr">→</span>
+          <div class="node"><b>Medallion</b><span>re-implementar semántica</span></div>
+          <span class="arr">→</span>
+          <div class="node"><b>Power BI</b><span>refresco programado</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="verdict">El near real time se resuelve en el <b>extractor</b>, no en el lake. Cada salto que replica el dato reintroduce la latencia que querías eliminar.</p>
+
+    <div class="foot">
+      <div class="l">Fuente: <b>arquitectura del proyecto</b> · caso anonimizado</div>
+      <div class="r">Ricardo Benavides</div>
+    </div>
+  </div>
+</body></html>

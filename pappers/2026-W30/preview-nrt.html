@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Preview · El near real time que el lakehouse no te iba a dar — W30</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --paper:#F7F5F0; --card:#ffffff; --ink:#191b1e; --muted:#5b616a; --faint:#8b909a;
+    --accent:#1a8f6b; --accent-d:#127a5a; --line:#e5e2d9; --line2:#efece4;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--paper); color:var(--ink); font-family:Inter,system-ui,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 600px at 100% -5%, rgba(26,143,107,.06), transparent 60%),
+      radial-gradient(900px 520px at -10% 8%, rgba(26,143,107,.045), transparent 55%);
+    background-attachment:fixed; }
+
+  .wrap{ max-width:860px; margin:0 auto; padding:56px 28px 96px; }
+
+  /* masthead */
+  .mast{ display:flex; align-items:center; gap:13px; padding-bottom:22px; margin-bottom:44px;
+    border-bottom:1px solid var(--line); }
+  .mast .wm{ font-family:Fraunces,serif; font-weight:600; font-size:24px; letter-spacing:-.01em; }
+  .mast .ed{ margin-left:auto; font-family:'Space Grotesk'; font-size:13px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .preview-flag{ font-family:'Space Grotesk'; font-size:11px; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent-d); border:1.5px solid rgba(26,143,107,.4);
+    border-radius:999px; padding:5px 12px; }
+
+  /* article header */
+  header.art{ max-width:680px; margin:0 auto 20px; }
+  .eyebrow{ font-family:'Space Grotesk'; color:var(--accent-d); font-weight:600; font-size:14px;
+    letter-spacing:.18em; text-transform:uppercase; display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+  .eyebrow .ln{ width:38px; height:2px; background:var(--accent); }
+  h1.title{ font-family:Fraunces,serif; font-weight:600; font-size:clamp(38px,6vw,62px); line-height:1.04;
+    letter-spacing:-.022em; margin-bottom:18px; }
+  .deck{ font-family:Fraunces,serif; font-weight:400; font-style:italic; font-size:clamp(20px,3vw,26px);
+    line-height:1.4; color:var(--muted); margin-bottom:30px; }
+  .byline{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px; font-family:'Space Grotesk';
+    font-size:14px; color:var(--faint); font-weight:500; padding-bottom:22px; border-bottom:1px solid var(--line); }
+  .byline b{ color:var(--ink); font-weight:600; }
+  .byline .dot{ width:4px; height:4px; border-radius:50%; background:var(--faint); }
+  .status{ max-width:680px; margin:26px auto 0; font-size:14.5px; color:var(--muted); line-height:1.55;
+    background:rgba(26,143,107,.05); border-left:3px solid var(--accent); border-radius:6px; padding:14px 18px; }
+  .status b{ color:var(--ink); }
+
+  /* body */
+  article{ max-width:680px; margin:0 auto; }
+  article p{ font-size:19px; margin:0 0 24px; }
+  article p.first::first-letter{ font-family:Fraunces,serif; font-weight:600; font-size:4.1em; float:left;
+    line-height:.82; padding:6px 12px 0 0; color:var(--accent-d); }
+  article h2{ font-family:Fraunces,serif; font-weight:600; font-size:31px; letter-spacing:-.015em;
+    line-height:1.15; margin:52px 0 20px; }
+  article strong{ font-weight:700; }
+  article em{ font-style:italic; }
+  article code{ font-family:'Space Grotesk',monospace; font-size:.86em; background:#eae7de;
+    padding:1px 7px; border-radius:5px; letter-spacing:.01em; }
+  blockquote{ margin:34px 0; padding:6px 0 6px 26px; border-left:3px solid var(--accent);
+    font-family:Fraunces,serif; font-style:italic; font-size:25px; line-height:1.42; color:var(--ink); }
+
+  /* figures */
+  figure{ margin:44px 0; }
+  figure img{ display:block; width:100%; height:auto; border-radius:16px;
+    box-shadow:0 24px 60px -22px rgba(15,25,20,.45), 0 0 0 1px rgba(0,0,0,.04); }
+  figure figcaption{ font-family:'Space Grotesk'; font-size:13.5px; color:var(--faint); line-height:1.5;
+    margin-top:14px; padding-left:2px; }
+  figure figcaption b{ color:var(--muted); font-weight:600; }
+
+  /* sources */
+  .sources{ max-width:680px; margin:60px auto 0; padding-top:30px; border-top:2px solid var(--line); }
+  .sources h2{ font-family:Fraunces,serif; font-weight:600; font-size:26px; margin-bottom:6px; }
+  .sources h3{ font-family:'Space Grotesk'; font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-d); font-weight:700; margin:24px 0 12px; }
+  .sources ul{ list-style:none; }
+  .sources li{ font-size:15px; color:var(--muted); line-height:1.5; margin-bottom:14px; padding-left:18px; position:relative; }
+  .sources li::before{ content:""; position:absolute; left:0; top:11px; width:6px; height:6px;
+    border-radius:50%; background:var(--accent); }
+  .sources li b{ color:var(--ink); }
+  .sources a{ color:var(--accent-d); text-decoration:none; word-break:break-word; border-bottom:1px solid rgba(26,143,107,.3); }
+  .sources a:hover{ border-bottom-color:var(--accent); }
+
+  footer.end{ max-width:680px; margin:56px auto 0; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; align-items:center; gap:12px; font-family:'Space Grotesk'; font-size:13px; color:var(--faint); }
+  footer.end .r{ margin-left:auto; letter-spacing:.14em; text-transform:uppercase; }
+
+  @media (max-width:620px){ article p{font-size:17.5px;} blockquote{font-size:21px;} }
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="47" stroke="#cfcabb" stroke-width="4"/>
+      <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#1a8f6b"/>
+      <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#b7bcaa"/>
+      <circle cx="50" cy="50" r="5.5" fill="#F7F5F0" stroke="#1a8f6b" stroke-width="4"/>
+    </svg>
+    <span class="wm">Brújula</span>
+    <span class="preview-flag">Preview</span>
+    <span class="ed">Edición W30 · Data &amp; Analytics</span>
+  </div>
+
+  <header class="art">
+    <div class="eyebrow"><span class="ln"></span>Arquitectura · Near Real Time</div>
+    <h1 class="title">El near real time que el lakehouse no te iba a dar</h1>
+    <p class="deck">Por qué el reporte operativo de las 8&nbsp;a.m. no siempre pertenece al data lake.</p>
+    <div class="byline">
+      <span><b>Ricardo Benavides</b> · Líder de Data Engineering &amp; Arquitecto de Datos SAP</span>
+      <span class="dot"></span><span>Opinión / autoridad</span>
+      <span class="dot"></span><span>~4 min de lectura</span>
+    </div>
+    <p class="status"><b>Caso real anonimizado.</b> El dashboard está por salir a producción; el impacto de negocio aún no se mide. La tesis se defiende por la corrección de la arquitectura, no por resultados.</p>
+  </header>
+
+  <article>
+    <p class="first">Cuando llegué al proyecto, la arquitectura ya estaba decidida: llevar los datos a un lakehouse y reportar en la herramienta de BI corporativa. Es la respuesta por defecto de 2026, y en el papel cuesta discutirla — democratización, escalabilidad, todo en un solo lugar. Pero el requisito real la puso a prueba en la primera reunión. El negocio no quería otro reporte. Quería <strong>actuar durante el día</strong>, no enterarse al día siguiente.</p>
+
+    <p>El equipo de preventa necesitaba ver, en campo y desde el teléfono, cómo iba la colocación de pedidos <strong>cada media hora</strong>: cuánto volumen llevaban contra el mismo día del año pasado, qué cobertura de clientes tenían contra su plan de visitas, y dónde había una brecha contra la meta que exigiera una acción táctica <em>antes</em> de que terminara la jornada.</p>
+
+    <p>El estado previo sí tiene números, y vale la pena anclarlos porque son lo único medido hasta ahora — el punto de partida, no el resultado. La información se sacaba de un reporte de preventa que se armaba a mano, con <strong>solo tres cortes al día</strong> y alrededor de <strong>quince horas-persona por semana</strong> de trabajo manual, con los defectos propios de ese proceso: datos que ya nacían viejos y errores de captura. Y el punto de comparación "moderno" que ya existía era, irónicamente, un reporte en <strong>la misma herramienta de BI que la dirección proponía como destino</strong>. La pregunta de negocio no era "¿cómo me fue ayer?", era "¿alcanzo la meta hoy, y qué muevo ahora si no?".</p>
+
+    <p>Que esa pregunta importe no es una intuición. La investigación de MIT&nbsp;CISR con Insight Partners sobre <em>real-time businesses</em> encontró que las empresas en el cuartil superior de "real-time-ness" tuvieron <strong>62% más crecimiento de ingresos y 97% más margen de utilidad</strong> que las del cuartil inferior — un premio que viene, literalmente, de acortar la distancia entre <em>sentir</em> una señal y <em>actuar</em> sobre ella. Ese es el dato de la industria, no el mío: sería deshonesto colgarme ese número. El dashboard apenas está por liberarse a producción y el impacto real —cuántos pedidos bloqueados se rescatan el mismo día, cuánto se mueve la cobertura— <strong>está por medirse</strong>. Lo que sí puedo defender hoy, antes de la primera medición, es la decisión de arquitectura. Y ahí la ruta "moderna" chocó con una verdad incómoda: <strong>para ese near real time, meter un data lake en medio no agregaba capacidad. Agregaba latencia.</strong></p>
+
+    <figure>
+      <img src="fig-premio-tiempo-real.png" alt="El premio del tiempo real: +62% ingresos, +97% margen"/>
+      <figcaption><b>Fig 2.</b> El premio del tiempo real: las empresas del cuartil superior de "real-time-ness" tuvieron +62% de crecimiento de ingresos y +97% de margen. Dato de industria (MIT CISR) — no del proyecto.</figcaption>
+    </figure>
+
+    <h2>La distinción que casi nadie hace explícita</h2>
+
+    <p>Conviene ser preciso, porque es fácil caricaturizar el argumento. No estoy diciendo que un lakehouse no pueda hacer streaming — puede. Lo que digo es más fino, y es la tesis de esta pieza:</p>
+
+    <blockquote>Cuando el dato transaccional y su lógica de negocio ya viven gobernados dentro de SAP, el camino más corto para monitoreo operativo en tiempo casi real es traer la query a donde vive la verdad — no mover la verdad para alcanzarla.</blockquote>
+
+    <p>Esto tiene nombre en arquitectura: <strong>data gravity</strong>. El principio, acuñado por Dave McCrory en 2010, dice que mientras más grande y compleja es una masa de datos, más caro y lento es moverla — así que lo económico es acercar el cómputo al dato, no el dato al cómputo. No es teoría de pizarrón: la propia guía reciente de TechTarget sobre eficiencia de data centers lo pone en términos operativos — "coloca los workloads cerca del dato, <strong>especialmente para aplicaciones latency-sensitive y en tiempo real</strong>". Y AtScale, en su glosario del tema, es todavía más directo: la performance de las queries se degrada cuando corren sobre datos <strong>replicados o ruteados entre plataformas</strong>, la latencia sube, y el tiempo real se vuelve más difícil de sostener — por eso la práctica madura es "centralizar el <em>acceso</em> y la gobernanza, no el dato".</p>
+
+    <p>El requerimiento no era un <code>SELECT</code> sobre una tabla plana. Era volumen convertido a dos unidades por un motor de conversión, comparado contra un día equivalente exacto del año anterior, restringido por las autorizaciones de la estructura comercial de cada usuario, y —el detalle que casi rompe cualquier atajo— <strong>fusionado con pedidos que llegan por una interfaz externa no-SAP</strong> que todavía no se materializan como entrega. Toda esa lógica ya estaba construida y gobernada en el data warehouse.</p>
+
+    <h2>Lo que cuesta servir eso desde un lake</h2>
+
+    <p>Para servir eso desde un lake, el trabajo real no es "conectar Databricks". Es replicar el stream hacia el object store, reconstruir las capas Medallion, y <strong>volver a implementar la semántica SAP</strong> en una segunda plataforma. Y ese "último kilómetro" es donde los proyectos se atoran — y no lo dice un vendor de transformación, lo dice la propia SAP. En un blog técnico de su comunidad sobre cómo Datasphere preserva el business context, SAP admite sin rodeos que "el business context —conversiones de moneda, unidades de medida, jerarquías y configuraciones de seguridad— puede perderse al replicar hacia afuera, por lo que necesitarás trabajo extra en el sistema destino para reconstruir ese contexto perdido". Y sobre las autorizaciones es todavía más tajante: "al replicar hacia afuera, todas las configuraciones de seguridad y los controles de acceso se pierden, dejando la necesidad ineludible de recrear el control de acceso en el sistema destino de terceros". Eso —conversión de moneda, jerarquías, seguridad row-level— es exactamente la lógica que mi requerimiento necesitaba y que ya vivía gobernada en el warehouse.</p>
+
+    <p>Hay algo más, y es la parte que más me gusta del argumento porque no es mía. En un análisis de junio de 2026 sobre SAP Business Data Cloud —el mundo del <em>zero-copy</em>— un arquitecto lo plantea exactamente como la decisión que tomamos: <em>"el error que muchos programas van a cometer es tratar el zero-copy como la arquitectura por defecto para todo caso. No lo es."</em> Y da el ejemplo casi textual: <strong>"un workload de analítica que sirve a usuarios de negocio a través de SAP Analytics Cloud debe quedarse compartido — semántica gobernada, en tiempo real, sin duplicación"</strong>, mientras que el mismo dato alimentando un modelo de ML sí se persiste en el lake. No es SAP vs. Databricks. Es <em>shared vs. persisted</em>, y elegir mal el default es lo que sale caro.</p>
+
+    <p>En la práctica, la rama de lake ni se acercaba. En el mejor de los casos —con todo optimizado— la latencia end-to-end a través del lake caía en <strong>dos a tres horas</strong>; el plan, de forma realista, la fijó en <strong>dos cargas diarias</strong>. En cualquiera de los dos escenarios son entre cuatro y seis veces la ventana de treinta minutos que el negocio necesitaba. El near real time se evaporaba precisamente en la capa que se suponía iba a modernizarlo.</p>
+
+    <h2>El tiempo real no lo pone el destino, lo pone el extractor</h2>
+
+    <p>La parte contraintuitiva es que el "casi tiempo real" no es un problema de la herramienta de visualización. Es un problema de <strong>ingeniería de extracción</strong>, y se resuelve donde nace el dato.</p>
+
+    <p>El flujo que sí entregó los treinta minutos es sobrio y aburrido, y por eso funciona: el DataSource estándar de posiciones de venta (<code>2LIS_11_VAITM</code>) alimenta vía <strong>ODP</strong>, con el extractor LO en modo <em>queued delta</em> para no golpear el performance del sistema transaccional, y con entrega al suscriptor garantizada <em>exactly once in order</em>. Esos micro-lotes aterrizan en un ADSO con change log activo, cuyas tablas <em>inbound</em> y <em>active</em> colapsan los deltas casi al instante, orquestado por <strong>Streaming Process Chains</strong> en bucle continuo — el reemplazo moderno del viejo <em>real-time data acquisition</em>.</p>
+
+    <figure>
+      <img src="fig-arquitectura-latencia.png" alt="Dos caminos al mismo dato, una sola latencia"/>
+      <figcaption><b>Fig 1.</b> Dos caminos al mismo dato, una sola latencia. La ruta corta (ECC → ODP streaming → BW/4HANA → SAC Live) entrega ~30 min; la ruta lake (→ Data Lake / Medallion → Power BI) cae a 2–3 horas en el mejor caso (el plan la fijó en 2 cargas diarias). El tiempo real lo pone el extractor, no el destino.</figcaption>
+    </figure>
+
+    <p>Encima de eso, la capa de visualización se conecta en modo <strong>Live</strong>. Y esto no es opinión de vendor: la documentación oficial de SAP describe la Live Data Connection en esos mismos términos —análisis <strong>sin replicación de datos</strong>, el dato confidencial se queda en la red del cliente, se respeta la seguridad implementada en el sistema origen, se reutiliza la inversión ya construida, el modelado complejo se hace de forma central y <strong>baja latencia, near real-time</strong>. La contraparte —la conexión <em>import</em>— copia el dato y vive de refrescos programados; peor aún, obliga a <strong>re-crear las jerarquías y la seguridad row-level dentro de la herramienta de BI</strong>, que es justo la deuda que queríamos evitar. Elegir Live no fue una preferencia estética: fue elegir <em>no</em> reimplementar la semántica de SAP en otra plataforma.</p>
+
+    <p>El resultado se libera a producción como un dashboard móvil que el preventista abre en la calle, con el velocímetro de avance vs. el año anterior, la cobertura contra el visit list y la brecha contra la meta en una sola vista. No es una arquitectura vistosa. Es la que hace que el número de las 8&nbsp;a.m. sea defendible a las 8:01.</p>
+
+    <h2>Cuándo el lake sí paga (y por qué separarlos importa)</h2>
+
+    <p>Nada de esto es un argumento contra el lakehouse. Es un argumento contra usarlo como respuesta por defecto a una pregunta que no es la suya. El lake paga —y mucho— cuando el caso es data science, cruce de datos SAP con no-SAP a gran escala, o machine learning sobre históricos profundos. Ahí la gravedad del dato juega al revés y mover todo a un motor abierto es exactamente lo correcto.</p>
+
+    <p>Y hay una disciplina que va de la mano, para no caer en el error opuesto —el de sobre-ingenierizar por moda. Como resume bien el análisis de <em>real-time analytics</em> de Business Model Analyst: <em>"si una decisión pierde valor una vez que el evento pasa, pertenece a la conversación de tiempo real"</em> — pero también <em>"muchos casos se sirven de sobra con frescura de segundos; perseguir sub-segundo sin una necesidad que lo justifique es mala asignación de capital"</em>. El near real time de treinta minutos no era poco: era <strong>exactamente</strong> la ventana de decisión que la operación de preventa podía aprovechar. Ni menos, ni un stack de sub-segundo que nadie iba a usar.</p>
+
+    <p>El error de arquitectura, entonces, no es elegir Databricks. Es <strong>no separar dos problemas distintos</strong>: el reporte operativo near-real-time que el negocio necesita este trimestre, y la plataforma de analítica avanzada que la organización quiere construir. Son cadencias distintas, dueños distintos y —esto es lo que se olvida— caminos técnicos distintos. Cuando los fusionas en un solo proyecto "moderno", la ambición de plataforma se come el valor operativo que ya podías liberar hoy.</p>
+
+    <p>La decisión, al final, fue ejecutar solo la ruta corta. El dashboard está por liberarse en producción, y con él la <em>capacidad</em> de gestionar la colocación de pedidos de forma casi en tiempo real: actuar sobre la brecha mientras todavía se puede facturar, en vez de leerla al día siguiente en un tablero perfecto. Cuánto de esa capacidad se convierte en facturación es la pregunta que las próximas semanas van a responder — y la mediremos con la misma disciplina con la que se diseñó. Pero conviene separar dos cosas que se confunden seguido: que una iniciativa dé o no el número esperado es una hipótesis de negocio; que la arquitectura sea la correcta para el requisito es una decisión que ya se puede juzgar. La segunda no depende de la primera. El requisito era treinta minutos sin duplicar el dato ni reimplementar su semántica, y eso se cumplió.</p>
+
+    <p>La lección que me llevo no es sobre SAP ni sobre Databricks. Es esta: antes de elegir la plataforma, pregunta dónde vive ya la lógica gobernada de tu número. Si la respuesta es "en el sistema de origen", tu trabajo de arquitecto no es mudarla. Es acortar la distancia entre esa verdad y la persona que tiene que actuar sobre ella — y a veces la distancia más corta es la que no pasa por el lake.</p>
+  </article>
+
+  <div class="sources">
+    <h2>Fuentes</h2>
+    <h3>Evidencia interna (caso, anonimizado)</h3>
+    <ul>
+      <li>FFD "Sales Order Follow Up" — requerimiento NRT, AS-IS (3 cortes/día, ~15 h-persona/sem), dashboard móvil 30 min, preguntas de negocio operativas.</li>
+      <li>Definición Funcional de Indicadores (Tabular Pedidos) — KPIs AY/LY (364 días), Meta por forecast, Cobertura vs Visit list, drop size, fusión SAP + interfaz externa.</li>
+      <li>Baraja de arquitectura / SLA — rama BW/4HANA+SAC (streaming 15–30 min) vs rama lake (2 cargas diarias); ODP / <b>2LIS_11_VAITM</b> / ADSO <b>/IMO/D_SD11</b> / Streaming Process Chains; SAC Live vía InA.</li>
+    </ul>
+    <h3>Refuerzo externo (verificable)</h3>
+    <ul>
+      <li><b>MIT CISR / Insight Partners</b> — <em>Top Performers Are Becoming Real-Time Businesses</em>: cuartil superior de "real-time-ness" = +62% ingresos y +97% margen. <a href="https://cisr.mit.edu/publication/2024_0801_RealTimeBusiness_WeillvanderBergBirnbaumdePlanta">cisr.mit.edu</a></li>
+      <li><b>TechTarget</b> — <em>Data gravity and its role in data center efficiency</em> (9-jul-2026): coloca el cómputo cerca del dato, sobre todo para cargas real-time. <a href="https://www.techtarget.com/searchdatacenter/feature/Data-gravity-and-its-role-in-data-center-efficiency">techtarget.com</a></li>
+      <li><b>AtScale</b> — <em>What is Data Gravity?</em>: la performance se degrada con datos replicados; centralizar acceso y gobernanza, no el dato. <a href="https://www.atscale.com/glossary/data-gravity/">atscale.com</a></li>
+      <li><b>SAP Learning / help.sap.com</b> — <em>Live vs Import en SAC</em>: Live = sin replicación, dato en la red del cliente, seguridad heredada, near-real-time; Import = copia + re-crear jerarquías y seguridad. <a href="https://learning.sap.com/courses/creating-data-connections-for-on-premise-data-sources-in-sap-analytics-cloud/introducing-connection-types-in-sap-analytics-cloud">learning.sap.com</a></li>
+      <li><b>SAP</b> (blog técnico de su comunidad — MajoMartinez, dic-2025) — <em>Datasphere: maintaining the business context &amp; considerations</em>: la propia SAP admite que el business context (moneda, UoM, jerarquías, seguridad/autorizaciones) "se pierde al replicar hacia afuera" y hay que reconstruirlo en el destino. <a href="https://community.sap.com/t5/technology-blog-posts-by-sap/datasphere-the-solution-to-maintain-the-business-context-amp-considerations/ba-p/13972913">community.sap.com</a></li>
+      <li><em>Beyond Zero Copy: What SAP Business Data Cloud Actually Means</em> (jun-2026): el zero-copy no es el default para todo; el workload que sirve vía SAC "debe quedarse compartido — real-time, sin duplicación". <a href="https://www.linkedin.com/pulse/beyond-zero-copy-what-sap-business-data-cloud-means-ai-sengupta-bzzsc">linkedin.com</a></li>
+      <li><b>cirqlone</b> — <em>The Hidden Cost of Losing SAP Context</em> (ago-2025): extraer SAP a un lake genérico elimina la semántica. <a href="https://cirqlone.com/hidden-cost-of-losing-sap-context/">cirqlone.com</a></li>
+      <li><b>Business Model Analyst</b> — <em>Real Time Analytics: A Strategic Guide for 2026</em>: define la latencia por necesidad; no sobre-construir por vanidad. <a href="https://businessmodelanalyst.com/real-time-analytics/">businessmodelanalyst.com</a></li>
+    </ul>
+  </div>
+
+  <footer class="end">
+    <span>Brújula · Edición W30 · borrador en edición (preview)</span>
+    <span class="r">Ricardo Benavides</span>
+  </footer>
+
+</div>
+</body></html>

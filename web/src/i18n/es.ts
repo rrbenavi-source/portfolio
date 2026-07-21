@@ -566,6 +566,108 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '05',
+        slug: 'near-real-time-lakehouse',
+        subtitle: 'Arquitectura de Datos · Near Real Time',
+        title: 'El near real time que el lakehouse no te iba a dar',
+        role: 'Autor: Ricardo Benavides',
+        meta: '2026',
+        lead: 'Por qué el reporte operativo de las 8 a.m. no siempre pertenece al data lake.',
+        summary:
+          'Cuando el dato transaccional y su lógica de negocio ya viven gobernados dentro de SAP, el camino más corto para el monitoreo operativo en tiempo casi real es traer la query a donde vive la verdad —no mover la verdad para alcanzarla. Con el caso real (anonimizado) de un dashboard de preventa que exigía treinta minutos de latencia, este escrito sostiene que el tiempo real lo pone el extractor, no el destino: meter un data lake en medio no agregaba capacidad, agregaba latencia.',
+        tags: ['Near real time', 'Data gravity', 'BW/4HANA', 'SAC Live', 'Lakehouse'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'Cuando llegué al proyecto, la arquitectura ya estaba decidida: llevar los datos a un lakehouse y reportar en la herramienta de BI corporativa. Es la respuesta por defecto de 2026, y en el papel cuesta discutirla —democratización, escalabilidad, todo en un solo lugar—. Pero el requisito real la puso a prueba en la primera reunión. El negocio no quería otro reporte. Quería <strong>actuar durante el día</strong>, no enterarse al día siguiente.',
+              'El equipo de preventa necesitaba ver, en campo y desde el teléfono, cómo iba la colocación de pedidos <strong>cada media hora</strong>: cuánto volumen llevaban contra el mismo día del año pasado, qué cobertura de clientes tenían contra su plan de visitas, y dónde había una brecha contra la meta que exigiera una acción táctica <em>antes</em> de que terminara la jornada.',
+              'El estado previo sí tiene números, y vale la pena anclarlos porque son lo único medido hasta ahora —el punto de partida, no el resultado—. La información se sacaba de un reporte de preventa que se armaba a mano, con <strong>solo tres cortes al día</strong> y alrededor de <strong>quince horas-persona por semana</strong> de trabajo manual, con los defectos propios de ese proceso: datos que ya nacían viejos y errores de captura. Y el punto de comparación "moderno" que ya existía era, irónicamente, un reporte en <strong>la misma herramienta de BI que la dirección proponía como destino</strong>. La pregunta de negocio no era "¿cómo me fue ayer?", era "¿alcanzo la meta hoy, y qué muevo ahora si no?".',
+              'Que esa pregunta importe no es una intuición. La investigación de MIT CISR con Insight Partners sobre <em>real-time businesses</em> encontró que las empresas en el cuartil superior de "real-time-ness" tuvieron <strong>62% más crecimiento de ingresos y 97% más margen de utilidad</strong> que las del cuartil inferior —un premio que viene, literalmente, de acortar la distancia entre <em>sentir</em> una señal y <em>actuar</em> sobre ella—. Ese es el dato de la industria, no el mío: sería deshonesto colgarme ese número. El dashboard apenas está por liberarse a producción y el impacto real —cuántos pedidos bloqueados se rescatan el mismo día, cuánto se mueve la cobertura— <strong>está por medirse</strong>. Lo que sí puedo defender hoy, antes de la primera medición, es la decisión de arquitectura. Y ahí la ruta "moderna" chocó con una verdad incómoda: <strong>para ese near real time, meter un data lake en medio no agregaba capacidad. Agregaba latencia.</strong>',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-premio-tiempo-real.png',
+            alt: 'El premio del tiempo real (MIT CISR): +62% de ingresos y +97% de margen',
+            caption: 'El premio del tiempo real: las empresas del cuartil superior de "real-time-ness" tuvieron +62% de crecimiento de ingresos y +97% de margen —dato de industria, MIT CISR, no del proyecto.',
+          },
+          {
+            type: 'prose',
+            heading: 'La distinción que casi nadie hace explícita',
+            body: [
+              'Conviene ser preciso, porque es fácil caricaturizar el argumento. No estoy diciendo que un lakehouse no pueda hacer streaming —puede—. Lo que digo es más fino, y es la tesis de esta pieza:',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'Cuando el dato transaccional y su lógica de negocio ya viven gobernados dentro de SAP, el camino más corto para monitoreo operativo en tiempo casi real es traer la query a donde vive la verdad —no mover la verdad para alcanzarla.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'Esto tiene nombre en arquitectura: <strong>data gravity</strong>. El principio, acuñado por Dave McCrory en 2010, dice que mientras más grande y compleja es una masa de datos, más caro y lento es moverla —así que lo económico es acercar el cómputo al dato, no el dato al cómputo—. No es teoría de pizarrón: la propia guía reciente de TechTarget sobre eficiencia de data centers lo pone en términos operativos —"coloca los workloads cerca del dato, <strong>especialmente para aplicaciones latency-sensitive y en tiempo real</strong>"—. Y AtScale, en su glosario del tema, es todavía más directo: la performance de las queries se degrada cuando corren sobre datos <strong>replicados o ruteados entre plataformas</strong>, la latencia sube, y el tiempo real se vuelve más difícil de sostener —por eso la práctica madura es "centralizar el <em>acceso</em> y la gobernanza, no el dato".',
+              'El requerimiento no era un <code>SELECT</code> sobre una tabla plana. Era volumen convertido a dos unidades por un motor de conversión, comparado contra un día equivalente exacto del año anterior, restringido por las autorizaciones de la estructura comercial de cada usuario, y —el detalle que casi rompe cualquier atajo— <strong>fusionado con pedidos que llegan por una interfaz externa no-SAP</strong> que todavía no se materializan como entrega. Toda esa lógica ya estaba construida y gobernada en el data warehouse.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Lo que cuesta servir eso desde un lake',
+            body: [
+              'Para servir eso desde un lake, el trabajo real no es "conectar Databricks". Es replicar el stream hacia el object store, reconstruir las capas Medallion, y <strong>volver a implementar la semántica SAP</strong> en una segunda plataforma. Y ese "último kilómetro" es donde los proyectos se atoran —y no lo dice un vendor de transformación, lo dice la propia SAP—. En un blog técnico de su comunidad sobre cómo Datasphere preserva el business context, SAP admite sin rodeos que "el business context —conversiones de moneda, unidades de medida, jerarquías y configuraciones de seguridad— puede perderse al replicar hacia afuera, por lo que necesitarás trabajo extra en el sistema destino para reconstruir ese contexto perdido". Y sobre las autorizaciones es todavía más tajante: "al replicar hacia afuera, todas las configuraciones de seguridad y los controles de acceso se pierden, dejando la necesidad ineludible de recrear el control de acceso en el sistema destino de terceros". Eso —conversión de moneda, jerarquías, seguridad row-level— es exactamente la lógica que mi requerimiento necesitaba y que ya vivía gobernada en el warehouse.',
+              'Hay algo más, y es la parte que más me gusta del argumento porque no es mía. En un análisis de junio de 2026 sobre SAP Business Data Cloud —el mundo del <em>zero-copy</em>— un arquitecto lo plantea exactamente como la decisión que tomamos: <em>"el error que muchos programas van a cometer es tratar el zero-copy como la arquitectura por defecto para todo caso. No lo es."</em> Y da el ejemplo casi textual: <strong>"un workload de analítica que sirve a usuarios de negocio a través de SAP Analytics Cloud debe quedarse compartido —semántica gobernada, en tiempo real, sin duplicación"</strong>, mientras que el mismo dato alimentando un modelo de ML sí se persiste en el lake. No es SAP vs. Databricks. Es <em>shared vs. persisted</em>, y elegir mal el default es lo que sale caro.',
+              'En la práctica, la rama de lake ni se acercaba. En el mejor de los casos —con todo optimizado— la latencia end-to-end a través del lake caía en <strong>dos a tres horas</strong>; el plan, de forma realista, la fijó en <strong>dos cargas diarias</strong>. En cualquiera de los dos escenarios son entre cuatro y seis veces la ventana de treinta minutos que el negocio necesitaba. El near real time se evaporaba precisamente en la capa que se suponía iba a modernizarlo.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El tiempo real no lo pone el destino, lo pone el extractor',
+            body: [
+              'La parte contraintuitiva es que el "casi tiempo real" no es un problema de la herramienta de visualización. Es un problema de <strong>ingeniería de extracción</strong>, y se resuelve donde nace el dato.',
+              'El flujo que sí entregó los treinta minutos es sobrio y aburrido, y por eso funciona: el DataSource estándar de posiciones de venta (<code>2LIS_11_VAITM</code>) alimenta vía <strong>ODP</strong>, con el extractor LO en modo <em>queued delta</em> para no golpear el performance del sistema transaccional, y con entrega al suscriptor garantizada <em>exactly once in order</em>. Esos micro-lotes aterrizan en un ADSO con change log activo, cuyas tablas <em>inbound</em> y <em>active</em> colapsan los deltas casi al instante, orquestado por <strong>Streaming Process Chains</strong> en bucle continuo —el reemplazo moderno del viejo <em>real-time data acquisition</em>—.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-arquitectura-latencia.png',
+            alt: 'Dos caminos al mismo dato, una sola latencia',
+            caption: 'Dos caminos al mismo dato, una sola latencia. La ruta corta (ECC → ODP streaming → BW/4HANA → SAC Live) entrega ~30 min; la ruta lake cae a 2–3 horas en el mejor caso —el plan la fijó en 2 cargas diarias—. El tiempo real lo pone el extractor, no el destino.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'Encima de eso, la capa de visualización se conecta en modo <strong>Live</strong>. Y esto no es opinión de vendor: la documentación oficial de SAP describe la Live Data Connection en esos mismos términos —análisis <strong>sin replicación de datos</strong>, el dato confidencial se queda en la red del cliente, se respeta la seguridad implementada en el sistema origen, se reutiliza la inversión ya construida, el modelado complejo se hace de forma central y <strong>baja latencia, near real-time</strong>—. La contraparte —la conexión <em>import</em>— copia el dato y vive de refrescos programados; peor aún, obliga a <strong>re-crear las jerarquías y la seguridad row-level dentro de la herramienta de BI</strong>, que es justo la deuda que queríamos evitar. Elegir Live no fue una preferencia estética: fue elegir <em>no</em> reimplementar la semántica de SAP en otra plataforma.',
+              'El resultado se libera a producción como un dashboard móvil que el preventista abre en la calle, con el velocímetro de avance vs. el año anterior, la cobertura contra el visit list y la brecha contra la meta en una sola vista. No es una arquitectura vistosa. Es la que hace que el número de las 8 a.m. sea defendible a las 8:01.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Cuándo el lake sí paga (y por qué separarlos importa)',
+            body: [
+              'Nada de esto es un argumento contra el lakehouse. Es un argumento contra usarlo como respuesta por defecto a una pregunta que no es la suya. El lake paga —y mucho— cuando el caso es data science, cruce de datos SAP con no-SAP a gran escala, o machine learning sobre históricos profundos. Ahí la gravedad del dato juega al revés y mover todo a un motor abierto es exactamente lo correcto.',
+              'Y hay una disciplina que va de la mano, para no caer en el error opuesto —el de sobre-ingenierizar por moda—. Como resume bien el análisis de <em>real-time analytics</em> de Business Model Analyst: <em>"si una decisión pierde valor una vez que el evento pasa, pertenece a la conversación de tiempo real"</em> —pero también <em>"muchos casos se sirven de sobra con frescura de segundos; perseguir sub-segundo sin una necesidad que lo justifique es mala asignación de capital"</em>. El near real time de treinta minutos no era poco: era <strong>exactamente</strong> la ventana de decisión que la operación de preventa podía aprovechar. Ni menos, ni un stack de sub-segundo que nadie iba a usar.',
+              'El error de arquitectura, entonces, no es elegir Databricks. Es <strong>no separar dos problemas distintos</strong>: el reporte operativo near-real-time que el negocio necesita este trimestre, y la plataforma de analítica avanzada que la organización quiere construir. Son cadencias distintas, dueños distintos y —esto es lo que se olvida— caminos técnicos distintos. Cuando los fusionas en un solo proyecto "moderno", la ambición de plataforma se come el valor operativo que ya podías liberar hoy.',
+              'La decisión, al final, fue ejecutar solo la ruta corta. El dashboard está por liberarse en producción, y con él la <em>capacidad</em> de gestionar la colocación de pedidos de forma casi en tiempo real: actuar sobre la brecha mientras todavía se puede facturar, en vez de leerla al día siguiente en un tablero perfecto. Cuánto de esa capacidad se convierte en facturación es la pregunta que las próximas semanas van a responder —y la mediremos con la misma disciplina con la que se diseñó—. Pero conviene separar dos cosas que se confunden seguido: que una iniciativa dé o no el número esperado es una hipótesis de negocio; que la arquitectura sea la correcta para el requisito es una decisión que ya se puede juzgar. La segunda no depende de la primera. El requisito era treinta minutos sin duplicar el dato ni reimplementar su semántica, y eso se cumplió.',
+              'La lección que me llevo no es sobre SAP ni sobre Databricks. Es esta: antes de elegir la plataforma, pregunta dónde vive ya la lógica gobernada de tu número. Si la respuesta es "en el sistema de origen", tu trabajo de arquitecto no es mudarla. Es acortar la distancia entre esa verdad y la persona que tiene que actuar sobre ella —y a veces la distancia más corta es la que no pasa por el lake.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Fuentes',
+            items: [
+              'MIT CISR / Insight Partners — <em>Top Performers Are Becoming Real-Time Businesses</em> (cuartil superior de "real-time-ness" = +62% ingresos, +97% margen). <a href="https://cisr.mit.edu/publication/2024_0801_RealTimeBusiness_WeillvanderBergBirnbaumdePlanta" target="_blank" rel="noopener">cisr.mit.edu</a>',
+              'TechTarget — <em>Data gravity and its role in data center efficiency</em> (colocar el cómputo cerca del dato, sobre todo para cargas real-time). <a href="https://www.techtarget.com/searchdatacenter/feature/Data-gravity-and-its-role-in-data-center-efficiency" target="_blank" rel="noopener">techtarget.com</a>',
+              'AtScale — <em>What is Data Gravity?</em> (la performance se degrada con datos replicados/ruteados; centralizar acceso y gobernanza, no el dato). <a href="https://www.atscale.com/glossary/data-gravity/" target="_blank" rel="noopener">atscale.com</a>',
+              'SAP Learning — <em>Introducing connection types in SAP Analytics Cloud</em> (Live = sin replicación, seguridad heredada, near real-time; Import = copia + refresco + re-crear jerarquías y seguridad). <a href="https://learning.sap.com/courses/creating-data-connections-for-on-premise-data-sources-in-sap-analytics-cloud/introducing-connection-types-in-sap-analytics-cloud" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Community (M. Martinez) — <em>Datasphere: maintaining the business context &amp; considerations</em> (la propia SAP admite que moneda, UoM, jerarquías y seguridad se pierden al replicar hacia afuera). <a href="https://community.sap.com/t5/technology-blog-posts-by-sap/datasphere-the-solution-to-maintain-the-business-context-amp-considerations/ba-p/13972913" target="_blank" rel="noopener">community.sap.com</a>',
+              'A. Sengupta — <em>Beyond Zero Copy: What SAP Business Data Cloud Actually Means</em> (el zero-copy no es el default para todo; el workload que sirve a usuarios vía SAC "debe quedarse compartido"). <a href="https://www.linkedin.com/pulse/beyond-zero-copy-what-sap-business-data-cloud-means-ai-sengupta-bzzsc" target="_blank" rel="noopener">linkedin.com</a>',
+              'cirqlone — <em>The Hidden Cost of Losing SAP Context</em> (extraer SAP a un lake genérico elimina la semántica gobernada). <a href="https://cirqlone.com/hidden-cost-of-losing-sap-context/" target="_blank" rel="noopener">cirqlone.com</a>',
+              'Business Model Analyst — <em>Real Time Analytics: A Strategic Guide for 2026</em> (define la latencia por necesidad de negocio; no sobre-construir por vanidad). <a href="https://businessmodelanalyst.com/real-time-analytics/" target="_blank" rel="noopener">businessmodelanalyst.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {
