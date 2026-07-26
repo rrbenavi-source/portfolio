@@ -668,6 +668,122 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '06',
+        slug: 'autopsia-reporte-z',
+        subtitle: 'SAP Migration · Lakehouse',
+        title: "Migrating a Z report isn't translating ABAP — it's an autopsy",
+        role: 'Author: Ricardo Benavides',
+        meta: '2026',
+        lead: 'What a nearly 3,000-line report taught me about taking SAP to the lakehouse.',
+        summary:
+          'Migrating an SAP report to the lakehouse sounds like translation: ABAP in, PySpark out. In practice it is an autopsy: part of the code exists only to work around limitations the new platform does not have, part of the logic lives in configuration nobody replicated, and part never actually ran in production. Drawing on the real (anonymized) case of a nearly 3,000-line custom FI report moved to Databricks, this piece argues that the deliverable of a report migration is not "the same report on another platform" — it is the documented decision of which logic lives, which dies, and which was never alive. The model is now live, reconciling fiscal years 2025 and 2026.',
+        tags: ['SAP migration', 'ABAP', 'Databricks', 'Lakehouse', 'Z reports', 'IEPS'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'There is a promise that shows up in every modernization pitch: "we migrate your SAP reports to the lakehouse." It sounds like translation — ABAP in, SQL or PySpark out, and the number the business already knows now shows up on a dashboard. This year the decision stopped being optional for many: SAP BW 7.5 leaves mainstream maintenance at the end of 2027, and since June 2026 SAP technically blocks ODP-RFC extraction from non-SAP applications — with an opt-out that expires on December 31. Thousands of organizations are deciding <em>this</em> year what moves to the lakehouse, and through which door.',
+              'I just went through it with a concrete report: a custom FI report, in production for years, producing monthly billing with its VAT per document — e-invoice included, customer, rates, clearing status. Nearly three thousand lines of ABAP, the vast majority in FORMs. The target: a Delta table in Databricks, consumed from Power BI. And it did not stop at a pilot: <strong>the model is built and today reconciles fiscal years 2025 and 2026</strong> against the source system.',
+              'The most honest lesson I can share is this: <strong>migrating that report was not translating it. It was performing an autopsy.</strong> And what we found inside changes how any SAP report migration — standard or custom — to Databricks, Snowflake or anywhere else should be planned.',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'The deliverable of a report migration is not "the same report on another platform." It is the explicit, documented decision of which logic lives, which logic dies, and which logic was never alive.',
+          },
+          {
+            type: 'prose',
+            heading: 'Dead code walking: the logic that exists for limitations you no longer have',
+            body: [
+              'The first thing we found when we opened the report: <strong>four distinct read flows</strong> — archived versus live documents, crossed with billing versus non-billing. Four code paths, each with its own FORMs, intermediate structures and special cases.',
+              'Why do they exist? Because in the source system archived and live data are read through different mechanisms, and the original author had no choice but to treat them as separate worlds. In the lakehouse that limitation is gone: once both sets land in tables, the merge is a <code>UNION</code> and the four flows <strong>collapse into one</strong> (plus a separate flow for extraordinary movements, which is a genuine business distinction). Half a dozen FORMs disappeared — not because we optimized them, but because the problem they solved no longer exists.',
+              'And they were not the only funerals. The F4 search help has no equivalent and needs none. The <code>AUTHORITY-CHECK</code> by company code becomes platform governance: Unity Catalog and row-level security, declared once, not programmed into every report. The <code>OPEN DATASET</code> that wrote a CSV to the application server becomes a write to a Volume. The custom execution-log table becomes job logging. None of that migrates: <strong>you let it die with dignity, and you file the death certificate.</strong>',
+              'This is the first finding of method: before estimating a report migration, separate business logic from <strong>workaround logic</strong> — the code that exists only to dodge limitations of the old platform. In our case, a very large fraction of those three thousand lines was pure workaround. Whoever prices a migration by lines of code is pricing the moving of furniture headed straight for the dumpster.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The logic that is not in the code',
+            body: [
+              'The opposite surprise was more uncomfortable: a central part of the report\'s behavior <strong>was not in the ABAP</strong>. It was in rows.',
+              'The report reads its parameters from a custom configuration table: which output and withheld VAT accounts to consider, which rates are valid, which document types qualify, clearing levels, tolerances. All of that is data, not code — and the replication to the lakehouse <strong>did not include that table</strong>. The program could be translated in full and still compute nothing correctly, because its brain lived somewhere else. The short-term fix was to export the configuration and embed it as a versioned fallback in the pipeline; the long-term one is to treat it as what it is: one more master table that must be replicated and governed.',
+              'Worse still: the report calls a custom function module that derives the product/service key for the e-invoice — and its source code <strong>could no longer be obtained</strong>. There is no translating a program nobody can read. The decision was a documented fallback (the material description from <code>MAKT</code> as an approximation) with the gap marked, visible, awaiting the functional definition. Another routine — the one determining the tax percentage — was rebuilt from the standard tables (<code>KONP</code> with <code>T007A</code>), which is where the data should have come from all along.',
+              'If you lead a migration, this is the second finding: <strong>a report\'s inventory is not its code; it is its code plus its configuration plus its dependencies.</strong> Custom parameter tables, shared function modules, execution variants. An extractor gives you the code; only the autopsy gives you the full inventory.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Replicate the behavior, not the intention',
+            body: [
+              'The finding that made me think the most looked minor at first. The report includes logic to navigate a document\'s clearing chain — following the trail of payments and partial clearings, iteratively, until the cycle closes. In Spark that means recursive self-joins: expensive and delicate. We braced for battle.',
+              'Then we looked at the production data: the field that chains the navigation was <strong>always empty</strong>. Because of how the system is configured, that logic — correct, well written, tested — <strong>had never executed</strong>. The report had spent years producing valid figures without ever tracing a chain.',
+              'There is an architecture decision disguised as a detail here: do you replicate what the code <em>intends</em> to do, or what the system <em>actually</em> does? We chose to replicate the real behavior and put the divergence in writing. Migrating the intention would have meant building — and paying for, and maintaining — a piece of complexity production never used.',
+              'The pattern repeats in smaller versions throughout the code: the <code>CP</code> operator of an SAP range that in practice is a <code>LIKE</code>; the SIGN/OPTION/LOW/HIGH range structures that have no natural SQL equivalent and are almost always used as a plain <code>IN</code> or <code>BETWEEN</code>. Each one demands the same question: fidelity to the code, or fidelity to the system?',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-autopsia.png',
+            alt: 'The autopsy of a custom report: what dies, what lives outside the code, and what was never alive',
+            caption: 'The autopsy of a ~3,000-line custom report: what dies (platform workaround logic), what lives outside the code (parameters in a custom table, a function module with no source), and what was never alive (the clearing chain that never executed).',
+          },
+          {
+            type: 'prose',
+            heading: 'The spec is the contract, the golden case is the insurance',
+            body: [
+              'None of the above holds without method, and here I connect with something I wrote a few weeks ago: design is the migration. For this report, design took the form of a <strong>33-column source-to-target specification</strong>: for every output field, its exact origin (table, field, transformation, business rule, null behavior), decided <em>before</em> writing the pipeline. Every funeral I mentioned above is recorded there — what is replicated, what is simplified, what dies and why.',
+              'And the implementation was protected by a discipline I recommend to any team: <strong>test-driven development with a golden case</strong>. A real case, verified by hand against the source system, with its expected result pinned as a non-regression test. Every refactor of the pipeline runs against that number. If it ever stops reconciling, the pipeline does not pass. In a tax domain this is not perfectionism: it is the difference between "the job ran green" and "the number stands up to an audit."',
+              'Protiviti estimated this year that moving off BW to a non-SAP platform demands <strong>three to four times the effort</strong> of staying on SAP routes — and points at exactly where: preserving complex business logic. My experience says that estimate is credible, with one important nuance: the effort does not go into translating logic. It goes into <strong>discovering which logic is business, which is platform workaround, and which lives in configuration</strong> — the autopsy. The translation, once the spec is closed, is the fast part.',
+              'One more data point, in case you think the autopsy is an exaggeration: <strong>the official guide does not exist</strong>. The platform owners — Databricks, Snowflake, Microsoft, AWS, Google — document the data layer in detail (extraction, CDC, zero-copy), but none of them publishes how to translate the logic of a custom report into SQL or PySpark. The closest thing, Google\'s Cortex Framework, replaces standard reporting with predefined views — and leaves custom logic for manual rewriting. The only vendor documenting ABAP logic migration today is SAP itself: a 2026 series on AI-assisted migration from BW 7.5 to Business Data Cloud, covering only BW routines and transformations, and only toward its own destination. If you are heading to a third-party lakehouse, the autopsy comes with no manual: <strong>the method is on you.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'IEPS by material: when the grain decides the truth',
+            body: [
+              'The same project included a challenge bigger than migrating what already existed: building a breakdown SAP did not provide out of the box — <strong>IEPS (Mexican excise tax) by material</strong>. The fiscal truth of IEPS lives in <code>BSET</code> (amount and base per tax line), but <code>BSET</code> <strong>carries no material</strong>. And reaching material level was not an analytical luxury: IEPS is not a single rate — for alcoholic beverages the rate changes with alcohol content (26.5%, 30% or 53%), so a mixed invoice can combine several rates in one document. <strong>Without material-level detail there is no way to attribute the correct rate and base to each line.</strong> The per-SKU detail has to be reconstructed from the accounting and billing line items, attributing the tax to each material and reconciling the sum back against <code>BSET</code>. When we tested it against a real document, the reconstruction <strong>reconciled to the cent</strong>: identical base and a one-cent difference from rounding. The breakdown that looked impossible — "the tax table carries no material" — was perfectly achievable with the right grain.',
+              'And there is the key word: <strong>the grain</strong>. The first version of the query worked at document grain, picking a "representative material" per invoice (a <code>min(MATNR)</code> with a material-group filter). Single-product invoices passed perfectly; mixed invoices, with thirty or forty materials, <strong>dropped out of the universe entirely</strong> whenever their representative material failed the filter. The result: close to <strong>57% of the real amount was invisible</strong> — without a single calculation error. The logic was correct; the unit of analysis was the wrong choice.',
+              'The error was caught the boring way: exporting the tables of one real document (<code>BKPF</code>, <code>BSEG</code>, <code>BSET</code>) and adding them up by hand. Hence the two practices I take away for any tax calculation in the lakehouse: <strong>control totals per document against the fiscal source before aggregating anything</strong>, and the grain treated as an explicit design decision in the spec — not an implementation detail. A tax breakdown that "almost" reconciles is not a success: in this domain you reconcile to the cent, or you did not reconcile.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The best report you migrate is the one you kill',
+            body: [
+              'That leaves the portfolio question, which is where this scales from one report to a strategy. If a single custom report demanded this level of analysis, what do you do with the hundreds that any installation accumulates over twenty years?',
+              'The serious answer is neither "migrate them all" nor "rewrite them all": it is to measure usage before touching anything. BW and the ABAP stack keep technical execution statistics; the mature practice is to start the migration with that inventory — what runs, what is orphaned, what is duplicated — and bury without guilt whatever has not run in years. Every report you kill is an autopsy you do not pay for. And what does migrate should not migrate as a report but as a <strong>data product</strong>: a report is a view over a business truth; migrate the truth once and the views become cheap.',
+              'The 2026 context makes this discipline urgent. With the ODP-RFC door closing in December and BW\'s end of maintenance on the horizon, the temptation is to rush everything across. It is exactly the wrong decision: the deadline is for deciding the <em>extraction architecture</em>, not for freezing twenty years of reports into a new platform. Technical debt does not get paid off by moving it to a new house.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-deadline-odp.png',
+            alt: 'Timeline of SAP Note 3255746: SAP extraction now has a deadline',
+            caption: 'SAP extraction now has a deadline: the timeline of Note 3255746, from the 2022 "unsupported" to the technical block of June 2026 and the end of the opt-out on Dec 31, 2026 — with BW 7.5\'s end of maintenance (2027/2030) in the background.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'The lesson I take away fits in one sentence: a legacy report is not a requirement, it is a <strong>witness</strong> — it testifies to what the business once needed, under the limitations of the platform where it was born. The architect\'s job is not to translate the witness word for word. It is to interrogate it, keep the truth, and let the rest rest in peace.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Sources',
+            items: [
+              'Protiviti (J. Haun) — <em>Moving Beyond SAP BW: The Real Options Analytics Leaders Are Weighing in 2026</em> (five routes off BW; non-SAP replatforming ≈ 3–4× the effort; the obstacle is complex business logic). <a href="https://tcblog.protiviti.com/2026/04/21/moving-beyond-sap-bw-the-real-options-analytics-leaders-are-weighing-in-2026/" target="_blank" rel="noopener">protiviti.com</a>',
+              'SAPinsider — <em>SAP Note 3255746: the 2026 ODP-RFC deadline</em> (June 2026 patch blocking ODP-RFC for non-SAP applications; opt-out until Dec 31, 2026; self-diagnosis via Note 3439624). <a href="https://sapinsider.org/blogs/sap-note-3255746-odp-rfc-deadline-2026/" target="_blank" rel="noopener">sapinsider.org</a>',
+              'Databricks (J. Ivain) — <em>Navigating the SAP Data Ocean: Demystifying SAP Data Extraction</em> (map of compliant extraction routes; the compliance-versus-efficiency trade-off). <a href="https://community.databricks.com/t5/technical-blog/navigating-the-sap-data-ocean-demystifying-sap-data-extraction/ba-p/94617" target="_blank" rel="noopener">community.databricks.com</a>',
+              'BARC (L. Baier) — <em>End of Maintenance for SAP BW: What\'s Next?</em> (BW 7.5 mainstream until end of 2027, extended 2030; BW/4HANA until 2040). <a href="https://barc.com/end-of-maintenance-sap-bw/" target="_blank" rel="noopener">barc.com</a>',
+              'SAP Community — <em>The SAP BW Migration Decision: Your Real Options in 2026</em> (the routes debate inside the SAP community itself). <a href="https://community.sap.com/t5/technology-blog-posts-by-members/the-sap-bw-migration-decision-your-real-options-in-2026/ba-p/14359306" target="_blank" rel="noopener">community.sap.com</a>',
+              'SAP (official "by SAP" blog) — <em>Blog 4 — AI-assisted migration of Business Logic from BW 7.5 to BDC</em> (Apr 2026): the only official material on migrating custom ABAP logic — BW routines/transformations only, and only toward BDC/Datasphere. <a href="https://community.sap.com/t5/technology-blog-posts-by-sap/blog-4-beyond-data-warehousing-ai-assisted-migration-of-business-logic-from/ba-p/14365536" target="_blank" rel="noopener">community.sap.com</a>',
+              'Databricks — <em>Databricks Migration Strategy: Lessons Learned</em> (Oct 2024): generic EDW migration with partner-led "code translation"; no mention of ABAP/SAP at the logic layer. <a href="https://www.databricks.com/blog/databricks-migration-strategy-lessons-learned" target="_blank" rel="noopener">databricks.com</a>',
+              'Google Cloud — <em>Cortex Framework: Integration with SAP</em>: predefined reporting views over ECC/S4 in BigQuery; custom reports are rewritten by hand. <a href="https://docs.cloud.google.com/cortex/docs/operational-sap" target="_blank" rel="noopener">docs.cloud.google.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {
