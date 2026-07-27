@@ -110,10 +110,25 @@ Snowflake · Microsoft/Azure.
 **Clientes:** FEMSA · Heineken · CEMEX · Metalsa · Deacero · Copamex · Nemak.
 
 **Modalidades vendibles a esta cuenta:**
+
 1. **Proyecto cerrado con entregable** — alcance, precio y fin definidos.
-2. **Fábrica de Datos** — `[PENDIENTE: definición operativa. Célula dedicada con
-   SLA, bolsa de horas, o equipo gestionado por sprint. Afecta una línea del
-   one-pager y una del guión de llamada.]`
+2. **Fábrica de Datos** — servicio donde, a partir de un requerimiento inicial, se
+   desarrollan productos de datos o reporting. Es un **equipo en pool** que recibe
+   el requerimiento y responde por **integridad, calidad y consumo**, facturado
+   **por uso**.
+
+**Por qué la Fábrica de Datos importa en esta cuenta específica:** Marco lleva 2+
+meses sin poder llenar una vacante de Senior AI Data Engineer. La Fábrica de Datos
+es la alternativa a ese headcount, pero por el lado que **no** activa su reflejo
+defensivo: no es poner una persona bajo su mando —eso es staffing, y es lo que ya
+lo tiene saturado de reclutadoras— sino recibir un requerimiento y devolver un
+producto de datos con garantía de integridad y calidad.
+
+**La distinción debe quedar explícita en el one-pager y en el guión.** Es la
+diferencia entre vender gente y vender resultado, y con este perfil es la
+diferencia entre entrar y no entrar. Aun así, **no se menciona en el Mensaje 1**
+(regla §6.4): en frío, cualquier alusión a su vacante se lee como bodyshopping por
+mucho que el modelo sea otro.
 
 **Encaje con Marco:** su stack es Azure + Databricks + Unity Catalog + Mosaic AI.
 D&C corre Databricks Lakehouse + AI/BI Genie + Azure **y añade la capa SAP que él
@@ -243,8 +258,11 @@ pappers.
 
 Una página, se envía **solo cuando él lo pida**. Estructura: tesis del techo de
 madurez → capacidad SAP↔Databricks → modalidades (proyecto cerrado / Fábrica de
-Datos) → prueba. Recortado del deck y reescrito para industrial global, **sin
-apoyarse en el logo HEINEKEN**.
+Datos, con la distinción explícita frente a staffing de §4) → prueba.
+
+Recortado del deck y reescrito para industrial global. La prueba se presenta como
+**experiencia operativa propia** según el reencuadre de §9.1, no como portafolio de
+cliente.
 
 ### 8.4 Guión de primera llamada — `outreach/marco-quintanar/guion-llamada.md`
 
@@ -259,14 +277,40 @@ fin: es su lenguaje nativo.
 
 | Riesgo | Manejo |
 |---|---|
-| Los tres casos documentados de D&C son HEINEKEN, que además es el empleador de Ricardo | El M1 no usa casos. **Pendiente real:** documentar un caso NEMAK / Metalsa / Deacero antes de que Marco lo pida |
-| Visibilidad de la doble posición Heineken ↔ D&C | El mensaje debe ser coherente con lo que ya es público en el LinkedIn de Ricardo |
+| **Caso único: el material documentado de D&C es todo HEINEKEN, que además es el empleador de Ricardo** | Ver §9.1 — se reencuadra, no se esconde |
+| Visibilidad de la doble posición Heineken ↔ D&C | El mensaje debe ser coherente con lo que ya es público en el LinkedIn de Ricardo. Es un hecho verificable, no un problema a gestionar |
 | Fricción de vendor onboarding en Honeywell (cuenta global, proveedor mexicano pequeño) | Se aborda en la llamada, no en el chat. Marco conoce el proceso mejor que nadie |
 | Marco puede no tener SAP en su alcance | La tesis está formulada como patrón, no como diagnóstico: si no le aplica, el mensaje sigue siendo una conversación válida y no queda mal |
 
-**Supuesto abierto:** definición operativa de **Fábrica de Datos**. Bloquea una
-línea del one-pager (§8.3) y una del guión (§8.4). No bloquea el dossier ni el
-mensaje 1.
+### 9.1 El caso único — reencuadre
+
+No existen otros casos documentados fuera de HEINEKEN, y no se van a fabricar. La
+mitigación no es conseguir más logos: es cambiar qué papel juega el caso.
+
+**Marco no es comprador de casos de éxito; es operador.** Dirige su propio COE y
+su perfil está escrito en primera persona de constructor: *"I built"*, *"I
+designed"*, *"I architected"*. A un operador, un case study de proveedor le dice
+poco. Lo que sí le pesa es hablar con alguien que **corre** la plataforma, no que
+la vio desde afuera.
+
+Ese es precisamente el caso HEINEKEN: no es un cliente al que se le vendió, es **la
+operación que Ricardo dirige todos los días** — 300+ reportes migrados, −50% de
+licenciamiento, equipo de ~15 personas, SAP ECC → Databricks en producción. La
+diferencia entre *"implementamos esto para un cliente"* y *"esto es lo que opero, y
+estas son las cicatrices"* es exactamente la diferencia que un operador valora.
+
+**Reglas derivadas:**
+
+- El caso **sigue sin usarse en el Mensaje 1** (regla §6.4). El reencuadre habilita
+  el M2 y la llamada, no el contacto en frío.
+- Cuando aparezca, se presenta como **experiencia operativa propia**, nunca como
+  portafolio de cliente.
+- **Transparencia activa sobre la doble posición.** La relación Heineken ↔ D&C ya
+  es pública en el LinkedIn de Ricardo; declararla de frente no cuesta nada y
+  compra credibilidad con alguien cuyo oficio fue auditar proveedores.
+- La cartera restante (FEMSA, CEMEX, Metalsa, Deacero, Copamex, Nemak) se menciona
+  como **trayectoria de la firma**, sin atribuirle casos ni cifras que no están
+  documentados. Marco corrió RFPs de $3B: detecta una cifra inflada de inmediato.
 
 ---
 
