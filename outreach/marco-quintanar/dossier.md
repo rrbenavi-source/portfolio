@@ -102,16 +102,20 @@ escrito por un par.
 
 ---
 
-## 6. Encaje D&C ↔ su stack
+## 6. Encaje D&C ↔ su stack (complemento vs. redundancia)
 
 | Complemento | Redundante | Paralelo |
 |---|---|---|
 | Capa SAP: BW/4HANA, ECC, extractores, ODP, reportes Z — la pieza que su stack no tiene y su trayectoria confirma que nunca tuvo | Databricks / Azure / ML — él ya lo corre y lo hace bien (AutoML, MLflow, Model Registry, drift monitoring); no hay nada que D&C le aporte aquí que él no tenga resuelto | AI/BI Genie — ambos lo usan (D&C sobre su stack Databricks, él dentro de Honeywell); es punto de conversación técnica entre pares, no un gancho de venta |
 
 **Lectura para el mensaje:** no se le ofrece algo ajeno a su mundo. Se le
-ofrece la pieza faltante de su propio stack — la capa fuente SAP que su
-ecosistema AI-Ready necesita para sostener el nivel de madurez que ya
-construyó del lado de Databricks.
+ofrece la pieza faltante de su propio stack — la capa fuente SAP que, *si el
+patrón que se observa en otros industriales le aplica a él* (Especulativo,
+ver bloque 4: es la tesis a validar con él, no un hecho asumido), es la que
+sostiene o limita el nivel de madurez que ya construyó del lado de
+Databricks. Ricardo no llega afirmando que su ecosistema la necesita; llega
+con la pregunta de si el patrón le aplica, y deja que Marco lo confirme o lo
+descarte.
 
 ---
 
