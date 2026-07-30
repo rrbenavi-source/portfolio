@@ -68,11 +68,14 @@ dirijo todos los días:
 - **300+ reportes** migrados y estandarizados en la modernización de la plataforma
   analítica SAP (BW/4HANA, Analysis for Office), con **−50%** de costo de
   licenciamiento
-- **10+ productos de datos** generados desde SAP ECC hacia Databricks, con ahorros
-  en costo y visibilidad para el negocio
-- **€1.5M de beneficio** en la unificación de contratos de suministro de una
-  operación de manufactura multiplanta — €1.4M en ahorros directos y €100k en
-  costos evitados, **sin inversión adicional en infraestructura**
+- **10+ productos de datos** generados desde SAP ECC hacia Databricks. Dos
+  ejemplos de lo que han producido:
+  - **€1.5M de beneficio** con la unificación de contratos de suministro de una
+    operación de manufactura multiplanta — €1.4M en ahorros directos y €100k en
+    costos evitados, **sin inversión adicional en infraestructura**
+  - **Daily Sales Report:** seguimiento de la venta diaria, mensual y acumulada
+    por canal, segmento de precio, marca, subcanal y demás dimensiones — donde
+    antes había que esperar reportería manual
 - **~15 personas** en el equipo
 - Todo sin interrumpir la operación
 
