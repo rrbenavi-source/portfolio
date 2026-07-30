@@ -4,43 +4,43 @@
 **Envío:** miércoles 29 o jueves 30 de julio de 2026 — uno o dos días DESPUÉS de
 que salga la edición 04 del newsletter, nunca el mismo día.
 **Fuente:** `dossier.md`, bloques 5 (vocabulario), 7 (objeciones), 8 (qué no decir).
+**Tono:** casual propositivo pero profesional, como se habla en Monterrey. Sin
+enumeraciones entre guiones largos ni frases de plantilla — esa es la firma del
+mensaje escrito con IA, y Marco la detecta igual que nosotros.
 
 ---
 
 ## Mensaje 1 — canónico
 
-> Marco, qué tal. Nos conectamos hace unas semanas a raíz de la newsletter — soy
-> Ricardo, el que escribe los pappers de datos que de repente te aparecen.
+> Qué tal Marco, un gusto. Soy Ricardo, el de la newsletter Brújula — por ahí nos
+> conectamos hace unas semanas.
 >
-> Esta semana publiqué uno sobre migrar reportería Z de SAP hacia un lakehouse, y
-> escribiéndolo me quedé pensando en tu terreno.
+> Te escribo porque esta semana publiqué un papper sobre migrar reportería Z de SAP
+> a lakehouse, y armándolo me acordé de tu mundo. Algo que me ha tocado ver en
+> varios industriales: la parte de Databricks la traen muy bien montada, gobierno,
+> catálogo, todo, y aun así el número llega raro al tablero. Y el detalle casi
+> nunca está en el lake; está en cómo salió el dato de SAP. La lógica se quedó
+> enterrada en el reporte Z y nadie la sacó completa.
 >
-> El patrón que veo seguido en industriales es este: se construye un ecosistema
-> `AI-Ready` impecable del lado de Databricks —Medallion, Unity Catalog, gobierno,
-> lineage, todo bien puesto— y al final el techo real se lo pone la capa fuente. El
-> dato que sale de SAP sin su semántica no se arregla con más gobierno del lado del
-> lake; se arregla en la extracción, que es donde casi nadie quiere meterse.
+> En esa capa llevo quince años, casi puro industrial del norte.
 >
-> Llevo quince años metido justo en esa capa —BW/4HANA, ECC, reportes Z— con
-> industriales del norte.
->
-> ¿Te suena el patrón, o en Honeywell ya lo tienen resuelto por ese lado?
+> ¿Allá les ha tocado batallar con eso, o ya lo traen resuelto?
 
-**149 palabras.** Dentro del rango 120–160.
+**127 palabras.** Dentro del rango 120–160.
 
 **Verificación de las 7 reglas del bloque 8 del dossier:**
 
 | Regla | Cumple |
 |---|---|
-| No diagnosticar Honeywell | ✅ Es patrón en tercera persona + pregunta abierta. Nunca afirma nada de su operación |
+| No diagnosticar Honeywell | ✅ "Me ha tocado ver en varios industriales" + pregunta abierta. Nunca afirma nada de su operación |
 | No mencionar su vacante | ✅ Ni una palabra |
 | No pedir llamada | ✅ El cierre es una pregunta de chat |
 | No adjuntar material | ✅ Sin links, sin deck |
 | No liderar con Heineken | ✅ No aparece |
 | No elogiar el perfil | ✅ Sin "vi tu perfil", sin adulación |
-| No traducir sus términos | ✅ `AI-Ready`, Medallion, Unity Catalog, lineage, lakehouse intactos |
+| No traducir sus términos | ✅ lakehouse, Databricks intactos; sin lista forzada de términos |
 
-**Por qué el cierre funciona:** "¿o ya lo tienen resuelto?" le regala la salida. Puede
+**Por qué el cierre funciona:** "¿o ya lo traen resuelto?" le regala la salida. Puede
 contestar que sí y quedar bien, lo cual hace barato contestar. Una pregunta que solo
 se puede responder aceptando una llamada, no se contesta.
 
@@ -50,22 +50,23 @@ se puede responder aceptando una llamada, no se contesta.
 
 Para si se prefiere entrar directo por el problema, sin rodeo.
 
-> Marco, qué tal. Soy Ricardo — nos conectamos por la newsletter hace unas semanas.
+> Marco, qué tal. Soy Ricardo, nos conectamos por la newsletter hace unas semanas.
 >
-> Publiqué esta semana un papper sobre por qué migrar un reporte Z de SAP no es
-> traducir ABAP: la lógica de negocio no vive en el código, vive en veinte años de
-> decisiones que nadie documentó. Cuando eso pasa a un lakehouse sin autopsia
-> previa, el número llega distinto y nadie sabe por qué.
+> Acabo de publicar un papper con una idea que traigo atorada desde hace rato:
+> migrar un reporte Z no es traducir ABAP. La lógica de negocio no vive en el
+> código, vive en veinte años de parches y decisiones que nadie documentó. Si eso
+> se pasa al lakehouse sin hacerle autopsia antes, el número llega distinto y luego
+> nadie sabe explicar por qué.
 >
-> Es el punto ciego que veo en varios industriales: la capa Databricks queda
-> `production-grade` y la capa fuente sigue siendo un acto de fe. El gobierno del
-> lado del lake no alcanza a cubrir lo que se perdió en la extracción.
+> Lo he visto en varios industriales: del lado moderno todo production-grade, y la
+> extracción de SAP sigue siendo un acto de fe.
 >
-> Quince años en esa capa —BW/4HANA, ECC, extractores— con manufactura del norte.
+> Yo vengo de esa capa, quince años, BW/4HANA y ECC con manufactura de acá del
+> norte.
 >
-> ¿Lo has visto de ese lado, o en Honeywell entran por otro camino?
+> ¿Tú lo has visto por tu lado, o allá entran por otro camino?
 
-**134 palabras.**
+**127 palabras.**
 
 ---
 
@@ -73,21 +74,23 @@ Para si se prefiere entrar directo por el problema, sin rodeo.
 
 Para si se prefiere que pese más la conversación entre pares que el argumento.
 
-> Marco, qué tal. Soy Ricardo, nos conectamos por la newsletter hace poco.
+> Qué tal Marco, soy Ricardo, el de la newsletter. Gracias por la conexión, por
+> cierto.
 >
-> Escribí esta semana sobre algo que me tiene dando vueltas: llevo años viendo
-> equipos que hacen todo bien del lado moderno —Medallion, Unity Catalog, `Data
-> Products` gobernados— y que aun así se topan con un techo que no está ahí, sino
-> en la fuente. Casi siempre SAP, y casi siempre la parte que nadie quiere tocar.
+> Te cuento rápido por qué te escribo. Esta semana publiqué algo sobre un tema que
+> me trae dando vueltas: equipos que hacen todo bien del lado moderno, Databricks,
+> gobierno, sus data products bien armados, y aun así se topan con un techo. Y el
+> techo no está ahí; está en la fuente. Casi siempre SAP, y casi siempre la parte
+> que nadie quiere agarrar.
 >
-> Me da curiosidad tu lectura porque tu terreno es justo donde eso pega: industrial
-> global, muchos sistemas fuente, y un COE que tiene que responder por el número.
+> Me dio curiosidad tu lectura porque tu cancha es justo donde eso pega: industrial
+> global, un montón de sistemas fuente, y un COE que responde por el número.
 >
-> Yo llevo quince años del lado feo de esa capa —BW/4HANA, ECC, reportes Z—.
+> Yo llevo quince años del lado feo de esa capa.
 >
-> ¿Te hace sentido el patrón, o en Honeywell ya está resuelto ese pedazo?
+> ¿Te hace sentido, o allá ya lo tienen dominado?
 
-**123 palabras.**
+**126 palabras.**
 
 ---
 
@@ -96,13 +99,13 @@ Para si se prefiere que pese más la conversación entre pares que el argumento.
 Cuando pregunta, discute o comparte su contexto. **Profundizar sin vender.** Una sola
 pregunta de descubrimiento, no un interrogatorio.
 
-> Eso que dices tiene sentido. Lo que me sigue pareciendo el punto más difícil no es
-> el pipeline —eso es lo fácil— sino demostrar que el número de destino es el mismo
-> que el de origen, y poder explicar cada diferencia cuando alguien pregunta.
+> Fíjate que sí, va por ahí. Para mí lo bravo nunca ha sido el pipeline — eso al
+> final sale. Lo bravo es demostrar que el número de destino es el mismo que el de
+> origen, y poder explicar cada diferencia cuando alguien la cuestiona.
 >
-> En tu caso, con `Global Industrials`, ¿cuántos sistemas fuente terminan alimentando
-> lo que ve el VECE COE? Es la variable que en mi experiencia decide si el problema
-> es de ingesta o de semántica.
+> Oye, y en tu caso, con todo lo que es Global Industrials, ¿cuántos sistemas
+> fuente le pegan a lo que ve tu COE? Te lo pregunto porque esa variable, en mi
+> experiencia, define si el problema es de ingesta o de semántica.
 
 **Regla:** el one-pager NO se manda aquí. Solo si él pregunta explícitamente "¿y
 ustedes qué hacen?" o equivalente. Ver `one-pager-honeywell.md`.
@@ -110,9 +113,9 @@ ustedes qué hacen?" o equivalente. Ver `one-pager-honeywell.md`.
 **Si menciona su vacante primero** (y solo si él la saca), ahí sí se puede introducir
 la Fábrica de Datos — nunca antes. Respuesta corta:
 
-> Por eso te preguntaba. Nosotros ese trabajo lo entregamos como producto, no como
-> headcount: un equipo en pool recibe el requerimiento y responde por integridad,
-> calidad y consumo, facturado por uso. Es otra cosa que contratar a alguien.
+> Mira, por eso te preguntaba. Nosotros ese trabajo lo entregamos como producto, no
+> como gente: un equipo en pool toma el requerimiento y responde por integridad,
+> calidad y consumo, y se factura por uso. Es otra película que andar reclutando.
 
 ---
 
@@ -120,10 +123,10 @@ la Fábrica de Datos — nunca antes. Respuesta corta:
 
 "Interesante, gracias por compartir" y poco más. **Cerrar bien, cero insistencia.**
 
-> Va, gracias por leerlo. Si en algún momento te topas con ese tema por tu lado, con
-> gusto te comparto lo que hemos aprendido. Suerte con el roadmap.
+> Va, gracias por echarle ojo. Si en algún momento te topas con el tema por tu
+> lado, con gusto lo platicamos. Éxito con el roadmap.
 
-**28 palabras.** No hay M3. Insistir después de un tibio quema el contacto de forma
+**25 palabras.** No hay M3. Insistir después de un tibio quema el contacto de forma
 permanente con este perfil.
 
 ---

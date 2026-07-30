@@ -107,27 +107,28 @@ Versión hablada, 2–3 líneas. En llamada no se recita un párrafo. Detalle co
 el bloque 7 del dossier.
 
 **"Ya tenemos equipo de datos."**
-> Y por lo que vi, fuerte del lado de Databricks. No es esa cancha. Lo que cubro es
-> la capa SAP —BW/4HANA, ECC, reportes Z— que es otra especialidad.
+> Sí, y por lo que vi, bueno. Pero no es esa cancha. Yo entro donde no traen gente:
+> BW/4HANA, ECC, los reportes Z. Es otra especialidad.
 
 **"¿Por qué no contrato a alguien?"**
-> Contratar resuelve headcount, no integridad de dato. Lo nuestro no es meter una
-> persona bajo tu mando: es recibir un requerimiento y devolver el producto con
-> garantía de integridad y calidad, facturado por uso.
+> Puedes, claro. Pero contratar te resuelve headcount, no la integridad del dato.
+> Lo de nosotros es distinto: tú me pasas el requerimiento y yo te regreso el
+> producto ya garantizado, y se factura por uso. No tienes que reclutar ni
+> entrenar a nadie.
 
 **"Trabajas en Heineken, ¿esto es un side business?"**
-> Te lo digo de frente: soy socio de D&C y dirijo Data Engineering SAP en Heineken.
-> Esa es la credencial — no te hablo de un caso que vi de lejos, sino de la
-> operación que corro.
+> Te lo digo derecho: soy socio de D&C y allá dirijo el equipo de Data Engineering
+> SAP. Y justo por eso te puedo hablar de esto — no es un caso que vi de lejos, es
+> la operación que traigo todos los días.
 
 **"Meter un proveedor mexicano a una cuenta global es fricción."**
-> Ese proceso lo conoces mejor que yo. Por eso propongo empezar chico y cerrado, no
-> con un contrato marco.
+> Ese proceso tú te lo sabes mejor que yo. Por eso mi propuesta es empezar con
+> algo chico y cerrado, no con un contrato marco.
 
 **"¿Qué casos tienen fuera de Heineken?"**
-> D&C tiene 15 años y cartera Tier-1, pero lo que puedo documentar con cifras y
-> sostener si me lo cuestionas es Heineken, porque es lo que yo operé. No te voy a
-> inflar casos de otros.
+> Mira, te voy a ser honesto. D&C tiene 15 años y cartera fuerte, pero lo que te
+> puedo documentar con cifras y sostener si me lo cuestionas es Heineken, porque
+> eso lo operé yo. No te voy a inflar casos de otros.
 
 ---
 
