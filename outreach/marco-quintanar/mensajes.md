@@ -17,22 +17,22 @@ mensaje escrito con IA, y Marco la detecta igual que nosotros.
 >
 > Te escribo porque esta semana publiqué un papper sobre migrar reportería Z de SAP
 > a lakehouse, y armándolo me acordé de tu mundo. Algo que me ha tocado ver en
-> varios industriales: la parte de Databricks la traen muy bien montada, gobierno,
+> varias empresas de manufactura: la parte de Databricks la traen muy bien montada, gobierno,
 > catálogo, todo, y aun así el número llega raro al tablero. Y el detalle casi
 > nunca está en el lake; está en cómo salió el dato de SAP. La lógica se quedó
 > enterrada en el reporte Z y nadie la sacó completa.
 >
-> En esa capa llevo quince años, casi puro industrial del norte.
+> En esa capa llevo desde el 2006, casi siempre con empresas de acá de la región.
 >
 > ¿Allá les ha tocado batallar con eso, o ya lo traen resuelto?
 
-**127 palabras.** Dentro del rango 120–160.
+**134 palabras.** Dentro del rango 120–160.
 
 **Verificación de las 7 reglas del bloque 8 del dossier:**
 
 | Regla | Cumple |
 |---|---|
-| No diagnosticar Honeywell | ✅ "Me ha tocado ver en varios industriales" + pregunta abierta. Nunca afirma nada de su operación |
+| No diagnosticar Honeywell | ✅ "Me ha tocado ver en varias empresas de manufactura" + pregunta abierta. Nunca afirma nada de su operación |
 | No mencionar su vacante | ✅ Ni una palabra |
 | No pedir llamada | ✅ El cierre es una pregunta de chat |
 | No adjuntar material | ✅ Sin links, sin deck |
@@ -58,15 +58,15 @@ Para si se prefiere entrar directo por el problema, sin rodeo.
 > se pasa al lakehouse sin hacerle autopsia antes, el número llega distinto y luego
 > nadie sabe explicar por qué.
 >
-> Lo he visto en varios industriales: del lado moderno todo production-grade, y la
-> extracción de SAP sigue siendo un acto de fe.
+> Me ha tocado verlo en varias empresas: del lado moderno todo production-grade, y
+> la extracción de SAP sigue siendo un acto de fe.
 >
-> Yo vengo de esa capa, quince años, BW/4HANA y ECC con manufactura de acá del
-> norte.
+> Yo vengo de esa capa desde el 2006, BW/4HANA y ECC, casi todo con manufactura de
+> la región.
 >
 > ¿Tú lo has visto por tu lado, o allá entran por otro camino?
 
-**127 palabras.**
+**130 palabras.**
 
 ---
 
@@ -86,11 +86,11 @@ Para si se prefiere que pese más la conversación entre pares que el argumento.
 > Me dio curiosidad tu lectura porque tu cancha es justo donde eso pega: industrial
 > global, un montón de sistemas fuente, y un COE que responde por el número.
 >
-> Yo llevo quince años del lado feo de esa capa.
+> Yo llevo desde el 2006 del lado feo de esa capa.
 >
 > ¿Te hace sentido, o allá ya lo tienen dominado?
 
-**126 palabras.**
+**127 palabras.**
 
 ---
 

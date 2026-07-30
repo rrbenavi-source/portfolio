@@ -180,8 +180,9 @@ a él.
 1. **Anclaje** — quién eres y por qué apareces ahora. Una línea, sin adulación.
 2. **Pretexto** — acabas de publicar un papper sobre la capa SAP hacia lakehouse.
 3. **Tesis como patrón** — el techo lo pone la fuente (§5), en tercera persona.
-4. **Credencial, una línea** — 15 años en la capa SAP de industriales del norte.
-   Sin logos, sin cifras, sin deck.
+4. **Credencial, una línea** — en la capa SAP desde 2006 (~20 años), casi siempre
+   con manufactura de la región. Sin logos, sin cifras, sin deck. (Nota: los
+   "+15 años" son de D&C la firma, no de Ricardo — no confundirlos.)
 5. **Cierre de costo cero** — pregunta genuina que **regale la salida**:
    *"¿te suena, o en Honeywell ya lo tienen resuelto?"*
 
