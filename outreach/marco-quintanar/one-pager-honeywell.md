@@ -6,7 +6,7 @@
 
 # D&C Solutions — la capa fuente de un ecosistema AI-Ready
 
-**Growth Through Data** · Monterrey · +15 años · contacto@dcsol.com.mx
+**Growth Through Data** · Monterrey · +15 años · rbenavides@dcsol.com.mx
 
 ---
 
@@ -65,10 +65,13 @@ consumo**, facturado por uso.
 No hablo de esto como proveedor que vio un proyecto de lejos. Es la operación que
 dirijo todos los días:
 
-- **300+ reportes** migrados de SAP ECC hacia Databricks
-- **−50%** de costo de licenciamiento
+- **300+ reportes** migrados y estandarizados en la modernización de la plataforma
+  analítica SAP (BW/4HANA, Analysis for Office), con **−50%** de costo de
+  licenciamiento
+- **10+ productos de datos** generados desde SAP ECC hacia Databricks, con ahorros
+  en costo y visibilidad para el negocio
 - **~15 personas** en el equipo
-- Plataforma analítica SAP consolidada sin interrumpir la operación
+- Todo sin interrumpir la operación
 
 Esas son las cicatrices, no un case study.
 
@@ -84,4 +87,4 @@ retail y servicios — FEMSA, CEMEX, Metalsa, Deacero, Copamex, Nemak, HEINEKEN.
 
 **Ricardo Benavides** · Socio, D&C Solutions
 Arquitecto de Datos · Líder de Data Engineering SAP
-Monterrey · contacto@dcsol.com.mx · 81 8019 8075
+Monterrey · rbenavides@dcsol.com.mx · 81 8019 8075

@@ -140,8 +140,10 @@ Te lo digo de frente: soy socio de D&C Solutions y, en paralelo, dirijo el
 equipo de Data Engineering SAP en Heineken México. No es un side business —
 es exactamente la credencial operativa. No te hablo desde un caso que vi de
 lejos como proveedor; te hablo desde la operación que corro todos los días:
-300+ reportes migrados de SAP ECC a Databricks, −50% de licenciamiento, un
-equipo de ~15 personas. Esas son las cicatrices, no un case study.
+300+ reportes migrados en la modernización de la plataforma SAP, −50% de
+licenciamiento, más de 10 productos de datos generados hacia Databricks con
+ahorros en costo y visibilidad, un equipo de ~15 personas. Esas son las
+cicatrices, no un case study.
 
 **4. "Somos cuenta global, meter un proveedor mexicano es fricción."**
 Tú conoces ese proceso mejor que yo — corriste RFPs de $3B y sourcing global

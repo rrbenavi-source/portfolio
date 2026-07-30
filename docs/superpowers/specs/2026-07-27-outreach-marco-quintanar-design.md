@@ -295,8 +295,9 @@ poco. Lo que sí le pesa es hablar con alguien que **corre** la plataforma, no q
 la vio desde afuera.
 
 Ese es precisamente el caso HEINEKEN: no es un cliente al que se le vendió, es **la
-operación que Ricardo dirige todos los días** — 300+ reportes migrados, −50% de
-licenciamiento, equipo de ~15 personas, SAP ECC → Databricks en producción. La
+operación que Ricardo dirige todos los días** — 300+ reportes migrados en la
+modernización SAP (BW/4HANA, AfO), −50% de licenciamiento, 10+ productos de datos
+desde SAP ECC hacia Databricks, equipo de ~15 personas. La
 diferencia entre *"implementamos esto para un cliente"* y *"esto es lo que opero, y
 estas son las cicatrices"* es exactamente la diferencia que un operador valora.
 
