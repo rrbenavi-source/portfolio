@@ -70,6 +70,9 @@ dirijo todos los días:
   licenciamiento
 - **10+ productos de datos** generados desde SAP ECC hacia Databricks, con ahorros
   en costo y visibilidad para el negocio
+- **€1.5M de beneficio** en la unificación de contratos de suministro de una
+  operación de manufactura multiplanta — €1.4M en ahorros directos y €100k en
+  costos evitados, **sin inversión adicional en infraestructura**
 - **~15 personas** en el equipo
 - Todo sin interrumpir la operación
 
