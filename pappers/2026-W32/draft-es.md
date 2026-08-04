@@ -9,9 +9,9 @@ Hay un número que lleva unos meses circulando y que todavía no aterriza en có
 las empresas están comprando sus copilotos de datos — los asistentes tipo AI/BI
 Genie o Copilot que responden preguntas de negocio en lenguaje natural,
 generando SQL sobre tus datos. En abril, dbt Labs publicó
-la actualización 2026 de su benchmark de text-to-SQL: los modelos de frontera,
-solos contra la base de datos, aciertan entre 84% y 90% de las preguntas
-analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien
+la actualización 2026 de su benchmark de text-to-SQL: los modelos de IA más
+avanzados del momento — probaron Claude Sonnet 4.6 y GPT-5.3 Codex —, solos
+contra la base de datos, aciertan entre 84% y 90% de las preguntas analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien
 modelado, suben a 98.2% y hasta 100%.
 
 Léelo dos veces, porque cierra un debate de años. Lo que separa un copiloto que
@@ -30,7 +30,7 @@ mapeos, contexto de negocio —, subió a **54.2%**. Tres veces más, pero aún
 reprobado.
 
 El benchmark de dbt de 2026 corre sobre ese mismo dataset — mismo terreno,
-herramienta de grounding distinta: entonces un knowledge graph, hoy un semantic
+herramienta de anclaje distinta: entonces un knowledge graph, hoy un semantic
 layer — con un subconjunto de 11 preguntas y 20 corridas por configuración. La
 comparación de los dos momentos cuenta la historia completa:
 
@@ -38,10 +38,10 @@ comparación de los dos momentos cuenta la historia completa:
 - **2026:** crudo 84–90% → con semantic layer 98–100%
 
 (Sobre el set completo de preguntas, dbt reporta un agregado crudo más bajo:
-64.5%. Las cifras de arriba son de los modelos de frontera en el subconjunto.)
+64.5%. Las cifras de arriba son de los dos modelos citados, en el subconjunto.)
 
 Lo que mejoró en tres años fue el modelo — de reprobado a notable. Lo que no
-cambió es quién gana: en ambos momentos, el grounding semántico se lleva la
+cambió es quién gana: en ambos momentos, la capa semántica se lleva la
 diferencia. Y ojo con dónde vive esa diferencia ahora: ya no son 37 puntos en
 la mitad de la tabla, son 8 a 16 puntos en la punta — exactamente los puntos que
 separan "impresionante" de "confiable". Los últimos puntos siempre son los caros.
@@ -71,7 +71,7 @@ Spider 2.0, el benchmark de referencia para text-to-SQL enterprise, plantea 632
 problemas derivados de casos reales: bases con más de mil columnas, BigQuery y
 Snowflake, múltiples dialectos, transformaciones encadenadas. Cuando salió, a
 finales de 2024, el mejor modelo del momento — que acertaba 91.2% en el Spider
-clásico — resolvió alrededor del **20%**. Hoy los modelos de frontera rondan el
+clásico — resolvió alrededor del **20%**. Hoy los mejores modelos rondan el
 **70%** en Spider 2.0-AIFunc, la extensión 2026 del benchmark — otro conjunto de
 tareas enterprise, no el examen original. Setenta, no noventa y ocho.
 

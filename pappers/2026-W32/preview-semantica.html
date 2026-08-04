@@ -59,9 +59,9 @@
   las empresas están comprando sus copilotos de datos — los asistentes tipo AI/BI
   Genie o Copilot que responden preguntas de negocio en lenguaje natural,
   generando SQL sobre tus datos. En abril, dbt Labs publicó
-  la actualización 2026 de su benchmark de text-to-SQL: los modelos de frontera,
-  solos contra la base de datos, aciertan entre 84% y 90% de las preguntas
-  analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien
+  la actualización 2026 de su benchmark de text-to-SQL: los modelos de IA más
+  avanzados del momento — probaron Claude Sonnet 4.6 y GPT-5.3 Codex —, solos
+  contra la base de datos, aciertan entre 84% y 90% de las preguntas analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien
   modelado, suben a 98.2% y hasta 100%.</p>
 
   <p>Léelo dos veces, porque cierra un debate de años. Lo que separa un copiloto que
@@ -81,7 +81,7 @@
   reprobado.</p>
 
   <p>El benchmark de dbt de 2026 corre sobre ese mismo dataset — mismo terreno,
-  herramienta de grounding distinta: entonces un knowledge graph, hoy un semantic
+  herramienta de anclaje distinta: entonces un knowledge graph, hoy un semantic
   layer — con un subconjunto de 11 preguntas y 20 corridas por configuración. La
   comparación de los dos momentos cuenta la historia completa:</p>
 
@@ -91,17 +91,17 @@
   </ul>
 
   <p class="note">Sobre el set completo de preguntas, dbt reporta un agregado crudo más
-  bajo: 64.5%. Las cifras de arriba son de los modelos de frontera en el subconjunto.</p>
+  bajo: 64.5%. Las cifras de arriba son de los dos modelos citados, en el subconjunto.</p>
 
   <p>Lo que mejoró en tres años fue el modelo — de reprobado a notable. Lo que no
-  cambió es quién gana: en ambos momentos, el grounding semántico se lleva la
+  cambió es quién gana: en ambos momentos, la capa semántica se lleva la
   diferencia. Y ojo con dónde vive esa diferencia ahora: ya no son 37 puntos en
   la mitad de la tabla, son 8 a 16 puntos en la punta — exactamente los puntos que
   separan "impresionante" de "confiable". Los últimos puntos siempre son los caros.</p>
 
   <figure>
     <img src="fig-tres-anos.png" alt="Dumbbell: exactitud 2023 vs 2026, crudo vs con capa semántica"/>
-    <figcaption>Fig. 1 — Tres años, mismo examen: la diferencia la pone el grounding, no el modelo.</figcaption>
+    <figcaption>Fig. 1 — Tres años, mismo examen: la diferencia la pone la capa semántica, no el modelo.</figcaption>
   </figure>
 
   <h2>90% suena alto hasta que lo pones a operar</h2>
@@ -129,7 +129,7 @@
   problemas derivados de casos reales: bases con más de mil columnas, BigQuery y
   Snowflake, múltiples dialectos, transformaciones encadenadas. Cuando salió, a
   finales de 2024, el mejor modelo del momento — que acertaba 91.2% en el Spider
-  clásico — resolvió alrededor del <b>20%</b>. Hoy los modelos de frontera rondan el
+  clásico — resolvió alrededor del <b>20%</b>. Hoy los mejores modelos rondan el
   <b>70%</b> en Spider 2.0-AIFunc, la extensión 2026 del benchmark — otro conjunto de
   tareas enterprise, no el examen original. Setenta, no noventa y ocho.</p>
 

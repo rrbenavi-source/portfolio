@@ -9,8 +9,9 @@ There's a number that has been circulating for a few months and still hasn't
 landed in how companies are buying their data copilots — the AI/BI Genie or
 Copilot-style assistants that answer business questions in natural language by
 generating SQL over your data. In April, dbt Labs
-published the 2026 update of its text-to-SQL benchmark: frontier models, working
-alone against the database, get 84–90% of analytical questions right. The same
+published the 2026 update of its text-to-SQL benchmark: today's most advanced AI
+models — they tested Claude Sonnet 4.6 and GPT-5.3 Codex — working alone against
+the database, get 84–90% of analytical questions right. The same
 models, answering on top of a well-modeled semantic layer, climb to 98.2% and
 even 100%.
 
@@ -39,7 +40,7 @@ tells the whole story:
 - **2026:** raw 84–90% → grounded 98–100%
 
 (Over the full question set, dbt reports a lower raw aggregate: 64.5%. The
-figures above are for frontier models on the subset.)
+figures above are for the two models named, on the subset.)
 
 What improved over three years is the model — from failing to solid. What didn't
 change is who wins: in both moments, semantic grounding takes the difference.
@@ -72,7 +73,7 @@ Spider 2.0, the reference benchmark for enterprise text-to-SQL, poses 632
 problems derived from real use cases: databases with over a thousand columns,
 BigQuery and Snowflake, multiple SQL dialects, chained transformations. When it
 came out in late 2024, the best model of the moment — one that scored 91.2% on
-classic Spider — solved roughly **20%**. Today, frontier models hover around
+classic Spider — solved roughly **20%**. Today, the best models hover around
 **70%** on Spider 2.0-AIFunc, the benchmark's 2026 enterprise extension —
 a different task set, not the original exam. Seventy, not ninety-eight.
 
