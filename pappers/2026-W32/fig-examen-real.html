@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{ --bg:#14161a; --teal:#2BBD8F; --text:#ECEAE4; --dim:#A2A6AD;
+    --faint:#71767f; --line:#2c3038; --gold:#CDA25A; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ width:1080px; height:1350px; }
+  .fig{ width:1080px; height:1350px; position:relative; overflow:hidden; padding:80px 76px 60px;
+    display:flex; flex-direction:column; font-family:Inter,sans-serif;
+    background:
+      radial-gradient(900px 640px at 108% -8%, rgba(43,189,143,.16), transparent 58%),
+      radial-gradient(760px 560px at -10% 110%, rgba(43,189,143,.05), transparent 55%),
+      var(--bg); }
+  .fig::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.03'/></svg>"); }
+
+  .top{ position:relative; z-index:2; display:flex; align-items:center; gap:16px; margin-bottom:40px; }
+  .top .wm{ font-family:Fraunces,serif; font-weight:600; font-size:30px; color:var(--text); }
+  .top .ed{ margin-left:auto; font-family:'Space Grotesk'; font-size:16px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+
+  .eyebrow{ position:relative; z-index:2; font-family:'Space Grotesk'; color:var(--teal); font-weight:600;
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .eyebrow .ln{ width:44px; height:2px; background:var(--teal); }
+  h1{ position:relative; z-index:2; font-family:Fraunces,serif; font-weight:600; font-size:56px; line-height:1.05;
+    letter-spacing:-.02em; color:var(--text); margin-bottom:16px; max-width:20ch; }
+  .lede{ position:relative; z-index:2; font-size:20px; color:var(--dim); line-height:1.4; max-width:54ch; margin-bottom:48px; }
+  .lede b{ color:var(--text); }
+
+  .chart{ position:relative; z-index:2; display:flex; flex-direction:column; gap:44px; }
+  .brow{ }
+  .brow .name{ display:flex; align-items:baseline; gap:14px; margin-bottom:14px; }
+  .brow .name b{ font-size:21px; color:var(--text); font-weight:600; }
+  .brow .name span{ font-size:17px; color:var(--faint); }
+  .barwrap{ position:relative; height:52px; background:rgba(255,255,255,.025); border-radius:8px; }
+  .bar{ position:absolute; left:0; top:0; bottom:0; border-radius:8px 4px 4px 8px; }
+  .bar.t{ background:linear-gradient(90deg, rgba(43,189,143,.55), var(--teal)); }
+  .bar.g{ background:linear-gradient(90deg, rgba(205,162,90,.5), var(--gold)); }
+  .bval{ position:absolute; top:50%; transform:translateY(-50%); font-family:'Space Grotesk';
+    font-weight:700; font-size:22px; }
+  .bval.in{ color:#0d1411; }
+  .bval.out{ color:var(--gold); }
+
+  .note{ position:relative; z-index:2; margin-top:48px; border:1.5px solid rgba(205,162,90,.45);
+    background:rgba(205,162,90,.06); border-radius:18px; padding:24px 30px; font-size:20px;
+    color:var(--dim); line-height:1.45; }
+  .note b{ color:var(--gold); }
+  .note .t{ color:var(--text); }
+
+  .foot{ position:relative; z-index:2; margin-top:auto; padding-top:22px; border-top:1px solid var(--line);
+    display:flex; align-items:center; }
+  .foot .l{ font-family:'Space Grotesk'; font-size:15px; letter-spacing:.02em; color:var(--faint); font-weight:500; }
+  .foot .r{ margin-left:auto; font-family:'Space Grotesk'; font-size:15px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint); font-weight:600; }
+</style></head>
+<body>
+  <div class="fig">
+    <div class="top">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="47" stroke="#2c3038" stroke-width="4"/>
+        <path d="M50 9 L59 41 L50 50 L41 41 Z" fill="#2BBD8F"/>
+        <path d="M50 91 L59 59 L50 50 L41 59 Z" fill="#3f4a58"/>
+        <circle cx="50" cy="50" r="5.5" fill="#14161a" stroke="#2BBD8F" stroke-width="4"/>
+      </svg>
+      <span class="wm">Brújula</span>
+      <span class="ed">W32 · Generative BI</span>
+    </div>
+
+    <div class="eyebrow"><span class="ln"></span>Un mismo modelo (o1-preview, fin de 2024) · tres exámenes</div>
+    <h1>El examen de verdad es más duro</h1>
+    <p class="lede">Mientras más se parece el benchmark a una empresa real,
+      <b>más se desploma el text-to-SQL crudo.</b></p>
+
+    <div class="chart">
+      <div class="brow">
+        <div class="name"><b>Spider 1.0</b><span>académico · el examen clásico</span></div>
+        <div class="barwrap">
+          <div class="bar t" style="width:91.2%"></div>
+          <div class="bval in" style="right:calc(8.8% + 18px)">91.2%</div>
+        </div>
+      </div>
+      <div class="brow">
+        <div class="name"><b>BIRD</b><span>intermedio · bases más sucias</span></div>
+        <div class="barwrap">
+          <div class="bar t" style="width:73%"></div>
+          <div class="bval in" style="right:calc(27% + 18px)">73.0%</div>
+        </div>
+      </div>
+      <div class="brow">
+        <div class="name"><b>Spider 2.0</b><span>enterprise real · 632 problemas · bases de 1,000+ columnas</span></div>
+        <div class="barwrap">
+          <div class="bar g" style="width:21.3%"></div>
+          <div class="bval out" style="left:calc(21.3% + 18px)">21.3%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note"><b>¿Y en 2026?</b> <span class="t">Los mejores modelos rondan 67–70%</span> en
+      Spider 2.0-AIFunc, la extensión enterprise más reciente del benchmark.
+      Setenta, no noventa y ocho: el 90% del titular se gana en el laboratorio, no en tu warehouse.</div>
+
+    <div class="foot">
+      <span class="l">Fuentes: Lei et al., Spider 2.0 (ICLR 2025, arXiv 2411.07763) · Spider 2.0-AIFunc (arXiv 2607.06229)</span>
+      <span class="r">Brújula · Ricardo Benavides</span>
+    </div>
+  </div>
+</body></html>

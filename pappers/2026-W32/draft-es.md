@@ -27,12 +27,16 @@ bien el **16.7%**. Con una representación de conocimiento encima — ontología
 mapeos, contexto de negocio —, subió a **54.2%**. Tres veces más, pero aún
 reprobado.
 
-El benchmark de dbt de 2026 corre sobre ese mismo dataset (con un subconjunto de
-11 preguntas, 20 corridas por configuración). Y la comparación de los dos
-momentos cuenta la historia completa:
+El benchmark de dbt de 2026 corre sobre ese mismo dataset — mismo terreno,
+herramienta de grounding distinta: entonces un knowledge graph, hoy un semantic
+layer — con un subconjunto de 11 preguntas y 20 corridas por configuración. La
+comparación de los dos momentos cuenta la historia completa:
 
 - **2023:** crudo 16.7% → con contexto 54.2%
 - **2026:** crudo 84–90% → con semantic layer 98–100%
+
+(Sobre el set completo de preguntas, dbt reporta un agregado crudo más bajo:
+64.5%. Las cifras de arriba son de los modelos de frontera en el subconjunto.)
 
 Lo que mejoró en tres años fue el modelo — de reprobado a notable. Lo que no
 cambió es quién gana: en ambos momentos, el grounding semántico se lleva la
@@ -65,17 +69,17 @@ Spider 2.0, el benchmark de referencia para text-to-SQL enterprise, plantea 632
 problemas derivados de casos reales: bases con más de mil columnas, BigQuery y
 Snowflake, múltiples dialectos, transformaciones encadenadas. Cuando salió, a
 finales de 2024, el mejor modelo del momento — que acertaba 91.2% en el Spider
-clásico — resolvió alrededor del **20%**. Hoy, año y medio después, los modelos
-de frontera rondan el **70%** en su variante más reciente. Setenta, no
-noventa y ocho.
+clásico — resolvió alrededor del **20%**. Hoy los modelos de frontera rondan el
+**70%** en Spider 2.0-AIFunc, la extensión 2026 del benchmark — otro conjunto de
+tareas enterprise, no el examen original. Setenta, no noventa y ocho.
 
-Las dos lecturas importan. La primera: el text-to-SQL crudo, a escala real de
-empresa, sigue lejos de producción — el 90% del titular se gana en el
-laboratorio, no en tu warehouse. La segunda es la interesante: el 98–100% del
-dataset ACME muestra lo que compra la curaduría *en un alcance acotado*. El
-camino a producción no es esperar un modelo más grande que domine el caos;
-es achicar el caos con semántica hasta que el modelo opere en un espacio donde
-sí puede ser confiable.
+La lectura obvia es que el text-to-SQL crudo, a escala real de empresa, sigue
+lejos de producción — el 90% del titular se gana en el laboratorio, no en tu
+warehouse. Pero la lectura interesante es la otra: el 98–100% del dataset ACME
+muestra lo que compra la curaduría *en un alcance acotado*. El camino a
+producción no es esperar un modelo más grande que domine el caos; es achicar el
+caos con semántica hasta que el modelo opere en un espacio donde sí puede ser
+confiable.
 
 ## La letra chica: la semántica no se descarga
 
@@ -85,8 +89,7 @@ como contexto del modelo — y ellos mismos advierten que eso no es práctico en
 datasets grandes. Piénsalo desde una operación SAP: miles de tablas, nombres
 como VBAK, VBAP, KONV, lógica repartida en extractores y rutinas. No hay ventana
 de contexto que aguante eso, y aunque la hubiera, el esquema no contiene lo que
-importa. El esquema te dice que existe un campo; no te dice por qué en 2019
-alguien decidió que las devoluciones de cierto canal se netean distinto.
+importa: te dice que un campo existe, no qué regla de negocio lo llena.
 
 Y ahí está la letra chica completa: el semantic layer que produce el salto no se
 descarga. Se construye. Alguien tuvo que sentarse a definir qué es "venta neta",
@@ -99,7 +102,7 @@ consume.
 Si queda duda de hacia dónde va esto, mira qué está construyendo cada plataforma.
 dbt tiene su Semantic Layer con MetricFlow. Snowflake lanzó Semantic Views.
 Databricks llevó sus Metric Views a Unity Catalog — la base de lo que llama
-Business Semantics, en GA desde inicios de este año — y en el Data + AI Summit
+Business Semantics, en GA desde abril de este año — y en el Data + AI Summit
 presentó Genie Ontology: una capa de contexto que aprende del uso para
 alimentar a Genie, todavía en preview. Cuando todos los vendors convergen en la
 misma pieza, deja de ser un feature y se convierte en una confesión: el modelo,
@@ -168,9 +171,13 @@ que nadie acordó.
   Databases*, nov-2023. El origen: 16.7% vs 54.2% sobre 43 preguntas.
   https://arxiv.org/abs/2311.07509
 - Lei et al. — *Spider 2.0: Evaluating Language Models on Real-World Enterprise
-  Text-to-SQL Workflows* (ICLR 2025). 632 problemas reales; ~20% para el mejor
-  modelo en su lanzamiento; ~70% para modelos de frontera en la variante 2026.
+  Text-to-SQL Workflows* (ICLR 2025). 632 problemas reales; 21.3% para el mejor
+  agente (o1-preview) en su lanzamiento vs 91.2% en Spider 1.0.
   https://arxiv.org/abs/2411.07763
+- *Spider 2.0-AIFunc: Extending Real-World Text-to-SQL to AI-Native SQL
+  Workflows* (2026). Extensión del benchmark: los mejores modelos propietarios
+  se agrupan en 67–70% de exactitud de ejecución.
+  https://arxiv.org/abs/2607.06229
 - Databricks — *What's new with Unity Catalog at Data + AI Summit 2026* (Metric
   Views, Business Semantics, Genie Ontology).
   https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026
