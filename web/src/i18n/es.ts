@@ -784,6 +784,129 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '07',
+        slug: 'semantica-de-quien',
+        subtitle: 'Semantic Layer · Copilotos de datos',
+        title: 'La IA ya escribe SQL casi perfecto. ¿Con la semántica de quién?',
+        role: 'Autor: Ricardo Benavides',
+        meta: '2026',
+        hero: 'brujula-cover-05.png',
+        lead: 'Tres años del mismo examen, y la lección que los vendors ya aceptaron.',
+        summary:
+          'En abril de 2026, dbt Labs midió de nuevo el mismo examen de text-to-SQL: los modelos más avanzados, solos contra la base de datos, aciertan entre 84% y 90% de las preguntas analíticas; sobre un semantic layer bien modelado, suben a 98–100%. Tres años antes, el mismo dataset daba 16.7% contra 54.2%. Lo que mejoró es el modelo; lo que no cambió es quién gana. Este escrito sostiene que lo que separa un copiloto de datos de demo de uno de producción ya no es el modelo, sino si alguien modeló la semántica sobre la que responde — y que esa capa, en una operación SAP real, no se descarga ni se compra: se extrae, se documenta y se modela.',
+        tags: ['Semantic Layer', 'Text-to-SQL', 'Databricks', 'Genie', 'SAP BDC', 'Benchmarks'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'Hay un número que lleva unos meses circulando y que todavía no aterriza en cómo las empresas están comprando sus copilotos de datos —los asistentes tipo AI/BI Genie o Copilot que responden preguntas de negocio en lenguaje natural, generando SQL sobre tus datos—. En abril, dbt Labs publicó la actualización 2026 de su benchmark de text-to-SQL: los modelos de IA más avanzados del momento —probaron Claude Sonnet 4.6 y GPT-5.3 Codex—, solos contra la base de datos, aciertan entre <strong>84% y 90%</strong> de las preguntas analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien modelado, suben a <strong>98.2% y hasta 100%</strong>.',
+              'Léelo dos veces, porque cierra un debate de años. Lo que separa un copiloto que impresiona en la demo de uno que puedes poner en producción ya no es el modelo. Es si alguien modeló la semántica sobre la que responde. Y eso abre la pregunta incómoda que este texto quiere desarrollar: ¿quién modela —y de dónde sale esa semántica?',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'El modelo no aporta la semántica. La consume. Y esa capa —la que de verdad decide si tu copiloto dice la verdad— nadie te la puede vender.',
+          },
+          {
+            type: 'prose',
+            heading: 'Tres años, mismo examen',
+            body: [
+              'Para entender por qué este resultado importa, hay que ir al origen. En noviembre de 2023, Juan Sequeda, Dean Allemang y Bryon Jacob publicaron el estudio que arrancó esta discusión: 43 preguntas de negocio sobre un esquema empresarial de seguros, el hoy conocido dataset ACME. GPT-4, directo contra el SQL, respondió bien el <strong>16.7%</strong>. Con una representación de conocimiento encima —ontología, mapeos, contexto de negocio—, subió a <strong>54.2%</strong>. Tres veces más, pero aún reprobado.',
+              'El benchmark de dbt de 2026 corre sobre ese mismo dataset —mismo terreno, herramienta de anclaje distinta: entonces un knowledge graph, hoy un semantic layer— con un subconjunto de 11 preguntas y 20 corridas por configuración. La comparación de los dos momentos cuenta la historia completa: en <strong>2023</strong>, crudo 16.7% → con contexto 54.2%; en <strong>2026</strong>, crudo 84–90% → con semantic layer 98–100%. (Sobre el set completo de preguntas, dbt reporta un agregado crudo más bajo: 64.5%. Las cifras anteriores son de los dos modelos citados, en el subconjunto.)',
+              'Lo que mejoró en tres años fue el modelo —de reprobado a notable—. Lo que no cambió es quién gana: en ambos momentos, la capa semántica se lleva la diferencia. Y ojo con dónde vive esa diferencia ahora: ya no son 37 puntos en la mitad de la tabla, son 8 a 16 puntos en la punta —exactamente los puntos que separan "impresionante" de "confiable"—. Los últimos puntos siempre son los caros.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-tres-anos.png',
+            alt: 'Exactitud 2023 vs 2026, crudo contra la base de datos vs con capa semántica',
+            caption: 'Fig. 1 — Tres años, mismo examen: la diferencia la pone la capa semántica, no el modelo.',
+          },
+          {
+            type: 'prose',
+            heading: '90% suena alto hasta que lo pones a operar',
+            body: [
+              'En un tablero ejecutivo que responde cien preguntas al día, 90% de exactitud significa <strong>diez números equivocados diarios</strong> —servidos con la misma seguridad que los correctos—. Nadie que haya firmado un cierre acepta esa tasa.',
+              'Y hay un detalle del benchmark más revelador que la cifra principal: los dos enfoques <strong>no fallan igual</strong>. Cuando el text-to-SQL se equivoca, suele devolver un número plausible e incorrecto, con total confianza. Cuando el semantic layer no puede responder, lo dice: error explícito, fuera de alcance. Uno te miente con seguridad; el otro te avisa que no sabe. En un entorno donde alguien firma el número antes de que llegue a un ejecutivo, esa diferencia vale más que los puntos de exactitud. Un error visible se corrige; un número plausible y falso viaja.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El examen de verdad es todavía más duro',
+            body: [
+              'Aquí conviene ser honesto con la escala, porque el dataset ACME es un experimento controlado: once preguntas, un esquema de seguros semi-complejo. La academia ya midió qué pasa cuando el examen se parece a una empresa real.',
+              'Una pausa para presentar a los tres examinadores. <strong>Spider 1.0</strong> (Yale, 2018) es el benchmark académico clásico: preguntas autocontenidas sobre bases pequeñas y limpias —el examen que los modelos ya dominan—. <strong>BIRD</strong> (2023) subió la dificultad: bases más grandes, datos sucios y preguntas que requieren conocimiento del negocio, no solo del esquema. Y <strong>Spider 2.0</strong> (2024) es el examen enterprise: 632 problemas derivados de casos reales, bases con más de mil columnas en BigQuery y Snowflake, múltiples dialectos de SQL y transformaciones encadenadas —el tipo de trabajo que un equipo de datos hace un martes cualquiera—.',
+              'Cuando salió Spider 2.0, a finales de 2024, el mejor modelo del momento —que acertaba 91.2% en Spider 1.0 y 73% en BIRD— resolvió alrededor del <strong>20%</strong>. Hoy los mejores modelos rondan el <strong>70%</strong> en Spider 2.0-AIFunc, la extensión 2026 del benchmark —otro conjunto de tareas enterprise, no el examen original—. Setenta, no noventa y ocho.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-examen-real.png',
+            alt: 'Mismo modelo, tres exámenes: Spider 1.0, BIRD y Spider 2.0',
+            caption: 'Fig. 2 — Mientras más se parece el benchmark a una empresa real, más se desploma el text-to-SQL crudo.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'La lectura obvia es que el text-to-SQL crudo, a escala real de empresa, sigue lejos de producción —el 90% del titular se gana en el laboratorio, no en tu warehouse—. Pero la lectura interesante es la otra: el 98–100% del dataset ACME muestra lo que compra la curaduría <em>en un alcance acotado</em>. El camino a producción no es esperar un modelo más grande que domine el caos; es <strong>achicar el caos con semántica</strong> hasta que el modelo opere en un espacio donde sí puede ser confiable.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'La letra chica: la semántica no se descarga',
+            body: [
+              'El benchmark de dbt tiene una honestidad que se agradece. Para que el text-to-SQL puro compitiera, los autores cargaron el esquema completo de la base como contexto del modelo —y ellos mismos advierten que eso no es práctico en datasets grandes—. Piénsalo desde una operación SAP: miles de tablas, nombres como <code>VBAK</code>, <code>VBAP</code>, <code>KONV</code>, lógica repartida en extractores y rutinas. No hay ventana de contexto que aguante eso, y aunque la hubiera, el esquema no contiene lo que importa: <strong>te dice que un campo existe, no qué regla de negocio lo llena.</strong>',
+              'Y ahí está la letra chica completa: el semantic layer que produce el salto no se descarga. Se construye. Alguien tuvo que sentarse a definir qué es "venta neta", contra qué tipo de cambio se convierte, qué canal incluye y cuál excluye, en qué momento un pedido se convierte en venta. El modelo no aporta esa semántica. La consume.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Los vendors ya votaron',
+            body: [
+              'Si queda duda de hacia dónde va esto, mira qué está construyendo cada plataforma. dbt tiene su Semantic Layer con MetricFlow. Snowflake lanzó Semantic Views. Databricks llevó sus Metric Views a Unity Catalog, la base de lo que llama Business Semantics, en GA desde abril de este año. GA —disponibilidad general— es el sello de producto terminado y soportado, con contrato detrás; lo contrario de preview, que es "pruébalo, pero no apuestes un proyecto". Y en el Data + AI Summit presentó Genie Ontology: una capa de contexto que aprende del uso para alimentar a Genie, todavía en preview. Cuando todos los vendors convergen en la misma pieza, deja de ser un feature y se convierte en una confesión: <strong>el modelo, solo, no alcanza.</strong> Necesita una capa curada de significado, y cada plataforma quiere ser la dueña de esa capa.',
+              'Esto lo veo operando a diario. La diferencia entre un espacio de Genie con métricas curadas e instrucciones bien puestas, y uno conectado directo a las tablas, no es sutil: es la diferencia entre respuestas que el negocio usa y respuestas que el negocio deja de consultar a la segunda semana.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'SAP también votó — y ahí está el detalle para los que vivimos en ese mundo',
+            body: [
+              'SAP entendió lo mismo, y su jugada es Business Data Cloud: data products gestionados que viajan "con su contexto de negocio y semántica intactos", incluyendo la sincronización de metadata semántica hacia Unity Catalog vía Delta Sharing, ya en GA con la alianza SAP–Databricks. En el papel, es exactamente la respuesta correcta: que la semántica viaje con el dato.',
+              'Pero hay que leer <em>qué</em> semántica viaja. La que BDC empaqueta es la del contenido estándar —el modelo de dominio que SAP define y mantiene—. La semántica de <em>tu</em> operación es otra cosa: vive en los extractores modificados, en las rutinas de usuario, en las mil líneas del reporte Z que calcula "venta neta" de una forma que ningún documento describe. Hace unas semanas escribí que migrar un reporte Z es una autopsia, no una traducción; esta es la razón de fondo. Veinte años de decisiones de negocio cristalizadas en código custom no vienen en ningún data product estándar. Esa capa —la que de verdad decide si tu copiloto dice la verdad— nadie te la puede vender. <strong>Se extrae, se documenta y se modela. Con trabajo.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El error de compra que viene',
+            body: [
+              'Viene una ola de proyectos que van a comprar el copiloto y saltarse el modelado. El pitch es irresistible: conéctalo al warehouse y pregunta en lenguaje natural. Y va a funcionar —en la demo, con las preguntas fáciles, con las tablas limpias—. En producción, la pregunta del CFO no es fácil: cruza canal, segmento de precio, moneda y un ajuste que solo existe porque alguien lo decidió hace siete años y ya no está en la empresa.',
+              'La secuencia correcta es la aburrida. Primero <strong>extraer</strong> la semántica de donde vive —y en las operaciones industriales de este lado del mundo, vive en SAP—. Después <strong>modelarla</strong> en una capa que el modelo pueda consumir: métricas definidas una vez, gobernadas, con dueño —Metric Views, MetricFlow, el sabor que tu stack hable—. Y al final, solo al final, <strong>conectar</strong> el copiloto. Es el orden que tres años de benchmarks implican y que veinte años de disciplina de datos confirman: el techo lo pone la fuente, no el destino.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'La prueba barata antes de comprar',
+            body: [
+              'Antes de evaluar cualquier copiloto de datos, corre una prueba que no cuesta licencias: toma tus <strong>tres métricas más peleadas</strong> y pídele a dos personas de negocio que te las definan por escrito. Si las definiciones no coinciden —y en mi experiencia, no coinciden—, tu siguiente paso no es el copiloto. Es el modelado. El copiloto solo va a responder, con mucha seguridad, la versión de la métrica que nadie acordó.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Fuentes',
+            items: [
+              'Ganz, J. &amp; Perigaud, B. (dbt Labs) — <em>Semantic Layer vs. Text-to-SQL: 2026 Benchmark Update</em> (7-abr-2026): cifras 2026, metodología (11 preguntas × 20 corridas, dataset ACME) y el caveat de cargar el esquema completo como contexto. <a href="https://docs.getdbt.com/blog/semantic-layer-vs-text-to-sql-2026" target="_blank" rel="noopener">docs.getdbt.com</a>',
+              'Sequeda, J., Allemang, D. &amp; Jacob, B. — <em>A Benchmark to Understand the Role of Knowledge Graphs on LLM\'s Accuracy for Question Answering on Enterprise SQL Databases</em> (nov-2023): el origen, 16.7% vs 54.2% sobre 43 preguntas. <a href="https://arxiv.org/abs/2311.07509" target="_blank" rel="noopener">arxiv.org/abs/2311.07509</a>',
+              'Lei et al. — <em>Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows</em> (ICLR 2025): 632 problemas reales; 21.3% para el mejor agente (o1-preview) en su lanzamiento vs 91.2% en Spider 1.0. <a href="https://arxiv.org/abs/2411.07763" target="_blank" rel="noopener">arxiv.org/abs/2411.07763</a>',
+              '<em>Spider 2.0-AIFunc: Extending Real-World Text-to-SQL to AI-Native SQL Workflows</em> (2026): extensión del benchmark; los mejores modelos propietarios se agrupan en 67–70% de exactitud de ejecución. <a href="https://arxiv.org/abs/2607.06229" target="_blank" rel="noopener">arxiv.org/abs/2607.06229</a>',
+              'Databricks — <em>What\'s new with Unity Catalog at Data + AI Summit 2026</em> (Metric Views, Business Semantics en GA, Genie Ontology en preview). <a href="https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026" target="_blank" rel="noopener">databricks.com</a>',
+              'Databricks — <em>Unlocking SAP business context in Databricks with semantic metadata Delta Sharing</em> (GA del sync semántico SAP BDC → Unity Catalog). <a href="https://www.databricks.com/blog/unlocking-sap-business-context-databricks-semantic-metadata-delta-sharing" target="_blank" rel="noopener">databricks.com</a>',
+              'Solid — <em>Text2SQL vs. Semantic Layer? The real question is who does the modeling</em>. <a href="https://journey.getsolid.ai/p/text2sql-vs-semantic-layer-the-real" target="_blank" rel="noopener">journey.getsolid.ai</a>',
+              'Atlan — <em>Text-to-SQL for Enterprise: Metric Drift and Context Layer</em> (2026). <a href="https://atlan.com/know/ai-agent/data-for-ai/text-to-sql-for-enterprise/" target="_blank" rel="noopener">atlan.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {
