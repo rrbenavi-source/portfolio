@@ -6,15 +6,17 @@ date: 2026-08-04
 ---
 
 There's a number that has been circulating for a few months and still hasn't
-landed in how companies are buying their data copilots. In April, dbt Labs
+landed in how companies are buying their data copilots — the AI/BI Genie or
+Copilot-style assistants that answer business questions in natural language by
+generating SQL over your data. In April, dbt Labs
 published the 2026 update of its text-to-SQL benchmark: frontier models, working
 alone against the database, get 84–90% of analytical questions right. The same
 models, answering on top of a well-modeled semantic layer, climb to 98.2% and
 even 100%.
 
-Read that twice, because it closes a years-long debate. What separates a demo
-copilot from a production one is no longer the model. It's whether someone
-modeled the semantics it answers on. Which opens the uncomfortable question this
+Read that twice, because it closes a years-long debate. What separates a copilot
+that impresses in the demo from one you can put in production is no longer the
+model. It's whether someone modeled the semantics it answers on. Which opens the uncomfortable question this
 piece wants to develop: who does the modeling — and where does that semantics
 come from?
 

@@ -6,15 +6,17 @@ date: 2026-08-04
 ---
 
 Hay un número que lleva unos meses circulando y que todavía no aterriza en cómo
-las empresas están comprando sus copilotos de datos. En abril, dbt Labs publicó
+las empresas están comprando sus copilotos de datos — los asistentes tipo AI/BI
+Genie o Copilot que responden preguntas de negocio en lenguaje natural,
+generando SQL sobre tus datos. En abril, dbt Labs publicó
 la actualización 2026 de su benchmark de text-to-SQL: los modelos de frontera,
 solos contra la base de datos, aciertan entre 84% y 90% de las preguntas
 analíticas. Los mismos modelos, respondiendo sobre un semantic layer bien
 modelado, suben a 98.2% y hasta 100%.
 
-Léelo dos veces, porque cierra un debate de años. Lo que separa un copiloto de
-demo de uno de producción ya no es el modelo. Es si alguien modeló la semántica
-sobre la que responde. Y eso abre la pregunta incómoda que este texto quiere
+Léelo dos veces, porque cierra un debate de años. Lo que separa un copiloto que
+impresiona en la demo de uno que puedes poner en producción ya no es el modelo.
+Es si alguien modeló la semántica sobre la que responde. Y eso abre la pregunta incómoda que este texto quiere
 desarrollar: ¿quién modela — y de dónde sale esa semántica?
 
 ## Tres años, mismo examen
