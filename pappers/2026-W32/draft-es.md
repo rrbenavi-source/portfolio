@@ -67,13 +67,21 @@ Aquí conviene ser honesto con la escala, porque el dataset ACME es un
 experimento controlado: once preguntas, un esquema de seguros semi-complejo. La
 academia ya midió qué pasa cuando el examen se parece a una empresa real.
 
-Spider 2.0, el benchmark de referencia para text-to-SQL enterprise, plantea 632
-problemas derivados de casos reales: bases con más de mil columnas, BigQuery y
-Snowflake, múltiples dialectos, transformaciones encadenadas. Cuando salió, a
-finales de 2024, el mejor modelo del momento — que acertaba 91.2% en el Spider
-clásico — resolvió alrededor del **20%**. Hoy los mejores modelos rondan el
-**70%** en Spider 2.0-AIFunc, la extensión 2026 del benchmark — otro conjunto de
-tareas enterprise, no el examen original. Setenta, no noventa y ocho.
+Una pausa para presentar a los tres examinadores. **Spider 1.0** (Yale, 2018) es
+el benchmark académico clásico: preguntas autocontenidas sobre bases pequeñas y
+limpias — el examen que los modelos ya dominan. **BIRD** (2023) subió la
+dificultad: bases más grandes, datos sucios y preguntas que requieren
+conocimiento del negocio, no solo del esquema. Y **Spider 2.0** (2024) es el
+examen enterprise: 632 problemas derivados de casos reales, bases con más de mil
+columnas en BigQuery y Snowflake, múltiples dialectos de SQL y transformaciones
+encadenadas — el tipo de trabajo que un equipo de datos hace un martes
+cualquiera.
+
+Cuando salió Spider 2.0, a finales de 2024, el mejor modelo del momento — que
+acertaba 91.2% en Spider 1.0 — resolvió alrededor del **20%**. Hoy los mejores
+modelos rondan el **70%** en Spider 2.0-AIFunc, la extensión 2026 del benchmark
+— otro conjunto de tareas enterprise, no el examen original. Setenta, no noventa
+y ocho.
 
 La lectura obvia es que el text-to-SQL crudo, a escala real de empresa, sigue
 lejos de producción — el 90% del titular se gana en el laboratorio, no en tu

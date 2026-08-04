@@ -69,13 +69,20 @@ Here it pays to be honest about scale, because the ACME dataset is a controlled
 experiment: eleven questions, one semi-complex insurance schema. Academia has
 already measured what happens when the exam looks like a real company.
 
-Spider 2.0, the reference benchmark for enterprise text-to-SQL, poses 632
-problems derived from real use cases: databases with over a thousand columns,
-BigQuery and Snowflake, multiple SQL dialects, chained transformations. When it
-came out in late 2024, the best model of the moment — one that scored 91.2% on
-classic Spider — solved roughly **20%**. Today, the best models hover around
-**70%** on Spider 2.0-AIFunc, the benchmark's 2026 enterprise extension —
-a different task set, not the original exam. Seventy, not ninety-eight.
+A quick introduction to the three examiners. **Spider 1.0** (Yale, 2018) is the
+classic academic benchmark: self-contained questions over small, clean databases
+— the exam models have already mastered. **BIRD** (2023) raised the difficulty:
+larger databases, dirty data, and questions that require business knowledge, not
+just the schema. And **Spider 2.0** (2024) is the enterprise exam: 632 problems
+derived from real use cases, databases with over a thousand columns on BigQuery
+and Snowflake, multiple SQL dialects, chained transformations — the kind of work
+a data team does on any given Tuesday.
+
+When Spider 2.0 came out in late 2024, the best model of the moment — one that
+scored 91.2% on Spider 1.0 — solved roughly **20%**. Today, the best models
+hover around **70%** on Spider 2.0-AIFunc, the benchmark's 2026 enterprise
+extension — a different task set, not the original exam. Seventy, not
+ninety-eight.
 
 The obvious reading is that raw text-to-SQL at real enterprise scale remains far
 from production — the headline 90% is earned in the lab, not in your warehouse.
