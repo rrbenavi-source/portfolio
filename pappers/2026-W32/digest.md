@@ -18,9 +18,10 @@ Edición objetivo: 05 del newsletter Brújula, martes 4-ago-2026.
   los shops SAP, esa semántica ya existe — está enterrada en extractores y
   reportes Z que nadie ha documentado. El trabajo no es comprar el copiloto: es la
   autopsia semántica de la fuente (continuidad directa de la tesis del W31).
-- **Por qué ahora:** dbt Labs publicó el benchmark (Claude Sonnet 4.6: 90.0→98.2%;
-  GPT-5.3-Codex: 84.1→100% con semantic layer) y el debate "¿semantic layer o
-  text-to-SQL?" está activo en toda la comunidad esta semana.
+- **Por qué ahora:** el benchmark es del 7-abr-2026 (verificado contra la fuente:
+  Claude Sonnet 4.6: 90.0→98.2%; GPT-5.3-Codex: 84.1→100% con semantic layer; 11
+  preguntas × 20 corridas, dataset ACME Insurance), pero el debate sigue activo y
+  la ola de compras de copilotos que ignora el modelado es el gancho vigente.
 - **Fuentes:**
   - https://docs.getdbt.com/blog/semantic-layer-vs-text-to-sql-2026 — el benchmark
     con las cifras; fuente primaria del gancho.
