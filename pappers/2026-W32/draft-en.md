@@ -79,8 +79,8 @@ and Snowflake, multiple SQL dialects, chained transformations — the kind of wo
 a data team does on any given Tuesday.
 
 When Spider 2.0 came out in late 2024, the best model of the moment — one that
-scored 91.2% on Spider 1.0 — solved roughly **20%**. Today, the best models
-hover around **70%** on Spider 2.0-AIFunc, the benchmark's 2026 enterprise
+scored 91.2% on Spider 1.0 and 73% on BIRD — solved roughly **20%**. Today, the
+best models hover around **70%** on Spider 2.0-AIFunc, the benchmark's 2026 enterprise
 extension — a different task set, not the original exam. Seventy, not
 ninety-eight.
 
@@ -111,13 +111,15 @@ contribute that semantics. It consumes it.
 
 If there's any doubt where this is heading, look at what every platform is
 building. dbt has its Semantic Layer with MetricFlow. Snowflake shipped Semantic
-Views. Databricks brought Metric Views into Unity Catalog — the foundation of
-what it calls Business Semantics, GA since April of this year — and at the Data
-+ AI Summit introduced Genie Ontology: a context layer that learns from usage to
-feed Genie, still in preview. When every vendor converges on the same piece, it
-stops being a feature and becomes a confession: the model, alone, is not enough.
-It needs a curated layer of meaning — and every platform wants to own that
-layer.
+Views. Databricks brought Metric Views into Unity Catalog, the foundation of
+what it calls Business Semantics, GA since April of this year. GA — general
+availability — is the mark of a finished, supported product with a contract
+behind it; the opposite of preview, which means "try it, but don't bet a project
+on it". And at the Data + AI Summit it introduced Genie Ontology: a context
+layer that learns from usage to feed Genie, still in preview. When every vendor
+converges on the same piece, it stops being a feature and becomes a confession:
+the model, alone, is not enough. It needs a curated layer of meaning — and every
+platform wants to own that layer.
 
 I see this in operation daily. The difference between a Genie space with curated
 metrics and well-crafted instructions, and one wired straight to the tables, is
