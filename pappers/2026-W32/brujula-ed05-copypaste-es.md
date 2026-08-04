@@ -106,9 +106,9 @@ Es el orden que tres años de benchmarks implican y que veinte años de discipli
 
 **La prueba barata antes de comprar**
 
-Antes de evaluar cualquier copiloto de datos, corre una prueba que no cuesta licencias: toma tus tres métricas más peleadas y pídele a dos personas de negocio que te las definan por escrito.
+Antes de evaluar cualquier copiloto de datos, corre una prueba que no cuesta licencias: elige las tres métricas que más discusión provocan en tus juntas —esas donde dos áreas llegan con números distintos para lo mismo— y pide por separado a dos personas de negocio que te las definan por escrito. Por escrito, porque el papel obliga a comprometerse con los bordes: qué entra, qué sale, en qué momento se cuenta, contra qué tipo de cambio.
 
-Si las definiciones no coinciden —y en mi experiencia, no coinciden—, tu siguiente paso no es el copiloto. Es el modelado. El copiloto solo va a responder, con mucha seguridad, la versión de la métrica que nadie acordó.
+Si las definiciones no coinciden —y en mi experiencia, no coinciden—, acabas de encontrar el problema: no está en la tecnología, está sin resolver en el negocio. Tu siguiente paso no es el copiloto. Es el modelado. El copiloto solo va a responder, con mucha seguridad, la versión de la métrica que nadie acordó.
 
 —
 
@@ -139,7 +139,7 @@ Pero ojo con la letra chica: ese semantic layer no se descarga, se construye. Al
 
 En la Edición 05 de Brújula: los tres años de benchmarks, por qué los últimos puntos son los caros, y una prueba que puedes correr esta semana sin gastar una licencia.
 
-👉 La prueba: pide a dos personas de negocio que te definan por escrito tus tres métricas más peleadas. Si no coinciden, tu siguiente paso no es el copiloto. Es el modelado.
+👉 La prueba: elige las tres métricas que más discusión provocan en tus juntas y pide por separado a dos personas de negocio que te las definan por escrito. Si no coinciden, el problema no está en la tecnología — está sin resolver en el negocio. Tu siguiente paso no es el copiloto. Es el modelado.
 
 ¿En tu organización, cuántas definiciones distintas hay de "venta"?
 

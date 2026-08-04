@@ -888,7 +888,8 @@ export const dict = {
             type: 'prose',
             heading: 'The cheap test before you buy',
             body: [
-              'Before evaluating any data copilot, run a test that costs no licenses: take your <strong>three most contested metrics</strong> and ask two business people to define them in writing. If the definitions don\'t match — and in my experience, they don\'t — your next step isn\'t the copilot. It\'s the modeling. The copilot will only answer, with great confidence, the version of the metric nobody agreed on.',
+              'Before evaluating any data copilot, run a test that costs no licenses: pick <strong>the three metrics that cause the most argument in your meetings</strong> — the ones where two departments show up with different numbers for the same thing — and ask two business people, separately, to define them in writing. In writing, because paper forces you to commit to the edges: what\'s in, what\'s out, when it counts, against which exchange rate.',
+              'If the definitions don\'t match — and in my experience, they don\'t — you\'ve just found the problem: <strong>it isn\'t in the technology, it\'s unresolved in the business.</strong> Your next step isn\'t the copilot. It\'s the modeling. The copilot will only answer, with great confidence, the version of the metric nobody agreed on.',
             ],
           },
           {

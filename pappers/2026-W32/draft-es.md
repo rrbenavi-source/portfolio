@@ -165,11 +165,16 @@ lo pone la fuente, no el destino.
 ## La prueba barata antes de comprar
 
 Antes de evaluar cualquier copiloto de datos, corre una prueba que no cuesta
-licencias: toma tus tres métricas más peleadas y pídele a dos personas de negocio
-que te las definan por escrito. Si las definiciones no coinciden — y en mi
-experiencia, no coinciden —, tu siguiente paso no es el copiloto. Es el modelado.
-El copiloto solo va a responder, con mucha seguridad, la versión de la métrica
-que nadie acordó.
+licencias: elige las tres métricas que más discusión provocan en tus juntas —esas
+donde dos áreas llegan con números distintos para lo mismo— y pide por separado a
+dos personas de negocio que te las definan por escrito. Por escrito, porque el
+papel obliga a comprometerse con los bordes: qué entra, qué sale, en qué momento
+se cuenta, contra qué tipo de cambio.
+
+Si las definiciones no coinciden — y en mi experiencia, no coinciden —, acabas de
+encontrar el problema: no está en la tecnología, está sin resolver en el negocio.
+Tu siguiente paso no es el copiloto. Es el modelado. El copiloto solo va a
+responder, con mucha seguridad, la versión de la métrica que nadie acordó.
 
 ---
 
