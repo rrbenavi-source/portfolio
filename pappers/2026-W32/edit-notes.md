@@ -32,3 +32,29 @@ verificación.
 - "Preveo una ola" → "Viene una ola" (más natural hablado).
 - Revisión contra `voice-profile.md`: sin aperturas genéricas, sin listas
   mecánicas de 3, primera persona donde hay experiencia real, cierre accionable.
+
+## Extensión v2 (feedback de Ricardo: "parece un resumen de 3 pappers anteriores")
+
+Reescritura completa post-editor con investigación adicional. Secciones nuevas:
+
+1. **"Tres años, mismo examen"** — el linaje del benchmark: Sequeda/Allemang/Jacob
+   nov-2023 (GPT-4 crudo 16.7% → con knowledge graph 54.2%, 43 preguntas, mismo
+   dataset ACME). Verificado contra arXiv 2311.07509.
+2. **"El examen de verdad es más duro"** — Spider 2.0 (arXiv 2411.07763, ICLR
+   2025): 632 problemas enterprise reales; mejor modelo ~20% al lanzamiento
+   (91.2% en Spider clásico); frontera ~70% en la variante 2026 (Spider
+   2.0-AIFunc, arXiv 2607.06229). Verificado contra abstracts y review.
+3. **"Los vendors ya votaron"** — convergencia: dbt MetricFlow, Snowflake
+   Semantic Views, Databricks Metric Views / Business Semantics (GA inicios
+   2026) + Genie Ontology (preview, DAIS 2026). Incluye 1 párrafo en primera
+   persona de operación Genie (sin cifras de cliente — solo experiencia pública
+   del portfolio).
+4. **"SAP también votó"** — BDC data products con semántica preservada + sync de
+   metadata semántica a Unity Catalog vía Delta Sharing (GA, alianza
+   SAP–Databricks), y el giro propio: la semántica que viaja es la del contenido
+   estándar; la custom (Z, extractores, user exits) no viene en el paquete.
+
+**Nota de rigor:** el papper-editor revisó la v1. Las secciones nuevas de la v2
+fueron verificadas por el controller contra arXiv y blogs de vendor (URLs en
+fuentes), pero NO pasaron por el agente editor. Si Ricardo quiere el pase
+completo del editor sobre la v2, correrlo antes del render.
