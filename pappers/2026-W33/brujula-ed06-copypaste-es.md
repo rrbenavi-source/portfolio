@@ -1,6 +1,6 @@
 # Brújula — Edición 06 (2026-W33) · Material copy-paste
 
-_Publica: martes 2026-08-18, 9:00 AM CDMX. Todo lo de abajo está listo para
+_Publica: martes 2026-08-11, 9:00 AM CDMX (martes de la propia W33). Todo lo de abajo está listo para
 pegar; las marcas `[ Sube la figura: … ]` indican dónde insertar cada imagen en
 el editor de LinkedIn._
 
