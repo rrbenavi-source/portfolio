@@ -4,6 +4,21 @@ _Publica: martes 2026-08-18, 9:00 AM CDMX. Todo lo de abajo está listo para
 pegar; las marcas `[ Sube la figura: … ]` indican dónde insertar cada imagen en
 el editor de LinkedIn._
 
+## Checklist de publicación
+
+1. LinkedIn → **Escribir artículo** → elige el newsletter **Brújula**.
+2. Sube la **portada** `brujula-cover-06.png` (1920×1080).
+3. Pega el **título** y el **subtítulo** de abajo.
+4. Pega el **cuerpo** completo. Los `**titulares**` van con el estilo *Heading 2*
+   del editor (selecciona la línea → H2); LinkedIn no interpreta el markdown.
+5. Inserta las **dos figuras** donde están las marcas, con su alt text (ver el
+   final de este archivo) y el pie de figura como texto en cursiva debajo.
+6. Revisa el preview en móvil y **publica**.
+7. Publica el **post de lanzamiento** en el feed (es una publicación aparte).
+8. Pega el **primer comentario** de inmediato, para que los links queden arriba.
+
+Extensión del artículo: ~1,560 palabras (lectura de 6–7 min).
+
 ---
 
 ## Título del artículo
@@ -168,3 +183,52 @@ La versión completa, con fuentes verificadas y las dos figuras, está aquí �
 📄 Artículo: https://rrbenavi-source.github.io/portfolio/publicaciones/automatizar-el-pipeline
 
 🇬🇧 English version: https://rrbenavi-source.github.io/portfolio/en/publicaciones/automatizar-el-pipeline
+
+_(Ambos links ya están en línea y verificados.)_
+
+---
+---
+
+## IMÁGENES · rutas, tamaños y alt text
+
+Todas en `pappers/2026-W33/` (y copiadas en `web/src/assets/publicaciones/`).
+
+**1. Portada — `brujula-cover-06.png` · 1920×1080**
+Alt text: `Portada de la edición 06 de Brújula: "Automatizar el pipeline no es
+automatizar las reglas de negocio".`
+
+**2. Figura 1 — `fig-abajo-hacia-arriba.png` · 1080×1350**
+Alt text: `Gráfica del benchmark ELT-Bench: en extracción y carga los agentes de
+IA pasaron de 57% en 2025 a 96–98% en 2026; en transformación, de 3.9% a 32.5%.`
+Pie: *Fig. 1 — La brecha se cierra de abajo hacia arriba: lo mecánico se
+resolvió; lo semántico apenas se movió.*
+
+**3. Figura 2 — `fig-acuerdo-experto.png` · 1080×1350**
+Alt text: `Auditoría de ELT-Bench-Verified: 33% de los desajustes por columna eran
+errores del examen, no del agente; y los expertos coincidieron solo el 57.8% de
+las veces al interpretar la misma especificación.`
+Pie: *Fig. 2 — Un tercio de los desajustes eran errores del examen; y los
+expertos solo coincidieron el 57.8% de las veces al leer la misma
+especificación.*
+
+---
+---
+
+## SI QUIERES REPOSTEAR MÁS ADELANTE (versión corta, para el feed)
+
+30 columnas de un benchmark académico tuvieron que eliminarse porque nadie logró
+establecer la respuesta correcta.
+
+¿La razón? Al interpretar la misma especificación escrita, los expertos
+coincidieron apenas el 57.8% de las veces.
+
+Ese es, en una cifra, el motivo por el que los agentes de IA ya construyen el
+96–98% de la extracción y la carga de un pipeline, y siguen fallando dos de cada
+tres veces en la transformación.
+
+No es que el modelo sea limitado. Es que la regla de negocio nunca se escribió
+sin ambigüedad.
+
+Lo desarrollé en la Edición 06 de Brújula 👇
+
+#DataEngineering #IA #SAP #Analytics
