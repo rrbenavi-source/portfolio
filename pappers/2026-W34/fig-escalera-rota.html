@@ -1,0 +1,52 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--ghost:#3f4a58;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:74px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:'Space Grotesk';color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:60px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:26px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:25px;color:var(--dim);margin-top:22px;line-height:1.45;max-width:32ch;}
+ .stair{margin-top:auto;margin-bottom:auto;display:flex;align-items:flex-end;gap:26px;height:520px;}
+ .step{flex:1;border-radius:10px 10px 0 0;position:relative;display:flex;flex-direction:column;justify-content:flex-start;padding:26px 20px;}
+ .s1{height:150px;border:3px dashed #5a6472;background:transparent;}
+ .s2{height:310px;background:linear-gradient(180deg,#243b39,#1b2429);border:1px solid var(--line);border-bottom:none;}
+ .s3{height:470px;background:linear-gradient(180deg,rgba(43,189,143,.30),rgba(43,189,143,.07));border:1px solid rgba(43,189,143,.45);border-bottom:none;}
+ .lvl{font-family:'Space Grotesk';font-size:19px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+ .s3 .lvl{color:var(--teal);}
+ .big{font-family:Fraunces,serif;font-size:62px;font-weight:700;color:var(--text);line-height:1;margin-top:14px;}
+ .s3 .big{color:var(--teal);font-size:76px;}
+ .note{font-size:20px;color:var(--dim);margin-top:12px;line-height:1.35;}
+ .missing{font-family:'Space Grotesk';font-size:20px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#7d8794;margin-top:10px;}
+ .base{height:3px;background:var(--line);margin-top:0;}
+ .kicker{margin-top:40px;border-left:3px solid var(--teal);padding-left:24px;font-size:27px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:22px;font-size:17px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:70px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 07</div>
+  <h2>El mercado volvió. El <span class="em">primer escalón</span> no.</h2>
+  <p class="lede">Vacantes de desarrollo de software en Estados Unidos: subieron <b>15%</b> en el último año, mientras el total de vacantes del país cayó <b>7%</b>. De dónde viene ese rebote:</p>
+
+  <div class="stair">
+    <div class="step s1">
+      <div class="lvl">Plazas junior</div>
+      <div class="missing">el escalón<br/>que falta</div>
+    </div>
+    <div class="step s3">
+      <div class="lvl">Plazas senior</div>
+      <div class="big">71%</div>
+      <div class="note">del aumento de vacantes de software corresponde a plazas senior.<br/><br/>Y el rebote arranca de un piso bajo: software sigue <b>27.5%</b> por debajo de su nivel prepandemia, y análisis de datos alrededor de <b>30%</b>.</div>
+    </div>
+  </div>
+  <div class="base"></div>
+
+  <div class="kicker">No es que el mercado se haya caído. Es que se está recuperando salteándose el primer escalón.</div>
+
+  <div class="src">Fuente: Indeed Hiring Lab, <i>AI and Job Postings: From Destruction to Creation?</i> (8-jul-2026) y <i>US Labor Market Snapshot — June 2026</i>. Serie pública, consultable en FRED (Reserva Federal de San Luis).</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

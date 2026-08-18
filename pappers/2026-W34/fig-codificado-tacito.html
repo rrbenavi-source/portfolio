@@ -1,0 +1,64 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--warn:#CDA25A;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:74px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at -8% -8%,rgba(43,189,143,.13),transparent 58%),var(--bg);}
+ .eyebrow{font-family:'Space Grotesk';color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:26px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .cols{display:flex;gap:26px;margin-top:52px;}
+ .card{flex:1;border:1px solid var(--line);border-radius:14px;padding:32px 28px;background:rgba(255,255,255,.02);}
+ .card.t{border-color:rgba(43,189,143,.4);background:rgba(43,189,143,.06);}
+ .tag{font-family:'Space Grotesk';font-size:18px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+ .card.t .tag{color:var(--teal);}
+ .name{font-family:Fraunces,serif;font-size:40px;font-weight:600;color:var(--text);margin-top:12px;line-height:1.12;}
+ .def{font-size:21px;color:var(--dim);margin-top:16px;line-height:1.45;min-height:150px;}
+ .res{border-top:1px solid var(--line);margin-top:22px;padding-top:20px;}
+ .num{font-family:Fraunces,serif;font-size:56px;font-weight:700;line-height:1;color:#C9705F;}
+ .card.t .num{color:var(--teal);font-size:44px;}
+ .who{font-size:19px;color:var(--dim);margin-top:12px;line-height:1.4;}
+ .bridge{margin-top:44px;border:1px solid var(--line);border-radius:14px;padding:30px 32px;background:rgba(205,162,90,.07);border-color:rgba(205,162,90,.35);}
+ .bridge .t{font-family:'Space Grotesk';font-size:18px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--warn);}
+ .bridge .p{font-family:Fraunces,serif;font-size:37px;color:var(--text);margin-top:14px;line-height:1.25;}
+ .bridge .q{font-size:21px;color:var(--dim);margin-top:16px;line-height:1.45;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:22px;padding-right:170px;font-size:17px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:70px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 07</div>
+  <h2>Dónde cae el empleo joven, y <span class="em">por qué importa</span></h2>
+
+  <div class="cols">
+    <div class="card">
+      <div class="tag">Sustituye</div>
+      <div class="name">Conocimiento codificado</div>
+      <div class="def">El formal y estandarizado: está documentado y se puede enseñar con un manual, un curso o un procedimiento escrito.</div>
+      <div class="res">
+        <div class="num">−19%</div>
+        <div class="who">Empleo de 22 a 25 años en las ocupaciones más expuestas, contra sus pares menos expuestos.</div>
+      </div>
+    </div>
+    <div class="card t">
+      <div class="tag">Complementa</div>
+      <div class="name">Conocimiento tácito</div>
+      <div class="def">El que solo se adquiere con práctica, mentoría y exposición repetida a situaciones reales. No está escrito en ninguna parte.</div>
+      <div class="res">
+        <div class="num">Crece</div>
+        <div class="who">Empleo de trabajadores con experiencia en las ocupaciones que dependen de él.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <div class="t">La consecuencia de gestión</div>
+    <div class="p">El conocimiento tácito no se enseña. Se fabrica pasando por el codificado.</div>
+    <div class="q">El trabajo mecánico que la IA absorbió era aburrido, lento y para el negocio valía poco. También era el único plan de estudios que teníamos.</div>
+  </div>
+
+  <div class="src">Fuente: Brynjolfsson, Chandar y Chen, <i>Canaries in the Coal Mine?</i>, Stanford Digital Economy Lab, revisión de agosto de 2026 (datos de nómina de ADP hasta junio de 2026). Los autores lo presentan como evidencia descriptiva, no causal.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>
