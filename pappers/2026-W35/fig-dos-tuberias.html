@@ -1,0 +1,65 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:74px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:'Space Grotesk';color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:26px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:24px;color:var(--dim);margin-top:20px;line-height:1.45;max-width:34ch;}
+ .lanes{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+ .lane{border-radius:12px;padding:26px 24px;display:flex;flex-direction:column;gap:16px;}
+ .lane.a{border:1px solid rgba(43,189,143,.45);background:linear-gradient(180deg,rgba(43,189,143,.20),rgba(43,189,143,.04));}
+ .lane.b{border:1px solid var(--line);background:linear-gradient(180deg,#1b2027,#171a1f);}
+ .lhead{font-family:'Space Grotesk';font-size:17px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+ .lane.a .lhead{color:var(--teal);}
+ .ltitle{font-family:Fraunces,serif;font-size:33px;font-weight:700;color:var(--text);line-height:1.15;}
+ .lane.a .ltitle{color:var(--teal);}
+ .req{font-size:20px;color:var(--dim);line-height:1.4;}
+ .req b{color:var(--text);}
+ .chips{display:flex;flex-wrap:wrap;gap:9px;}
+ .chip{font-family:'Space Grotesk';font-size:17px;font-weight:500;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px;}
+ .lane.a .chip{color:#bfe9d8;border-color:rgba(43,189,143,.35);}
+ .store{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;font-size:19px;color:var(--faint);line-height:1.4;}
+ .lane.a .store{border-top-color:rgba(43,189,143,.28);}
+ .wall{margin-top:26px;border:1px dashed #4a525e;border-radius:12px;padding:24px;display:flex;gap:20px;align-items:flex-start;}
+ .wall .no{font-family:Fraunces,serif;font-size:44px;font-weight:700;color:#7d8794;line-height:1;}
+ .wall .txt{font-size:21px;color:var(--dim);line-height:1.45;}
+ .wall .txt b{color:var(--text);}
+ .kicker{margin-top:26px;border-left:3px solid var(--teal);padding-left:24px;font-size:26px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:22px;padding-right:150px;font-size:17px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:70px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 08</div>
+  <h2>Dos tuberías que <span class="em">no se cruzan</span></h2>
+  <p class="lede">El contenido premium de BDC existe bajo una condición que no aparece en las portadas: tu ERP tiene que estar en la nube de SAP.</p>
+
+  <div class="lanes">
+    <div class="lane a">
+      <div class="lhead">Contenido premium</div>
+      <div class="ltitle">Data products administrados por SAP</div>
+      <div class="req">Requisito: <b>ERP en la nube de SAP</b>. Los sistemas on-premise ni siquiera aparecen en la <i>formation</i> (KBA 3786663).</div>
+      <div class="chips"><span class="chip">S/4HANA private cloud</span><span class="chip">S/4HANA public cloud</span><span class="chip">SuccessFactors</span></div>
+      <div class="store">259 data products estándar a principios de 2026, la mayoría datos maestros. Aterrizan en el object store de <b>Foundation Services</b>.</div>
+    </div>
+    <div class="lane b">
+      <div class="lhead">Todo lo demás</div>
+      <div class="ltitle">Tus propios data products</div>
+      <div class="req">Entran por la conectividad de <b>Datasphere</b>. Funciona, pero el catálogo administrado no aplica.</div>
+      <div class="chips"><span class="chip">ECC</span><span class="chip">S/4 on-premise</span><span class="chip">Campos Z</span><span class="chip">CDS views</span><span class="chip">Oracle</span><span class="chip">SQL Server</span><span class="chip">Salesforce</span><span class="chip">Snowflake</span><span class="chip">BigQuery</span></div>
+      <div class="store">Aterrizan en el object store de <b>Datasphere</b>, que es distinto. Los administrados no pasan por aquí; los tuyos no pasan por allá.</div>
+    </div>
+  </div>
+
+  <div class="wall"><div class="no">§3.3</div><div class="txt">Tu Databricks puede recibir un data product y guardarlo copiado <b>temporalmente y solo para que las consultas corran más rápido</b>. Lo que no puede hacer es <b>repartirlo hacia adelante</b>: Power BI, Tableau, un lago externo, otro tenant.</div></div>
+
+  <div class="kicker">Tu lakehouse deja de ser la capa desde donde todo se sirve y pasa a ser un consumidor autorizado, no un redistribuidor.</div>
+
+  <div class="src">Fuentes: SAP, <i>Business Data Cloud — FAQs</i> (blog oficial); KBA SAP 3786663; SAP BDC Supplemental Terms and Conditions v7-2026, §3.3 y §1.11; catálogo público de data products en el SAP Discovery Center. Conteo de 259: Expertum, enero de 2026.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--ghost:#3f4a58;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:74px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:'Space Grotesk';color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:26px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:24px;color:var(--dim);margin-top:20px;line-height:1.45;max-width:34ch;}
+ .clocks{margin-top:auto;margin-bottom:auto;display:flex;flex-direction:column;gap:20px;}
+ .row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;border-radius:12px;padding:22px 24px;border:1px solid var(--line);background:linear-gradient(180deg,#1b2027,#171a1f);}
+ .row.now{border:1px solid rgba(43,189,143,.55);background:linear-gradient(180deg,rgba(43,189,143,.22),rgba(43,189,143,.05));box-shadow:0 0 0 1px rgba(43,189,143,.12);}
+ .row.ghosty{border:1px dashed #3a414c;background:transparent;}
+ .who{font-family:'Space Grotesk';font-size:26px;font-weight:600;color:var(--text);line-height:1.25;}
+ .row.ghosty .who{color:#7d8794;}
+ .row.now .who{color:var(--teal);}
+ .note{font-size:19px;color:var(--faint);margin-top:7px;line-height:1.35;}
+ .row.now .note{color:var(--dim);}
+ .date{font-family:Fraunces,serif;font-size:46px;font-weight:700;color:var(--text);line-height:1;white-space:nowrap;text-align:right;}
+ .row.now .date{color:var(--teal);font-size:52px;}
+ .row.ghosty .date{color:#5c6675;}
+ .tag{font-family:'Space Grotesk';font-size:15px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);display:block;margin-top:8px;text-align:right;}
+ .row.now .tag{color:var(--teal);}
+ .kicker{margin-top:34px;border-left:3px solid var(--teal);padding-left:24px;font-size:26px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:22px;padding-right:150px;font-size:17px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:70px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edition 08</div>
+  <h2>Four clocks. Only <span class="em">one is yours</span>.</h2>
+  <p class="lede">They show you the 2027 one, or the 2040 one. The one actually running right now is the first on this list.</p>
+
+  <div class="clocks">
+    <div class="row now">
+      <div><div class="who">ODP-RFC · the opt-out</div><div class="note">The June 2026 patch already blocks unauthorized calls against S/4HANA, BW and ECC. The opt-out only holds them open through year-end. Note 3255746; self-assessment in 3439624.</div></div>
+      <div><div class="date">Dec 2026</div><span class="tag">your date</span></div>
+    </div>
+    <div class="row">
+      <div><div class="who">SAP BW 7.5 on NetWeaver</div><div class="note">End of mainstream maintenance. The date in red in every deck — and 20,000 to 30,000 customers are still there.</div></div>
+      <div><div class="date">31 Dec 2027</div><span class="tag">theirs</span></div>
+    </div>
+    <div class="row">
+      <div><div class="who">BW/4HANA 2023 · BPC 2021</div><div class="note">Two products, one clock: the same day for both, per the Product Availability Matrix. Four years and four months of runway from today.</div></div>
+      <div><div class="date">31 Dec 2030</div><span class="tag">your release</span></div>
+    </div>
+    <div class="row ghosty">
+      <div><div class="who">BW/4HANA product line</div><div class="note">A commitment to the line, delivered <i>“through a sequence of releases.”</i> Not your release&rsquo;s date: the promise that another one will come.</div></div>
+      <div><div class="date">2040</div><span class="tag">line promise</span></div>
+    </div>
+  </div>
+
+  <div class="kicker">A BW/4HANA upgrade is a technical project. A move to Business Data Cloud is a change of contract, of consumption model, and of the regime your data lives under.</div>
+
+  <div class="src">Sources: SAP Product Availability Matrix (BW/4HANA 2023 and BPC 2021, for SAP BW/4HANA); SAP&rsquo;s official blog on the maintenance extension to 2040; SAP note 3255746 v11 (21-Apr-2026) and note 3439624 (13-Apr-2026); SAPinsider on the June 2026 patch.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>
