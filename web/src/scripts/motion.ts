@@ -1,7 +1,14 @@
 // Progressive-enhancement motion: scroll reveals + metric count-up.
 // No-ops gracefully and respects prefers-reduced-motion.
 
-const REVEAL_THRESHOLD = 0.12;
+// Un threshold por ratio se cuelga con elementos más altos que el viewport: si el
+// contenedor mide 19,000px y la ventana 900px, la razón de intersección no pasa de 0.047
+// y nunca alcanza el umbral, así que el bloque se queda en opacity:0 y la página se ve
+// vacía. Es justo el caso de las páginas de publicación, donde un solo .reveal envuelve
+// el artículo completo. Se revela con cualquier píxel visible y el retraso lo da el
+// rootMargin, que no depende del alto del elemento.
+const REVEAL_THRESHOLD = 0;
+const REVEAL_ROOT_MARGIN = '0px 0px -8% 0px';
 const COUNT_THRESHOLD = 0.5;
 const COUNT_DURATION = 1100;
 
@@ -52,7 +59,7 @@ export function initMotion(): void {
         }
       });
     },
-    { threshold: REVEAL_THRESHOLD }
+    { threshold: REVEAL_THRESHOLD, rootMargin: REVEAL_ROOT_MARGIN }
   );
   reveals.forEach((el) => revealIO.observe(el));
 
