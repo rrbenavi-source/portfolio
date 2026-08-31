@@ -1,11 +1,54 @@
-# Lo que se omite en silencio
+# Brújula · Edición 09 — material listo para copiar y pegar
 
-*El viaje de una query de ventas de BW a Business Data Cloud, estación por estación —y qué validar en cada una antes de que lo descubra un director en una junta.*
+**Publicación: martes 1 de septiembre de 2026, 9:00 AM CDMX.**
+Artículo en el portfolio: https://rrbenavi-source.github.io/portfolio/publicaciones/lo-que-se-omite-en-silencio
 
-**Brújula · Edición 09 · W36**
-*Arquitectura de Datos · SAP*
+Es la segunda parte de la edición 08 ("El reloj que no es tuyo", publicada el 25-ago). Se sostiene sola, pero conviene enlazarlas en el primer comentario.
 
 ---
+
+## Checklist
+
+1. Crear la edición nueva en el editor de newsletter de LinkedIn.
+2. Pegar **título** y **subtítulo** (abajo).
+3. Subir la **portada**: `brujula-cover-09.png` (1920×1080).
+4. Pegar el **cuerpo** entre los separadores, respetando las marcas `[ Sube la figura: … ]`.
+5. Subir las dos figuras en su posición, con el **alt text** que viene más abajo.
+6. Llenar los campos de **SEO** (título y descripción).
+7. Publicar, y de inmediato hacer el **post de lanzamiento** en el feed.
+8. Poner el **primer comentario** con los dos links. LinkedIn penaliza los links externos en el cuerpo del post.
+
+---
+
+## Título
+
+Lo que se omite en silencio
+
+## Subtítulo
+
+Tu query de ventas viaja de BW a Business Data Cloud. Lo que no se soporta no falla: desaparece del objeto.
+
+## SEO — título
+
+Lo que se omite en silencio: qué le pasa a tu query de BW en Business Data Cloud
+
+## SEO — descripción
+
+La nota SAP 2932647 lo dice sin rodeos: los features no soportados no bloquean la transferencia, se omiten y se retiran del objeto. Tres piezas de una query de ventas típica están en esa lista. Siete estaciones, y qué validar en cada una.
+
+---
+
+## Alt text de las imágenes
+
+- **Portada:** Portada de la edición 09 del newsletter Brújula, titulada "Lo que se omite en silencio", sobre fondo oscuro con acento teal.
+- **Figura 1** (`fig-dos-formas-de-perder.png`): Dos formas de perder features al llevar una query de BW a Datasphere. A la izquierda, la que avisa: cuatro situaciones que impiden la transferencia del modelo. A la derecha, la que no avisa: la lista de features que se omiten y se retiran del objeto en silencio, desde cualquier fórmula fuera de las cuatro operaciones básicas hasta las variables de autorización.
+- **Figura 2** (`fig-siete-estaciones.png`): Las siete estaciones del viaje de una query de ventas de BW a Business Data Cloud, con lo que hay que validar en cada tramo: el lift, la conversión a modelo analítico, dónde vive el número, dónde se consume el reporte, las autorizaciones, BPC y los desarrollos Z, y al final el dato para IA.
+
+---
+
+## CUERPO — copiar de aquí
+
+===============================================================
 
 La edición pasada terminó en la decisión: qué firmas cuando te mueves a Business Data
 Cloud, de dónde puede venir tu dato y cuánto cuesta de verdad. Esta empieza donde aquella
@@ -23,7 +66,7 @@ reconcilian.
 Ese objeto, o uno casi idéntico, existe en prácticamente todos los BW de manufactura y
 consumo masivo del país. Vamos a llevarlo estación por estación.
 
-## Estación 1 — El lift: no pasa nada, y ese es el punto
+Estación 1 — El lift: no pasa nada, y ese es el punto
 
 El sistema se mueve *as-is*. La query sigue siendo la misma query, la conexión live de SAC
 sigue apuntando al mismo sistema, Analysis for Office sigue funcionando. Nada se rompe
@@ -38,7 +81,7 @@ ventanas de carga diarias que hoy corren dentro del datacenter pasan a viajar ha
 nube de SAP. Hay que dimensionar el enlace y re-medir los tiempos con volumen real, no con
 una muestra.
 
-## Estación 2 — La query se vuelve modelo analítico
+Estación 2 — La query se vuelve modelo analítico
 
 Aquí está la noticia. En el Architecture Center de SAP, el **Query Template Generator**
 —la herramienta que convierte queries de BW en modelos analíticos de Datasphere— aparecía
@@ -65,7 +108,7 @@ de Datasphere con **BW/4HANA Model Transfer**. Un caso documentado por SAP muest
 produce: una sola query generó **63 objetos** entre dimensiones, textos, jerarquías, fact
 view y modelo analítico.
 
-### Y aquí está el documento que decide tu proyecto
+**Y aquí está el documento que decide tu proyecto**
 
 La nota SAP **2932647** —versión 18, del 18 de diciembre de 2025— lista, para el Model
 Transfer desde BW/4HANA y desde BW bridge, qué features de una query se soportan y cuáles
@@ -95,6 +138,8 @@ objeto. La lista no tiene nada de exótica. Se pierden:
 - **Las variables de exit, de replacement path y de autorización.**
 - **La conversión de unidades**, los **key figures no acumulables**, los de **cobertura de
   inventario**, la **eliminación de volumen de negocio** y los **display attributes**.
+
+[ Sube la figura 1: fig-dos-formas-de-perder.png ]
 
 Vuelve al ejemplo del principio. Esa query tenía una fórmula de variación —y una variación
 protegida contra división entre cero se escribe con `NOERR` o `NDIV`—, variables de periodo
@@ -126,7 +171,7 @@ Y una advertencia que la nota se hace a sí misma: es "desarrollo en curso, libe
 múltiples oleadas", va en la versión 18 y se actualiza con frecuencia. La lista de hoy no
 va a ser la de tu proyecto.
 
-## Estación 3 — Dónde vive el número ahora
+Estación 3 — Dónde vive el número ahora
 
 Cambió el motor. Con Model Transfer, BW queda como fuente remota y **el cálculo lo hacen
 los motores de HANA de Datasphere**. Con el Query Template Generator, los objetos viven en
@@ -139,7 +184,7 @@ referencia. Fiscal year variant. Textos en los idiomas que realmente usas. Y si 
 inventarios, recuerda que los no acumulables ni siquiera llegan: hay que rehacerlos, y son
 el lugar clásico donde el total anual deja de ser la suma de los meses.
 
-## Estación 4 — Dónde se consume el reporte
+Estación 4 — Dónde se consume el reporte
 
 La historia de SAC es la parte fácil: creas una **conexión live de SAC hacia Datasphere** y
 ahí puedes construir de nuevo o **sustituir la fuente BW en las historias y modelos que ya
@@ -198,7 +243,7 @@ trimestre de 2026** —el que está corriendo y cierra en septiembre—, así qu
 escribir esto sigue siendo una promesa con calendario, no algo que puedas probar.
 Pregúntala por nombre y pide la fecha por escrito.
 
-## Estación 5 — Las autorizaciones no viajan solas
+Estación 5 — Las autorizaciones no viajan solas
 
 Tu query filtra por organización de ventas mediante analysis authorizations, y ya vimos que
 las **variables de autorización no sobreviven al transfer**. Datasphere tampoco tiene
@@ -215,7 +260,7 @@ grupo de usuarios, así que la separación se hace **por espacio**, y eso reorde
 Y la prueba que nadie hace: entrar con el usuario de un gerente regional y confirmar que ve
 exactamente lo mismo que veía, ni una fila más.
 
-## Estación 6 — ¿Y BPC?
+Estación 6 — ¿Y BPC?
 
 Buena noticia primero: **BPC se mueve con el BW**, en el mismo movimiento. SAP lo dice
 explícitamente —*"along with moving your SAP BW 7.50 or SAP BW/4HANA to a private cloud
@@ -258,7 +303,7 @@ compatibilidad y vulnerabilidades (§6.7.2). Los checks de simplificación e inc
 en cada upgrade **los ejecutas tú** (§6.10.2). Y la propiedad intelectual de toda
 Modification queda del lado de SAP (§6.7.4).
 
-## Estación 7 — Y hasta entonces, el dato para IA
+Estación 7 — Y hasta entonces, el dato para IA
 
 Solo aquí entra el **Data Product Generator**, que es otra herramienta y sirve para otra
 cosa: publica InfoProviders —InfoObjects, aDSOs, CompositeProviders, MultiProviders,
@@ -273,7 +318,9 @@ SAP el derecho de restringir o exigir la remoción de cualquier Add-on o Modific
 authorized via SAP"*. El código que escribas dentro de ese BW también queda sujeto a la
 frontera del dato.
 
-## Lo que se lleva de aquí quien firma
+[ Sube la figura 2: fig-siete-estaciones.png ]
+
+Lo que se lleva de aquí quien firma
 
 Tres números, y ninguno es el del servidor:
 
@@ -290,68 +337,58 @@ hoy no está publicada. Sin ella, el roadmap de la estación 2 es una casilla en
 Nada de esto dice que no te muevas. Dice que el número que llega al dashboard después del
 movimiento tiene que ser el mismo que llegaba antes —y que demostrarlo es trabajo, no un
 supuesto.
+===============================================================
+
+## POST DE LANZAMIENTO (feed) — copiar de aquí
+
+===============================================================
+
+Hay una frase en la nota SAP 2932647 que debería cambiar cómo se presupuestan estos proyectos:
+
+"...unsupported features do not prevent the BW analytic query from being transferrable, but are simply skipped and removed from the transferred object during the process."
+
+No bloquean. Se omiten y se retiran del objeto.
+
+Al llevar una query de BW a Datasphere hay dos formas de perder, y solo una te avisa. La que avisa son cuatro situaciones que detienen la transferencia: te enteras el primer día. La que no avisa es todo lo demás, y la lista no tiene nada de exótica: cualquier fórmula que exceda las cuatro operaciones básicas, las queries de dos estructuras, el default filter, las variables de exit y las de autorización, la conversión de unidades, los no acumulables.
+
+Piensa en una query de ventas cualquiera: fórmula de variación, variables de periodo, autorizaciones por organización de ventas. Tres de sus piezas están en esa lista.
+
+No inventé un caso difícil. Inventé el caso típico.
+
+Y aquí está el problema real: un modelo al que le quitaron media fórmula se ve perfectamente sano. El objeto existe. Se abre. Trae números. La prueba no es que el objeto exista —es que el número cuadre, celda por celda, contra la query original, con las mismas variables y el mismo día.
+
+Hay otra cosa que reordena el roadmap completo. El modelo transferido queda, en palabras de SAP, "disconnected by design" del origen: cada cambio en la query obliga a correr el proceso otra vez, y las jerarquías se aplanan y se congelan el día que las transferiste.
+
+La edición 09 de Brújula lleva una query estación por estación: qué pasa en el lift, qué pasa cuando se vuelve modelo analítico, por qué Analysis for Office no lee modelos analíticos y qué le cuesta eso a tus controllers, por qué las autorizaciones no viajan solas, y qué dice el contrato sobre los desarrollos Z que rodean a BPC.
+
+Tres números se lleva quien firma, y ninguno es el del servidor. El primero: cuántas de tus queries están en esa lista.
+
+#SAP #BW4HANA #BusinessDataCloud #Datasphere #ArquitecturaDeDatos #Analytics
+
+===============================================================
+
+## PRIMER COMENTARIO (poner de inmediato)
+
+Edición completa, con las fuentes y las dos figuras:
+https://rrbenavi-source.github.io/portfolio/publicaciones/lo-que-se-omite-en-silencio
+
+Y la edición 08, que es la primera parte —el contrato, las capacity units y los cuatro relojes—:
+https://rrbenavi-source.github.io/portfolio/publicaciones/el-reloj-que-no-es-tuyo
 
 ---
 
-## Fuentes
+## VERSIÓN CORTA (para repostear en unos días)
 
-- **SAP.** Nota **2932647**, *Supported and unsupported features with SAP BW/4HANA / SAP BW
-  Bridge Model Transfer in SAP Datasphere*, **versión 18, 18 de diciembre de 2025**. Fuente
-  primaria de la estación 2: regla de omisión silenciosa, bloqueantes duros, listas por
-  nivel, desconexión por diseño del modelo transferido y aplanamiento de jerarquías. La
-  propia nota advierte que la lista cambia con el tiempo. Relacionada: nota **3478268**,
-  sobre el soporte de jerarquías. https://me.sap.com/notes/2932647
-- **SAP Learning.** *Outlining the Capabilities of the Query Template Generator* y
-  *Outlining the Configuration of the Query Template Generator*, publicados el **30 de julio
-  de 2026**. Proceso de dos pasos, objetos generados, transacción `RSDWCTG_ADMIN`, BW
-  Modeling Tools 1.27 PL3 y objeto de autorización S_ADT_RES.
-  https://learning.sap.com/courses/transforming-sap-bw-with-sap-business-data-cloud/outlining-the-capabilities-of-the-query-template-generator_a2bfd608-4246-4255-8ea9-2d250e90de91
-- **SAP Architecture Center.** *Modernizing SAP BW with SAP Business Data Cloud*
-  (ref-arch 6550e4). Prerrequisitos por release, detalle del Data Product Generator y la
-  marca *(planned)* del Query Template Generator, que la fuente anterior supera.
-  https://architecture.learning.sap.com/docs/ref-arch/6550e4
-- **SAP Learning.** *Introducing Model Transfer*. Transacción `RSDWC_QUERY`, BW como fuente
-  remota con cálculo en los motores de HANA de Datasphere, traspaso de analysis
-  authorizations vía `RSDWC_DAC_RSEC_GEN` y la tabla `RSDWC_RSEC_DAC`, y sustitución de
-  fuentes BW en historias existentes de SAC.
-  https://learning.sap.com/learning-journeys/modernizing-your-data-warehouse-landscape-from-sap-bw-to-sap-datasphere/introducing-the-hybrid-approach
-- **SAP / comunidad SAP.** *Part 2 – Import SAP BW/4HANA Queries into SAP Datasphere using
-  SAP BW/4HANA Model Transfer.* Caso documentado: una sola query genera 63 objetos.
-  https://community.sap.com/t5/technology-blog-posts-by-sap/part-2-import-sap-bw-4hana-queries-into-sap-datasphere-using-sap-bw-4hana/ba-p/13759521
-- **SAP.** KBA **3297935**, *SAP Datasphere Analytic Models and some Views are not shown in
-  AO*, y KBA **2436382**, matriz de conexiones de Analysis for Office. Alcance sobre
-  Datasphere: vistas y perspectivas sí, modelos analíticos no.
-  https://userapps.support.sap.com/sap/support/knowledge/en/3297935
-- **SAP Help Portal.** *Consuming Data Exposed by SAP Datasphere*. Los tres caminos hacia
-  Power BI y otros clientes: OData, ODBC/JDBC vía Open SQL schema, y sus límites.
-  https://help.sap.com/docs/SAP_DATASPHERE
-- **SAP.** *SAP Business Data Cloud — Supplemental Terms and Conditions*, **versión 7-2026**.
-  Documento público, sin registro, leído completo para esta edición. Definiciones de Add-on
-  (§1.1), Customer ABAP Add-on (§1.7) y Modification (§1.9); prohibición de extracción
-  masiva y lista cerrada de seis destinos permitidos (§6.2.5); derechos y responsabilidades
-  sobre Add-ons y Modifications, incluida la cláusula de remoción por extracción de Data
-  Products hacia aplicaciones no-SAP (§6.7.1–§6.7.5); checks de simplificación e
-  incompatibilidad a cargo del cliente (§6.10.2). Las citas de *"Use of OData APIs for data
-  extraction is prohibited"* y del tope de 2,000 llamadas por GB corresponden a la **versión
-  10-2025** (secciones 2.5 y 5.5), que gobierna el consumo de Datasphere; la numeración de
-  secciones no es la misma entre versiones y aquí se citan por separado a propósito.
-  https://assets.cdn.sap.com/agreements/product-use-and-support-terms/cls/en/sap-business-data-cloud-supplement-english-v7-2026.pdf
-- **SAP y Microsoft.** *SAP Business Data Cloud Connect for Microsoft Fabric*, anunciado en
-  noviembre de 2025, con disponibilidad general planeada para Q3 2026. Compartición
-  bidireccional zero-copy hacia OneLake.
-  https://news.sap.com/2025/11/sap-bdc-connect-for-microsoft-fabric-business-insights-ai-innovation/
-- **SAP.** *SAP Business Planning and Consolidation (SAP BPC) Strategy Update*, 8 de octubre
-  de 2025. BPC se mueve a la nube privada junto con el sistema BW.
-  https://community.sap.com/t5/technology-blog-posts-by-sap/sap-business-planning-and-consolidation-sap-bpc-strategy-update/ba-p/14237803
-- **Comunidad SAP.** *Planning Modernization*, 31 de mayo de 2025. Arquitectura híbrida de
-  SAC sobre BPC Live Connection contra BW en nube privada, y la recomendación de usar
-  estructuras aDSO compatibles con el Data Product Generator. Contribución de miembro.
-  https://community.sap.com/t5/technology-blog-posts-by-members/planning-modernization/ba-p/14115243
-- **Comunidad SAP.** *Working with BW Authorizations in Datasphere on Enterprise Level.* Los
-  Data Access Controls no soportan comodines y la separación por espacio. Contribución de
-  miembro; validar contra el estado actual del producto.
-  https://community.sap.com/t5/technology-blog-posts-by-members/working-with-bw-authorizations-in-datasphere-on-enterprise-level/ba-p/14302361
-- **Expertum.** *Premium Outbound Integration in SAP Datasphere.* Bloques de 20 GB y el
-  factor de inflación medido sobre tablas grandes. Medición de partner, de 2024: sirve el
-  orden de magnitud, no el número exacto.
-  https://expertum.net/premium-outbound-integration-in-sap-datasphere/
+Si tu estrategia de ahorro en licencias de analytics fue mover consumo de SAC hacia Analysis for Office —una jugada común y correcta—, hay un detalle que conviene revisar antes de migrar queries a Datasphere.
+
+Analysis for Office alcanza vistas y perspectivas de Datasphere. No alcanza los modelos analíticos (KBA 3297935).
+
+Y el modelo analítico es exactamente el objeto que producen las dos herramientas con las que SAP te lleva una query de BW a Datasphere.
+
+El camino soportado para llevar un modelo analítico a Excel es el add-in de SAP Analytics Cloud: otro producto, que requiere licencia de BI o de planning de SAC. Capacity units por usuario al mes.
+
+O sea que la migración empuja a tus controllers de regreso a la familia SAC.
+
+Nadie va a poner las dos cosas en la misma diapositiva por ti.
+
+https://rrbenavi-source.github.io/portfolio/publicaciones/lo-que-se-omite-en-silencio

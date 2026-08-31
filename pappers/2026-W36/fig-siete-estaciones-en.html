@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:70px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:24px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:23px;color:var(--dim);margin-top:18px;line-height:1.45;max-width:40ch;}
+ .rows{margin-top:34px;display:flex;flex-direction:column;}
+ .row{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:13px 0;border-bottom:1px solid var(--line);align-items:start;}
+ .row:first-child{border-top:1px solid var(--line);}
+ .n{font-family:"Space Grotesk";font-size:19px;font-weight:700;letter-spacing:.06em;color:var(--teal);border:1px solid rgba(43,189,143,.4);border-radius:8px;text-align:center;padding:8px 0;line-height:1;}
+ .row.mute .n{color:var(--faint);border-color:var(--line);}
+ .st{font-family:Fraunces,serif;font-size:27px;font-weight:600;color:var(--text);line-height:1.2;}
+ .row.mute .st{color:var(--dim);}
+ .vd{font-size:19px;color:var(--dim);line-height:1.42;margin-top:7px;}
+ .vd b{color:var(--text);} .vd .lbl{font-family:"Space Grotesk";font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-right:9px;}
+ .row.mute .vd .lbl{color:var(--faint);}
+ .kicker{margin-top:22px;border-left:3px solid var(--teal);padding-left:24px;font-size:24px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;padding-right:150px;font-size:16px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:56px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Issue 09</div>
+  <h2>Seven stops, <span class="em">seven tests</span></h2>
+  <p class="lede">A sales query's journey from BW to Business Data Cloud, and what to demand at every leg of it.</p>
+
+  <div class="rows">
+    <div class="row"><div class="n">01</div><div><div class="st">The lift</div><div class="vd"><span class="lbl">Validate</span>That your release qualifies, that cleanup happened <b>first</b>, and that the link holds: extraction from your ERP now crosses the network.</div></div></div>
+    <div class="row"><div class="n">02</div><div><div class="st">The query becomes an analytic model</div><div class="vd"><span class="lbl">Validate</span>Not that the object exists: that <b>the number matches cell by cell</b> against the original query, same variables, same day.</div></div></div>
+    <div class="row"><div class="n">03</div><div><div class="st">Where the number now lives</div><div class="vd"><span class="lbl">Validate</span>Response times at production volume, currency conversion, fiscal year variant, texts per language, and <b>non-cumulative key figures</b>, which must be rebuilt.</div></div></div>
+    <div class="row"><div class="n">04</div><div><div class="st">Where the report is consumed</div><div class="vd"><span class="lbl">Validate</span>Analysis for Office <b>cannot read analytic models</b>. Your Excel controllers move back into the SAC family, and that means capacity units per user.</div></div></div>
+    <div class="row"><div class="n">05</div><div><div class="st">Authorizations</div><div class="vd"><span class="lbl">Validate</span>Wildcards don't exist in Data Access Controls. Log in as a regional manager and confirm they <b>don't see a single extra row</b>.</div></div></div>
+    <div class="row"><div class="n">06</div><div><div class="st">BPC and your Z developments</div><div class="vd"><span class="lbl">Ask</span>In writing: are your modifications around BPC still admissible inside BW running in SAP's cloud, and <b>under which category</b>?</div></div></div>
+    <div class="row mute"><div class="n">07</div><div><div class="st">And only then, the data for AI</div><div class="vd"><span class="lbl">Later</span>The Data Product Generator and delta share into your lakehouse come last, and under the contractual boundary from the previous issue.</div></div></div>
+  </div>
+
+  <div class="kicker">The number that reaches the dashboard after the move has to be the same one that reached it before. Proving that is work, not an assumption.</div>
+
+  <div class="src">Sources: SAP note 2932647 v18; SAP Learning, <i>Query Template Generator</i> and <i>Introducing Model Transfer</i>; KBA 3297935; SAP BDC Supplemental Terms and Conditions v7-2026.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

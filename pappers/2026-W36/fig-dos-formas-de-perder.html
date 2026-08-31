@@ -1,0 +1,66 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:74px 68px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:20px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-top:26px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:24px;color:var(--dim);margin-top:20px;line-height:1.45;max-width:36ch;}
+ .lanes{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+ .lane{border-radius:12px;padding:26px 24px;display:flex;flex-direction:column;gap:15px;}
+ .lane.a{border:1px solid rgba(43,189,143,.45);background:linear-gradient(180deg,rgba(43,189,143,.20),rgba(43,189,143,.04));}
+ .lane.b{border:1px solid var(--line);background:linear-gradient(180deg,#1b2027,#171a1f);}
+ .lhead{font-family:"Space Grotesk";font-size:17px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+ .lane.a .lhead{color:var(--teal);}
+ .ltitle{font-family:Fraunces,serif;font-size:31px;font-weight:700;color:var(--text);line-height:1.15;}
+ .lane.a .ltitle{color:var(--teal);}
+ .req{font-size:19px;color:var(--dim);line-height:1.4;}
+ .req b{color:var(--text);} .req i{color:var(--dim);}
+ .chips{display:flex;flex-wrap:wrap;gap:8px;}
+ .chip{font-family:"Space Grotesk";font-size:15px;font-weight:500;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:6px 12px;}
+ .lane.a .chip{color:#bfe9d8;border-color:rgba(43,189,143,.35);}
+ .store{margin-top:auto;border-top:1px solid var(--line);padding-top:15px;font-size:18px;color:var(--faint);line-height:1.4;}
+ .store b{color:var(--dim);}
+ .lane.a .store{border-top-color:rgba(43,189,143,.28);}
+ .wall{margin-top:18px;border:1px dashed #4a525e;border-radius:12px;padding:22px;display:flex;gap:20px;align-items:center;}
+ .wall .no{font-family:"Space Grotesk";font-size:27px;font-weight:700;color:#7d8794;line-height:1.1;white-space:nowrap;}
+ .wall .txt{font-size:20px;color:var(--dim);line-height:1.45;}
+ .wall .txt b{color:var(--text);}
+ .kicker{margin-top:20px;border-left:3px solid var(--teal);padding-left:24px;font-size:26px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;padding-right:150px;font-size:16px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:64px;bottom:54px;font-family:Fraunces,serif;font-size:24px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 09</div>
+  <h2>Dos formas de <span class="em">perder</span></h2>
+  <p class="lede">Al llevar una query de BW a Datasphere hay dos maneras de perder features. Solo una de las dos te avisa.</p>
+
+  <div class="lanes">
+    <div class="lane a">
+      <div class="lhead">La que avisa</div>
+      <div class="ltitle">El modelo no se transfiere</div>
+      <div class="req">Cuatro situaciones bloquean el proceso por completo. Molesto, pero honesto: <b>te enteras el primer día</b>.</div>
+      <div class="chips"><span class="chip">Query no basada en CompositeProvider</span><span class="chip">Temporal join</span><span class="chip">Ambiguous join</span><span class="chip">Input parameters de vistas HANA</span></div>
+      <div class="store">Tres de las cuatro viven en el <b>CompositeProvider</b>, no en la query. Se detectan revisando el proveedor, antes de tocar nada.</div>
+    </div>
+    <div class="lane b">
+      <div class="lhead">La que no avisa</div>
+      <div class="ltitle">El feature desaparece del objeto</div>
+      <div class="req">Todo lo demás <b>sí se transfiere</b>, y lo no soportado se omite y se retira del objeto transferido. Sin error, sin advertencia.</div>
+      <div class="chips"><span class="chip">Toda fórmula fuera de + − × ÷</span><span class="chip">IF</span><span class="chip">AND</span><span class="chip">OR</span><span class="chip">%</span><span class="chip">%GT</span><span class="chip">%CT</span><span class="chip">SUMCT</span><span class="chip">NOERR</span><span class="chip">NDIV</span><span class="chip">COUNT</span><span class="chip">Queries de dos estructuras</span><span class="chip">Default filter</span><span class="chip">Variables de exit</span><span class="chip">Replacement path</span><span class="chip">Variables de autorización</span><span class="chip">Conversión de unidades</span><span class="chip">No acumulables</span><span class="chip">Display attributes</span></div>
+      <div class="store">Un modelo al que le quitaron media fórmula <b>se ve perfectamente sano</b>.</div>
+    </div>
+  </div>
+
+  <div class="wall"><div class="no">Nota 2932647</div><div class="txt">Esa lista cubre el <b>Model Transfer</b>. Para el <b>Query Template Generator</b> —la herramienta nueva, documentada por SAP el 30 de julio de 2026— <b>no existe una lista equivalente publicada</b>. Pídela por su nombre antes de firmar el roadmap.</div></div>
+
+  <div class="kicker">Lo que hay que validar no es que el objeto exista. Es que el número cuadre, celda por celda, contra la query original.</div>
+
+  <div class="src">Fuente: SAP, nota 2932647, versión 18 (18-dic-2025). La propia nota advierte que la lista de features cambia con cada oleada de la funcionalidad.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>
