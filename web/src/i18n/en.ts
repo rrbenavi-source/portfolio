@@ -1359,6 +1359,12 @@ export const dict = {
             ],
           },
           {
+            type: 'figure',
+            src: 'fig-dos-formas-de-perder-en.png',
+            alt: 'Two ways to lose features when moving a BW query into Datasphere. On the left, the one that warns you: four situations that block the model transfer. On the right, the one that does not: the list of features silently skipped and removed from the object, from any formula beyond the four basic operations to authorization variables',
+            caption: 'Fig. 1 — Two ways to lose, and only one warns you. The one on the right reaches a meeting as a number nobody can defend.',
+          },
+          {
             type: 'prose',
             body: [
               'Go back to the example at the top. That query had a variance formula —and a variance protected against division by zero is written with <code>NOERR</code> or <code>NDIV</code>—, period variables that in practice are almost always exit variables, and authorizations resting on authorization variables. Three of its pieces are on the list. <strong>I didn’t invent a hard case: I invented the typical one.</strong>',
@@ -1372,7 +1378,7 @@ export const dict = {
             type: 'figure',
             src: 'fig-siete-estaciones-en.png',
             alt: 'The seven stops of a BW query’s journey to Business Data Cloud, with what to validate at each one: the lift, the conversion into an analytic model, where the number lives, where the report is consumed, authorizations, BPC and Z developments, and finally the data for AI',
-            caption: 'Fig. 1 — Seven stops, seven tests. At every leg there is something to demand before a director discovers it in a meeting.',
+            caption: 'Fig. 2 — Seven stops, seven tests. At every leg there is something to demand before a director discovers it in a meeting.',
           },
           {
             type: 'prose',

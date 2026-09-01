@@ -1359,6 +1359,12 @@ export const dict = {
             ],
           },
           {
+            type: 'figure',
+            src: 'fig-dos-formas-de-perder.png',
+            alt: 'Dos formas de perder features al llevar una query de BW a Datasphere. A la izquierda, la que avisa: cuatro situaciones que impiden la transferencia del modelo. A la derecha, la que no avisa: la lista de features que se omiten y se retiran del objeto en silencio, desde cualquier fórmula fuera de las cuatro operaciones básicas hasta las variables de autorización',
+            caption: 'Fig. 1 — Dos formas de perder, y solo una avisa. La de la derecha es la que llega a una junta convertida en un número que nadie puede defender.',
+          },
+          {
             type: 'prose',
             body: [
               'Vuelve al ejemplo del principio. Esa query tenía una fórmula de variación —y una variación protegida contra división entre cero se escribe con <code>NOERR</code> o <code>NDIV</code>—, variables de periodo que en la práctica casi siempre son de exit, y autorizaciones apoyadas en variables de autorización. Tres de sus piezas están en la lista. <strong>No inventé un caso difícil: inventé el caso típico.</strong>',
@@ -1372,7 +1378,7 @@ export const dict = {
             type: 'figure',
             src: 'fig-siete-estaciones.png',
             alt: 'Las siete estaciones del viaje de una query de BW a Business Data Cloud, con lo que hay que validar en cada una: el lift, la conversión a modelo analítico, dónde vive el número, dónde se consume el reporte, las autorizaciones, BPC y los desarrollos Z, y al final el dato para IA',
-            caption: 'Fig. 1 — Siete estaciones, siete pruebas. En cada tramo hay algo que exigir antes de que lo descubra un director en una junta.',
+            caption: 'Fig. 2 — Siete estaciones, siete pruebas. En cada tramo hay algo que exigir antes de que lo descubra un director en una junta.',
           },
           {
             type: 'prose',
