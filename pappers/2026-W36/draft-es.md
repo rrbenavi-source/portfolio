@@ -160,11 +160,23 @@ Nadie va a poner las dos cosas en la misma diapositiva por ti.
 
 **¿Y Power BI?** Hay tres caminos y no son equivalentes:
 
-- **OData** consume vistas **y modelos analíticos**, y es el único que respeta la agregación
-  del modelo y trae las asociaciones. Requiere OAuth de tres patas.
+- **OData** —un protocolo de consulta sobre HTTP, con conector nativo en Power BI— es el
+  único de los tres que alcanza **modelos analíticos** y no solo vistas, y el único que
+  respeta las dos cosas que hacen valioso a ese modelo. Su **agregación**: el modelo no solo
+  suma, también define excepciones —inventario que se toma como el último valor del periodo,
+  headcount que se cuenta sin acumular— y por OData el motor de Datasphere aplica esa regla
+  antes de mandarte el número. Y sus **asociaciones**: los joins ya definidos hacia las
+  dimensiones, que traen el texto y la jerarquía pegados a la llave. El precio está en la
+  autenticación: **OAuth de tres patas** —usuario, aplicación cliente y servidor de
+  autorización—, donde la persona autoriza a Power BI a leer en su nombre. Bueno para la
+  seguridad, porque el token carga su identidad y los Data Access Controls aplican por
+  persona; incómodo para la operación, porque los tokens expiran y el refresh programado
+  depende de que alguien se vuelva a autenticar.
 - **ODBC/JDBC** vía Open SQL schema es más simple, pero SQL devuelve resultados
   bidimensionales: contra un modelo analítico **se pierden asociaciones y jerarquías, y el
-  dato llega des-agregado**. Para el mundo OLAP que traes de BW, te devuelve al inicio.
+  dato llega des-agregado**, así que Power BI lo vuelve a sumar con la regla equivocada —el
+  inventario anual sale como la suma de doce meses en vez del saldo de diciembre—. Para el
+  mundo OLAP que traes de BW, te devuelve al inicio.
 - **Premium Outbound Integration** es la salida masiva con precio explícito: bloques de
   20 GB con tarifa escalonada. El detalle que hunde presupuestos es que se cobra el volumen
   de salida, no el de la tabla; mediciones públicas sobre tablas tipo BSEG dieron un

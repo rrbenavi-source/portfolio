@@ -158,11 +158,23 @@ going to put both facts on the same slide for you.
 
 **And Power BI?** There are three paths and they are not equivalent:
 
-- **OData** consumes views **and analytic models**, and it is the only one that respects the
-  model's aggregation and carries the associations. It requires three-legged OAuth.
+- **OData** —a query protocol over HTTP, with a native connector in Power BI— is the only
+  one of the three that reaches **analytic models** and not just views, and the only one that
+  respects the two things that make that model valuable. Its **aggregation**: the model does
+  not merely sum, it also defines exceptions —inventory taken as the last value of the
+  period, headcount counted without accumulating— and over OData the Datasphere engine
+  applies that rule before handing you the number. And its **associations**: the joins already
+  defined toward the dimensions, which bring the text and the hierarchy attached to the key.
+  The price is authentication: **three-legged OAuth** —user, client application and
+  authorization server—, where the person authorizes Power BI to read on their behalf. Good
+  for security, because the token carries their identity and Data Access Controls apply per
+  person; awkward for operations, because tokens expire and scheduled refresh depends on
+  someone re-authenticating.
 - **ODBC/JDBC** via the Open SQL schema is simpler, but SQL returns two-dimensional results:
   against an analytic model **you lose associations and hierarchies, and the data arrives
-  un-aggregated**. For the OLAP world you're bringing from BW, it puts you back at the start.
+  un-aggregated**, so Power BI sums it again with the wrong rule —annual inventory comes out
+  as the sum of twelve months instead of the December balance—. For the OLAP world you're
+  bringing from BW, it puts you back at the start.
 - **Premium Outbound Integration** is the bulk exit with an explicit price: 20 GB blocks on a
   tiered rate. The detail that sinks budgets is that you're charged for the volume that
   leaves, not the size of the table; public measurements on BSEG-type tables produced a
