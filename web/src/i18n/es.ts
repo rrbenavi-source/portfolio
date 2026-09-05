@@ -1482,6 +1482,160 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '12',
+        slug: 'validar-migracion-extractores-s4hana',
+        subtitle: 'Arquitectura de Datos · SAP',
+        title: 'Cómo validar una migración de extractores a S/4HANA',
+        role: 'Autor: Ricardo Benavides',
+        meta: '2026',
+        hero: 'brujula-cover-10.png',
+        lead: 'La primera carga que puse a cuadrar salió en verde. Sin errores, sin registros rechazados, sin advertencias. Y con menos filas de las que había en el origen.',
+        summary:
+          'Fase de construcción de una migración ECC → S/4HANA: los extractores clásicos se vuelven CDS views con anotaciones, y el riesgo se muda de la lógica al metadato. Un error de metadato casi nunca aborta: entrega un dataset con la forma correcta y menos filas. Este escrito recorre dos fallas silenciosas —un campo de idioma que nadie reportea y una autorización de negocio— y el alcance oculto que ninguna especificación contemplaba: por qué las cuatro familias de datos no viven en la misma anotación, qué exige una llave compuesta como la de centro de coste, por qué una jerarquía llega partida en cinco segmentos hacia un destino que espera seis, y por qué «la carga corrió sin error» dejó de ser evidencia de nada.',
+        tags: ['SAP', 'S/4HANA', 'BW/4HANA', 'CDS Views', 'ODP', 'Migración', 'Arquitectura de Datos'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'Hace unas ediciones cerré un papper sobre migración de extractores con una práctica que me parecía obvia: <em>un extractor no está terminado cuando corre, está terminado cuando el dato cuadra contra el origen</em>. Fácil de escribir.',
+              'Estas semanas me tocó cumplirla. Estamos en construcción y validación de datos en desarrollo, migrando los extractores clásicos de un ECC hacia CDS views en S/4HANA, y la primera carga que puse a cuadrar <strong>salió en verde</strong>. Sin errores, sin registros rechazados, sin advertencias. Y con menos filas de las que había en el origen.',
+              'No fue un caso aislado. Terminó siendo la forma característica de fallar de esta arquitectura, y me obligó a revisar algo más incómodo que un mapeo: <strong>el criterio con el que damos por buena una carga</strong>. Esta edición es lo que encontramos, y por qué creo que cambia lo que hay que escribir en un plan de trabajo —y, si firmas el presupuesto, en un contrato.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Un modelo declarativo falla distinto',
+            body: [
+              'En ECC, un extractor era esencialmente un programa. Código que sabía qué tablas leer, en qué orden y con qué lógica. Cuando un programa se equivoca, normalmente se nota: aborta, deja un log, alguien lo ve en rojo.',
+              'En S/4HANA, el extractor es una <strong>CDS view con anotaciones</strong>. Las anotaciones son declaraciones —empiezan con <code>@</code>— y no son documentación: son instrucciones. Le dicen al framework de aprovisionamiento —<strong>ODP</strong>, la capa que expone los datos de SAP hacia el mundo analítico— qué clase de dato estás publicando, y el sistema destino construye su parte a partir de esa declaración.',
+              'Para que una vista sea extraíble hacen falta <strong>dos declaraciones, no una</strong>. La primera es el interruptor: <code>@Analytics.dataExtraction.enabled</code>. Sin ella la vista existe, se consulta y se reportea perfectamente, pero es invisible para la extracción. La segunda es la familia del dato, y ahí aparece la primera rareza: <strong>las cuatro familias no viven en la misma anotación</strong>. Datos maestros y transaccionales se declaran con <code>@Analytics.dataCategory</code>; textos y jerarquías, con <code>@ObjectModel.dataCategory</code>. Buscar «la anotación de categoría» te entrega la mitad del mapa y ninguna señal de que falta la otra mitad.',
+              'Que el contenedor destino se derive de ahí no es una metáfora. El objeto que se publica lleva el nombre técnico de la vista más un sufijo que sale de esa declaración: <code>$P</code> para atributos de datos maestros, <code>$T</code> para textos, <code>$H</code> para jerarquías, <code>$F</code> para transaccionales. <strong>El tipo de lo que nace del otro lado está literalmente en el nombre</strong>, y no se elige después.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Cuando la llave es compuesta',
+            body: [
+              'Y todo eso es cuando la llave es un solo campo. Los atributos de centro de coste, que es el objeto con el que trabajamos, no tienen una llave: tienen tres —sociedad de controlling, centro de coste y fecha de validez—, y una llave compuesta multiplica lo que hay que declarar. La regla es que <strong>exactamente un campo de la llave es el representativo</strong>, el que «es» la entidad, y se marca con <code>@ObjectModel.representativeKey</code>. En el ejemplo que usa SAP: una dimensión de ciudad con llave país + ciudad tiene como representativo la ciudad, no el país. Para centro de coste el representativo es el centro de coste; la sociedad de controlling es el prefijo que lo hace único.',
+              'Esa anotación parece de modelado analítico y no lo es: <strong>sin ella el framework no publica la vista</strong> —se queja de que no encuentra un campo representativo— y no hay extracción. Además apunta al <strong>alias</strong> del campo, no a su nombre de origen: si lo renombraste en la proyección, la anotación tiene que apuntar al nombre nuevo o no resuelve.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Tres obligaciones más, y ninguna es cosmética',
+            items: [
+              '<strong>Todos los demás campos de la llave necesitan una asociación</strong> a su propia vista de datos maestros. La sociedad de controlling no puede ir suelta.',
+              '<strong>La fecha de validez es la excepción, y trae dos reglas.</strong> El campo «válido hasta» tiene que ser parte de la llave y llevar la semántica de fecha final; el «válido desde» va fuera de la llave. Y el «válido hasta» <strong>no puede</strong> tener asociación ni aparecer en la condición de ninguna otra.',
+              '<strong>El texto se asocia al campo representativo</strong>, no a la llave completa —aunque la condición de la asociación sí tenga que incluir todos los campos de la llave, y la vista de textos tenga que tener exactamente la misma llave.',
+            ],
+          },
+          {
+            type: 'prose',
+            body: [
+              'El destino hereda esa forma: una llave compuesta en el origen se vuelve un <strong>objeto compuesto</strong> del otro lado —el centro de coste colgando de la sociedad de controlling— y qué cuelga de qué lo decide el campo que declaraste representativo. Si esa derivación no se puede resolver, al menos avisa: cuando otra vista intenta asociarse, la activación falla con <code>RSODP056</code>, <em>no se puede derivar el nombre del InfoObject</em>. Es de las pocas veces en toda esta fase en que el sistema nos detuvo.',
+              'Visto de lejos todo esto suena a simplificación. Menos código, menos superficie de error. Pero el riesgo no desapareció: <strong>se movió de la lógica al metadato</strong>. Y un error de metadato casi nunca produce un aborto. Produce una extracción que corre, que entrega un dataset con la forma correcta, y que está incompleto.',
+              'Es una diferencia de naturaleza, no de grado. <strong>Un programa mal escrito falla ruidosamente. Una declaración mal puesta te entrega menos, en verde.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El campo que nadie estaba mirando',
+            body: [
+              'El caso que mejor lo enseña es también el más tonto, que es justo lo que lo hace peligroso.',
+              'Volvamos a ese extractor de atributos de centro de coste. La vista traía, entre setenta y tantos campos, <strong>el campo de idioma</strong>. Un atributo más, sin relevancia analítica; nadie lo reportea. Nadie lo estaba mirando.',
+              'El sistema destino asigna la marca de <em>campo de idioma</em> a cualquier columna cuyo tipo de dato sea <code>LANG</code>. Por el tipo, no por lo que uno declare —lo comprobamos por eliminación: apagar la anotación semántica no cambió nada, y leer el campo de la tabla en vez de la vista estándar tampoco—. Y con esa marca, el proceso de carga asume que el dato es multiidioma y <strong>añade un filtro por su cuenta</strong>: pide únicamente los idiomas instalados en el sistema destino y descarta todo lo demás. Sin error, sin advertencia, sin línea en el log.',
+              'Vale la pena ver dónde acabó viviendo el criterio. Cuántas filas llegan no lo decide el extractor, ni la vista, ni la especificación funcional: lo decide <strong>una lista de idiomas configurada en otro sistema</strong>, que nadie del lado del origen tiene motivo para abrir.',
+              'Está documentado por SAP en el KBA <strong>3219389</strong>. Casi no lo encontramos: el título habla de un <em>text datasource</em>, así que uno lo descarta cuando el problema está en una vista de atributos. La causa real no tiene nada que ver con textos —es el tipo del campo— pero el título te manda a otro lado.',
+              'Y entonces vino la parte que sí es una decisión de arquitectura. <strong>SAP documenta la solución únicamente del lado del destino</strong>: cambiar a mano esa marca del campo. Funciona. El problema es que ese metadato se regenera cada vez que se replica el origen, así que la corrección se borra sola. Es un paso manual perpetuo, que sobrevive mientras la persona que lo conoce esté en el proyecto, y que alguien va a olvidar en producción exactamente el día que importa.',
+              'Preferimos resolverlo en el origen. La línea que funcionó rompe el tipo con una función de texto y lo vuelve a fijar como carácter simple, y además <strong>renombra el campo</strong>: si el tipo ya está corregido pero el nombre sigue siendo el estándar, el destino lo vuelve a detectar por el nombre. Son dos mecanismos distintos y hay que desactivar los dos. El mapeo del campo renombrado vive en la transformación, que es un objeto propio, se transporta y sobrevive a las replicaciones.',
+              'Eso es lo que cambió: no eliminamos el trabajo manual, lo <strong>mudamos de un lugar que se borra a uno que persiste</strong>. El precio es que el nombre técnico deja de coincidir con el del extractor original y hay que dejarlo escrito en la matriz de mapeo. Me parece un intercambio barato.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El permiso que devuelve menos datos',
+            body: [
+              'El segundo hallazgo tiene forma distinta y el mismo desenlace.',
+              'Las vistas estándar de SAP llevan controles de acceso propios, escritos en un lenguaje aparte —<strong>DCL</strong>, el dialecto con el que se declaran autorizaciones sobre una vista— y embebidos en el modelo. Cuando la vista los activa, el sistema no rechaza la consulta: <strong>recorta el resultado</strong> a lo que ese usuario tiene derecho a ver. Los perfiles de autorización estándar para la extracción no los cubren: habilitan el mecanismo, no el contenido.',
+              'Si al usuario técnico de la conexión le faltan las autorizaciones <strong>de negocio</strong> —una sociedad de controlling, un plan de cuentas— la extracción no se cae. Devuelve menos filas. O cero.',
+              'Piensa en lo que eso significa en una prueba integral. El equipo técnico ejecuta la carga, sale en verde, se marca la actividad como cerrada. El usuario funcional abre el reporte semanas después y ve una cifra menor. <strong>Nadie tiene motivo para sospechar del permiso, porque el permiso nunca dijo que no.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Lo que las dos fallas tienen en común',
+            body: [
+              'Un campo de idioma que nadie reportea y una autorización de negocio. No se parecen en nada, excepto en lo único que importa: <strong>ninguna de las dos produjo un error</strong>. Las dos entregaron un resultado plausible.',
+              'De ahí sale la tesis de esta edición, y es incómoda porque cuestiona un hábito que traíamos funcionando bien: <strong>«la carga corrió sin error» dejó de ser evidencia de nada.</strong> Era una señal razonable cuando el extractor era un programa. En un modelo declarativo, es apenas la confirmación de que el mecanismo se ejecutó.',
+              'La evidencia ahora es cuantitativa. Conteo de filas contra el origen, carga completa, sin filtros y sin <em>delta</em> —sin carga incremental, trayendo todo—, antes de comparar un solo valor. SAP tiene su propia herramienta de validación de transición de datos precisamente porque la reconciliación contra el origen es la prueba, no un paso opcional de aseguramiento.',
+              'Hasta la herramienta con la que uno prueba cambió, y de una forma que vale la pena contar. El chequeador de extractores clásico —<code>RSA3</code>, el primer reflejo de cualquiera que venga de ECC— no funciona con vistas CDS. Hay que usar otro reporte, <code>RODPS_REPL_TEST</code>, y ese reporte trae su propia trampa: <strong>no simula</strong>. Inicializar o correr un delta desde ahí abre una suscripción real en la cola de datos, que después alguien tiene que ir a limpiar. La herramienta de diagnóstico modifica el estado que estás diagnosticando, y tampoco lo anuncia.',
+              'Hay un corolario de secuencia que aprendimos por las malas y que vale más que muchas metodologías: <strong>el delta va al final.</strong> Activar la carga incremental antes de haber cuadrado la carga completa introduce diferencias de ventana temporal que se confunden con errores de mapeo, y se pierden días persiguiendo un defecto que no existe. Primero se demuestra que el dato es correcto; después se optimiza cómo llega.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El alcance que no estaba en ninguna especificación',
+            body: [
+              'Y aquí aparece el segundo tipo de sorpresa de la fase de construcción, que ya no es de calidad sino de alcance.',
+              'Las jerarquías —centros de coste, plan de cuentas— resultaron el objeto más caro y el que peor se había estimado. Tres razones.',
+              'La primera es que una jerarquía no es una tabla plana: declararla como jerarquía hace que el objeto nazca <strong>con segmentos</strong>. Cinco, en nuestro caso —cabecera, textos de cabecera, nodos, textos de nodo e intervalos—, y ese formato se deriva de la anotación. Declarar la familia equivocada no produce un error: produce el contenedor equivocado, que hay que borrar y rehacer. Ni siquiera viene todo de la misma vista: los textos de los nodos no los entrega la vista de jerarquía sino otra distinta, así que una sola jerarquía de centro de coste ya necesita <strong>tres vistas en el origen</strong>.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-cinco-seis.png',
+            alt: 'Mapeo de los cinco segmentos del DataSource de una jerarquía de centro de coste hacia los seis grupos de la transformación en el destino: cabecera, textos de cabecera, nodos, textos de nodo e intervalos encuentran su grupo, y el sexto grupo, textos por nivel de jerarquía, se queda sin segmento de origen',
+            caption: 'Fig. 1 — Cinco entran, seis esperan. El destino no exige que sus seis grupos estén llenos: una carga que deja uno vacío sale del mismo color que una completa.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'La segunda es que existen <strong>dos sintaxis de jerarquías en CDS</strong> y la que aparece primero en cualquier búsqueda es la equivocada. La nueva —una entidad propia, declarada con <code>DEFINE HIERARCHY</code>— sirve para consumo analítico y <strong>no</strong> para extracción; la vía de extracción sigue siendo la anotación <code>@ObjectModel.dataCategory: #HIERARCHY</code>. Lo verificamos de la forma dura: las <strong>244 páginas</strong> de la guía oficial de SAP sobre modelos de datos ABAP no mencionan ni una sola vez la extracción hacia el mundo analítico —ni la anotación que la habilita, ni el framework—. Es información correcta aplicada al escenario equivocado, que es la clase de error más difícil de detectar porque todo lo que lees es cierto.',
+              'La tercera es la que cambia el plan, y es consecuencia directa de la primera. Como los textos de nodo llegan por separado, para migrar esas jerarquías por la vía que SAP recomienda <strong>hay que modificar objetos en el sistema destino</strong>: agregarle al centro de coste dos características que hoy no existen —una para el identificador de la jerarquía y otra para el texto del nodo, compuesta a la anterior—, con longitudes fijas y mapeadas segmento por segmento. Eso no es parametrizar: <strong>es modelar</strong>. Lo verificamos contra el sistema: en dos de las tres jerarquías del alcance, esa configuración está literalmente vacía.',
+              'Ninguna de las especificaciones funcionales lo mencionaba. Y no por descuido: <strong>están escritas desde el lado del origen</strong>. Describen con precisión qué dato hay que sacar de S/4HANA, porque ahí es donde está la novedad y donde se concentró el análisis. El destino se da por sentado, porque «ya existe y ya funciona».',
+              'Ese supuesto es el que hay que romper. En una migración de este tipo, <strong>el sistema que no estás migrando también tiene trabajo</strong>, y ese trabajo no aparece en ningún documento hasta que alguien intenta cargar el primer árbol.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Qué le pediría a un plan de trabajo',
+            items: [
+              '<strong>Que la definición de «terminado» sea un número, no un color.</strong> Conteo contra el origen, carga completa, sin delta. Si la actividad se puede cerrar con una captura de pantalla en verde, el criterio está mal escrito.',
+              '<strong>Que el delta esté planeado como una fase posterior</strong>, no como parte de la construcción. Es una decisión de secuencia que ahorra semanas de diagnóstico falso.',
+              '<strong>Que el alcance cubra explícitamente el sistema destino.</strong> Si tus especificaciones sólo describen el origen, tienes un alcance a medias y una contingencia calculada sobre la mitad del trabajo. Vale la pena preguntar, antes de firmar: <em>¿qué hay que modificar del otro lado?</em>',
+              '<strong>Que la prueba de autorizaciones sea de negocio, no técnica.</strong> Que el usuario de conexión se pueda conectar no prueba nada sobre qué datos alcanza a ver. Esto se pide por escrito y se mide con un conteo.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El norte',
+            body: [
+              'Lo digo desde una región donde esto no es hipotético. Buena parte de las operaciones de las multinacionales instaladas en el noreste corre sobre plataformas SAP que están, o van a estar, en esta misma transición. La conversación sobre cómo se prueba una migración no es un detalle de implementación: es la diferencia entre descubrir un faltante en desarrollo o descubrirlo en un cierre.',
+              'La edición 02 de este newsletter defendía que el diseño es la migración. Lo sigo sosteniendo. Pero la fase de construcción me enseñó algo que el diseño no puede resolver solo: <strong>incluso con la especificación correcta, la forma de comprobar que el dato llegó completo tuvo que cambiar.</strong>',
+              'Migrar a un modelo declarativo no eliminó el riesgo: <strong>lo dejó sin síntoma</strong>. Y un riesgo sin síntoma es el argumento para hacer la validación más estricta, no más ligera. Menos código no significa menos pruebas. Significa otras pruebas: menos revisar lógica y más contar filas.',
+              'Si estás por entrar a esta fase, el cambio más barato que puedes hacer hoy no cuesta ni una línea de código. Es reescribir el criterio de aceptación de tus actividades de carga para que exija un número. Todo lo demás de esta edición lo descubrimos porque ese número no cuadraba.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Fuentes',
+            items: [
+              'SAP Learning — <em>Working with ODP Context: CDS view based extraction</em>. Condiciones de extraibilidad: <code>@Analytics.dataCategory</code> <strong>o</strong> <code>@ObjectModel.dataCategory</code> <strong>y</strong> <code>@Analytics.dataExtraction.enabled</code>; sufijos <code>$P</code>/<code>$T</code>/<code>$H</code>/<code>$F</code> del ODP. <a href="https://learning.sap.com/courses/upgrading-your-sap-bw-skills-to-sap-bw-4hana/working-with-odp-context-cds-view-based-extraction_f01df9a0-0e79-4d76-be38-d2cfac4dde42" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Learning — <em>Working with Dimension and Text Views</em>. Llave compuesta: un solo <code>@ObjectModel.representativeKey</code>; los demás campos de la llave requieren asociación; reglas de <code>@Semantics.businessDate.to</code> y <code>.from</code>. <a href="https://learning.sap.com/courses/developing-analytical-models-with-cds-based-analytical-projection-views/working-with-dimension-and-text-views" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Learning — <em>Working with Hierarchy Views</em>. Las cinco vistas de una jerarquía y la restricción de que la vista de jerarquía no admite asociaciones. <a href="https://learning.sap.com/courses/developing-analytical-models-with-cds-based-analytical-projection-views/working-with-hierarchy-views" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Help — <em>Analytics Annotations</em> y <em>ObjectModel Annotations</em>: enum de <code>dataCategory</code>, <code>dataExtraction.delta</code>, <code>representativeKey</code>, <code>foreignKey.association</code> y <code>hierarchy.association</code>. <a href="https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/c2/dd92fb83784c4a87e16e66abeeacbd/content.htm" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP — KBA <strong>3219389</strong>: el proceso de carga filtra automáticamente por los idiomas instalados en el sistema destino cuando el DataSource tiene un campo marcado como <em>Language Field</em>; válido también para DataSources basados en vistas CDS de S/4HANA. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3219389" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP — KBA <strong>2754750</strong>: <code>RSODP056</code>, <em>cannot derive InfoObject name</em>, cuando la vista destino de una asociación tiene característica compuesta. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/2754750" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP — KBA <strong>3062210</strong>: restricciones de acceso dependientes de usuario en vistas CDS vía DCL y <code>@AccessControl.authorizationCheck</code>. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3062210" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP Help — <em>ABAP Data Models</em>: la guía oficial de modelos de datos ABAP, cuyo capítulo de jerarquías no cubre la extracción. <a href="https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP — <em>ABAP CDS: DEFINE HIERARCHY</em>: la sintaxis de jerarquía para consumo analítico, distinta de la vía de extracción. <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abencds_f1_define_hierarchy.htm" target="_blank" rel="noopener">help.sap.com</a>',
+              'Comunidad SAP (S. Kranig, SAP) — <em>CDS based data extraction, Part III: Miscellaneous</em>. Los textos de nodo llegan en una vista aparte y obligan a dos características externas en el destino; <code>RSA3</code> no aplica y <code>RODPS_REPL_TEST</code> no es simulación. <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/cds-based-data-extraction-part-iii-miscellaneous/ba-p/13452148" target="_blank" rel="noopener">community.sap.com</a>',
+              'Comunidad SAP (RIG) — <em>An Introduction to the Data Transition Validation Tool</em>: la reconciliación contra el origen como prueba de éxito. <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/an-introduction-to-the-data-transition-validation-tool/ba-p/13541524" target="_blank" rel="noopener">community.sap.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {

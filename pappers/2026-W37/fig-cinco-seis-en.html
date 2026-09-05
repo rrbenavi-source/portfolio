@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:70px 64px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:24px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:24px;color:var(--dim);margin-top:16px;line-height:1.42;max-width:44ch;}
+ .cols{margin-top:46px;display:grid;grid-template-columns:1fr 54px 1fr;gap:0 10px;align-items:center;}
+ .chead{font-family:"Space Grotesk";font-size:15px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);padding-bottom:10px;}
+ .chead.r{color:var(--teal);}
+ .rows{margin-top:0;display:flex;flex-direction:column;gap:16px;}
+ .row{display:grid;grid-template-columns:1fr 54px 1fr;gap:0 10px;align-items:stretch;}
+ .cell{border-radius:10px;padding:13px 16px;display:flex;flex-direction:column;justify-content:center;min-height:98px;}
+ .src-c{border:1px solid var(--line);background:linear-gradient(180deg,#1b2027,#171a1f);}
+ .tgt-c{border:1px solid rgba(43,189,143,.42);background:linear-gradient(180deg,rgba(43,189,143,.17),rgba(43,189,143,.035));}
+ .seg{font-family:"Space Grotesk";font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+ .tgt-c .seg{color:rgba(43,189,143,.85);}
+ .nm{font-size:22px;color:var(--text);line-height:1.25;margin-top:4px;}
+ .arrow{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:24px;font-family:"Space Grotesk";}
+ .row.orphan .arrow{color:#4a525e;}
+ .empty{border:1px dashed #4a525e;border-radius:10px;min-height:98px;display:flex;align-items:center;justify-content:center;padding:13px 16px;}
+ .empty span{font-family:"Space Grotesk";font-size:17px;letter-spacing:.06em;color:#6b7280;text-transform:uppercase;font-weight:600;}
+ .row.orphan .tgt-c{border-style:dashed;border-color:rgba(43,189,143,.35);background:linear-gradient(180deg,rgba(43,189,143,.08),transparent);}
+ .kicker{margin-top:38px;border-left:3px solid var(--teal);padding-left:22px;font-size:24px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;margin-bottom:6px;border-top:1px solid var(--line);padding-top:15px;padding-right:150px;font-size:15px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:50px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edition 10</div>
+  <h2>Five arrive, six <span class="em">are waiting</span></h2>
+  <p class="lede">A hierarchy does not arrive as a table: it arrives split into segments, and the annotation decides that shape. The source delivers five. The target transformation exposes six slots.</p>
+
+  <div class="cols"><div class="chead">Source · DataSource segments</div><div></div><div class="chead r">Target · transformation groups</div></div>
+
+  <div class="rows">
+    <div class="row"><div class="cell src-c"><div class="seg">Segment 0001</div><div class="nm">Hierarchy header</div></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 1</div><div class="nm">Hierarchy header</div></div></div>
+    <div class="row"><div class="cell src-c"><div class="seg">Segment 0002</div><div class="nm">Header texts</div></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 2</div><div class="nm">Hierarchy description</div></div></div>
+    <div class="row"><div class="cell src-c"><div class="seg">Segment 0003</div><div class="nm">Nodes</div></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 3</div><div class="nm">Hierarchy structure</div></div></div>
+    <div class="row"><div class="cell src-c"><div class="seg">Segment 0004</div><div class="nm">Node texts</div></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 4</div><div class="nm">Texts for text nodes</div></div></div>
+    <div class="row"><div class="cell src-c"><div class="seg">Segment 0005</div><div class="nm">Leaves and intervals</div></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 5</div><div class="nm">Interval value</div></div></div>
+    <div class="row orphan"><div class="empty"><span>No source segment</span></div><div class="arrow">→</div><div class="cell tgt-c"><div class="seg">Group 6</div><div class="nm">Texts by hierarchy level</div></div></div>
+  </div>
+
+  <div class="kicker">Nothing warns you about the gap. The target does not require all six groups to be filled: a load that leaves one empty comes out the same colour as a complete one.</div>
+
+  <div class="src">Source: a real cost centre hierarchy transformation during the build phase. The DataSource publishes five segments; the transformation into the InfoObject exposes six mapping groups.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

@@ -1482,6 +1482,160 @@ export const dict = {
           },
         ],
       },
+      {
+        idx: '12',
+        slug: 'validar-migracion-extractores-s4hana',
+        subtitle: 'Data Architecture · SAP',
+        title: 'How to validate an extractor migration to S/4HANA',
+        role: 'Author: Ricardo Benavides',
+        meta: '2026',
+        hero: 'brujula-cover-10-en.png',
+        lead: 'The first load I put up for reconciliation came out green. No errors, no rejected records, no warnings. And with fewer rows than the source had.',
+        summary:
+          'Build phase of an ECC → S/4HANA migration: classic extractors become CDS views with annotations, and the risk moves from the logic into the metadata. A metadata error almost never aborts: it delivers a dataset with the right shape and fewer rows. This piece walks through two silent failures — a language field nobody reports on and a business authorisation — and the hidden scope no specification covered: why the four data families do not live in the same annotation, what a compound key like a cost centre demands, why a hierarchy arrives split into five segments toward a target that expects six, and why "the load ran without errors" stopped being evidence of anything.',
+        tags: ['SAP', 'S/4HANA', 'BW/4HANA', 'CDS Views', 'ODP', 'Migration', 'Data Architecture'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'A few editions ago I closed a papper on extractor migration with a practice that felt obvious to me: <em>an extractor is not finished when it runs, it is finished when the data reconciles against the source</em>. Easy to write.',
+              'These past weeks I had to live up to it. We are in build and data validation in development, migrating the classic extractors of an ECC system into CDS views in S/4HANA, and the first load I put up for reconciliation <strong>came out green</strong>. No errors, no rejected records, no warnings. And with fewer rows than the source had.',
+              'It was not an isolated case. It turned out to be the characteristic failure mode of this architecture, and it forced me to revisit something more uncomfortable than a mapping: <strong>the criterion by which we call a load good</strong>. This edition is what we found, and why I think it changes what belongs in a work plan — and, if you sign the budget, in a contract.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'A declarative model fails differently',
+            body: [
+              'In ECC, an extractor was essentially a program. Code that knew which tables to read, in what order and with what logic. When a program gets it wrong, you usually notice: it aborts, it leaves a log, someone sees it in red.',
+              'In S/4HANA, the extractor is a <strong>CDS view with annotations</strong>. Annotations are declarations — they start with <code>@</code> — and they are not documentation: they are instructions. They tell the provisioning framework — <strong>ODP</strong>, the layer that exposes SAP data to the analytical world — what kind of data you are publishing, and the target system builds its half out of that declaration.',
+              'For a view to be extractable you need <strong>two declarations, not one</strong>. The first is the switch: <code>@Analytics.dataExtraction.enabled</code>. Without it the view exists, it can be queried and reported on perfectly well, but it is invisible to extraction. The second is the family of the data, and here comes the first oddity: <strong>the four families do not live in the same annotation</strong>. Master data and transactional data are declared with <code>@Analytics.dataCategory</code>; texts and hierarchies, with <code>@ObjectModel.dataCategory</code>. Searching for "the category annotation" hands you half the map and no sign that the other half is missing.',
+              'That the target container is derived from this is not a metaphor. The object that gets published carries the technical name of the view plus a suffix that comes out of that declaration: <code>$P</code> for master data attributes, <code>$T</code> for texts, <code>$H</code> for hierarchies, <code>$F</code> for transactional data. <strong>The type of whatever is born on the other side is literally in the name</strong>, and it is not chosen afterwards.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'When the key is compound',
+            body: [
+              'And all of that is when the key is a single field. Cost centre attributes, which is the object we were working on, do not have a key: they have three — controlling area, cost centre and validity date — and a compound key multiplies what you have to declare. The rule is that <strong>exactly one field of the key is the representative one</strong>, the one that "is" the entity, and it is marked with <code>@ObjectModel.representativeKey</code>. In SAP own example: a city dimension keyed on country + city has the city as its representative field, not the country. For cost centre, the representative is the cost centre; the controlling area is the prefix that makes it unique.',
+              'That annotation looks like analytical modelling and it is not: <strong>without it the framework will not publish the view</strong> — it complains that it cannot find a representative field — and there is no extraction. It also points at the field <strong>alias</strong>, not its source name: if you renamed it in the projection, the annotation has to point at the new name or it will not resolve.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Three more obligations, and none of them cosmetic',
+            items: [
+              '<strong>Every other key field needs an association</strong> to its own master data view. The controlling area cannot travel loose.',
+              '<strong>The validity date is the exception, and it brings two rules.</strong> The "valid to" field has to be part of the key and carry the end-date semantics; the "valid from" goes outside the key. And the "valid to" field <strong>cannot</strong> have an association, nor appear in the condition of any other one.',
+              '<strong>The text is associated to the representative field</strong>, not to the whole key — even though the association condition does have to include every key field, and the text view has to have exactly the same key.',
+            ],
+          },
+          {
+            type: 'prose',
+            body: [
+              'The target inherits that shape: a compound key in the source becomes a <strong>compounded object</strong> on the other side — the cost centre hanging off the controlling area — and which hangs off which is decided by the field you declared representative. If that derivation cannot be resolved, at least it speaks up: when another view tries to associate, activation fails with <code>RSODP056</code>, <em>cannot derive InfoObject name</em>. It is one of the very few times in this whole phase that the system stopped us.',
+              'Seen from a distance, all of this sounds like a simplification. Less code, less surface for error. But the risk did not disappear: <strong>it moved from the logic to the metadata</strong>. And a metadata error almost never produces an abort. It produces an extraction that runs, that delivers a dataset with the right shape, and that is incomplete.',
+              'It is a difference of nature, not of degree. <strong>A badly written program fails loudly. A badly placed declaration hands you less, in green.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The field nobody was watching',
+            body: [
+              'The case that teaches it best is also the silliest, which is exactly what makes it dangerous.',
+              'Back to that cost centre attributes extractor. Among some seventy-odd fields, the view carried <strong>the language field</strong>. One more attribute, of no analytical relevance; nobody reports on it. Nobody was watching it.',
+              'The target system assigns the <em>language field</em> flag to any column whose data type is <code>LANG</code>. By the type, not by what you declare — we established that by elimination: switching off the semantic annotation changed nothing, and reading the field from the table instead of the standard view did not either. And with that flag, the load process assumes the data is multilingual and <strong>adds a filter of its own</strong>: it requests only the languages installed in the target system and discards everything else. No error, no warning, no line in the log.',
+              'It is worth noticing where the criterion ended up living. How many rows arrive is not decided by the extractor, nor the view, nor the functional specification: it is decided by <strong>a list of languages configured in another system</strong>, which nobody on the source side has any reason to open.',
+              'SAP documents it in KBA <strong>3219389</strong>. We almost did not find it: the title talks about a <em>text datasource</em>, so you dismiss it when your problem is in an attributes view. The real cause has nothing to do with texts — it is the type of the field — but the title sends you somewhere else.',
+              'And then came the part that is genuinely an architecture decision. <strong>SAP documents the fix only on the target side</strong>: change that field flag by hand. It works. The problem is that this metadata is regenerated every time the source is replicated, so the correction erases itself. It is a perpetual manual step, one that survives only as long as the person who knows about it stays on the project, and that someone will forget in production on exactly the day it matters.',
+              'We preferred to solve it at the source. The line that worked breaks the type with a string function and pins it back down as a plain character, and it also <strong>renames the field</strong>: if the type is already corrected but the name is still the standard one, the target detects it again by name. They are two different mechanisms and you have to disable both. The mapping of the renamed field lives in the transformation, which is an object of its own, gets transported, and survives replication.',
+              'That is what changed: we did not eliminate the manual work, we <strong>moved it from a place that gets erased to one that persists</strong>. The price is that the technical name no longer matches the original extractor, and it has to be written down in the mapping matrix. That strikes me as a cheap trade.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The permission that returns less data',
+            body: [
+              'The second finding has a different shape and the same ending.',
+              'SAP standard views carry access controls of their own, written in a separate language — <strong>DCL</strong>, the dialect in which authorisations over a view are declared — and embedded in the model. When the view activates them, the system does not reject the query: it <strong>trims the result</strong> down to what that user is entitled to see. The standard authorisation profiles for extraction do not cover them: they enable the mechanism, not the content.',
+              'If the technical user on the connection is missing the <strong>business</strong> authorisations — a controlling area, a chart of accounts — the extraction does not fall over. It returns fewer rows. Or zero.',
+              'Think about what that means in an integration test. The technical team runs the load, it comes out green, the activity is marked closed. The functional user opens the report weeks later and sees a smaller figure. <strong>Nobody has any reason to suspect the permission, because the permission never said no.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'What the two failures have in common',
+            body: [
+              'A language field nobody reports on, and a business authorisation. They look nothing alike, except in the only thing that matters: <strong>neither of them produced an error</strong>. Both delivered a plausible result.',
+              'That is where this edition thesis comes from, and it is uncomfortable because it questions a habit we had running just fine: <strong>"the load ran without errors" has stopped being evidence of anything.</strong> It was a reasonable signal when the extractor was a program. In a declarative model, it is barely confirmation that the mechanism executed.',
+              'The evidence now is quantitative. Row counts against the source, full load, no filters and no <em>delta</em> — no incremental loading, bring everything — before comparing a single value. SAP has its own data transition validation tool precisely because reconciliation against the source is the test, not an optional assurance step.',
+              'Even the tool you test with changed, and in a way worth telling. The classic extractor checker — <code>RSA3</code>, the first reflex of anyone coming from ECC — does not work with CDS views. You have to use another report, <code>RODPS_REPL_TEST</code>, and that report brings a trap of its own: <strong>it does not simulate</strong>. Initialising or running a delta from there opens a real subscription in the operational delta queue, which someone then has to go and clean up. The diagnostic tool modifies the state you are diagnosing, and it does not announce that either.',
+              'There is a sequencing corollary we learned the hard way, and it is worth more than a lot of methodologies: <strong>delta goes last.</strong> Turning on incremental loading before the full load reconciles introduces time-window differences that get confused with mapping errors, and you lose days chasing a defect that does not exist. First you prove the data is correct; then you optimise how it arrives.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'The scope that was in no specification',
+            body: [
+              'And here comes the second kind of surprise from the build phase, which is no longer about quality but about scope.',
+              'The hierarchies — cost centres, chart of accounts — turned out to be the most expensive object and the worst estimated. Three reasons.',
+              'The first is that a hierarchy is not a flat table: declaring it as a hierarchy makes the object be born <strong>with segments</strong>. Five, in our case — header, header texts, nodes, node texts and intervals — and that format is derived from the annotation. Declaring the wrong family does not produce an error: it produces the wrong container, which you then have to delete and rebuild. It does not even all come from the same view: the node texts are not delivered by the hierarchy view but by a different one, so a single cost centre hierarchy already needs <strong>three views on the source side</strong>.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-cinco-seis-en.png',
+            alt: 'Mapping of the five DataSource segments of a cost centre hierarchy onto the six transformation groups on the target side: header, header texts, nodes, node texts and intervals each find their group, and the sixth group, texts by hierarchy level, is left with no source segment',
+            caption: 'Fig. 1 — Five arrive, six are waiting. The target does not require all six groups to be filled: a load that leaves one empty comes out the same colour as a complete one.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'The second is that there are <strong>two hierarchy syntaxes in CDS</strong> and the one that shows up first in any search is the wrong one. The new one — an entity of its own, declared with <code>DEFINE HIERARCHY</code> — serves analytical consumption and <strong>not</strong> extraction; the extraction path is still the <code>@ObjectModel.dataCategory: #HIERARCHY</code> annotation. We verified it the hard way: the <strong>244 pages</strong> of SAP official guide on ABAP data models do not mention extraction into the analytical world even once — neither the annotation that enables it, nor the framework. It is correct information applied to the wrong scenario, which is the hardest class of error to catch because everything you read is true.',
+              'The third is the one that changes the plan, and it follows directly from the first. Because the node texts arrive separately, migrating those hierarchies the way SAP recommends means <strong>you have to modify objects in the target system</strong>: adding two characteristics to the cost centre that do not exist today — one for the hierarchy identifier and one for the node text, compounded to the former — with fixed lengths and mapped segment by segment. That is not configuration: <strong>it is modelling</strong>. We checked it against the system: in two of the three hierarchies in scope, that configuration is literally empty.',
+              'None of the functional specifications mentioned it. And not out of carelessness: <strong>they are written from the source side</strong>. They describe with precision what data has to come out of S/4HANA, because that is where the novelty is and where the analysis concentrated. The target is taken for granted, because "it already exists and it already works".',
+              'That assumption is the one to break. In a migration like this, <strong>the system you are not migrating also has work to do</strong>, and that work does not appear in any document until someone tries to load the first tree.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'What I would ask of a work plan',
+            items: [
+              '<strong>That the definition of "done" is a number, not a colour.</strong> A count against the source, full load, no delta. If the activity can be closed with a green screenshot, the criterion is badly written.',
+              '<strong>That delta is planned as a later phase</strong>, not as part of the build. It is a sequencing decision that saves weeks of false diagnosis.',
+              '<strong>That the scope explicitly covers the target system.</strong> If your specifications only describe the source, you have half a scope and a contingency calculated on half the work. It is worth asking, before signing: <em>what has to be modified on the other side?</em>',
+              '<strong>That the authorisation test is a business test, not a technical one.</strong> That the connection user can connect proves nothing about what data it can actually see. This gets requested in writing and measured with a count.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'True north',
+            body: [
+              'I say this from a region where none of it is hypothetical. A good share of the operations of the multinationals installed in the northeast runs on SAP platforms that are, or are about to be, in this same transition. The conversation about how a migration gets tested is not an implementation detail: it is the difference between finding a shortfall in development and finding it in a close.',
+              'Edition 02 of this newsletter argued that design <em>is</em> the migration. I still hold to that. But the build phase taught me something design alone cannot solve: <strong>even with the right specification, the way of proving the data arrived complete had to change.</strong>',
+              'Migrating to a declarative model did not remove the risk: <strong>it left it without symptoms</strong>. And a risk without symptoms is the argument for making validation stricter, not lighter. Less code does not mean fewer tests. It means different tests: less reviewing logic and more counting rows.',
+              'If you are about to enter this phase, the cheapest change you can make today does not cost a single line of code. It is rewriting the acceptance criterion of your load activities so that it demands a number. Everything else in this edition we discovered because that number did not add up.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Sources',
+            items: [
+              'SAP Learning — <em>Working with ODP Context: CDS view based extraction</em>. Extractability conditions: <code>@Analytics.dataCategory</code> <strong>or</strong> <code>@ObjectModel.dataCategory</code> <strong>and</strong> <code>@Analytics.dataExtraction.enabled</code>; the <code>$P</code>/<code>$T</code>/<code>$H</code>/<code>$F</code> ODP suffixes. <a href="https://learning.sap.com/courses/upgrading-your-sap-bw-skills-to-sap-bw-4hana/working-with-odp-context-cds-view-based-extraction_f01df9a0-0e79-4d76-be38-d2cfac4dde42" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Learning — <em>Working with Dimension and Text Views</em>. Compound keys: a single <code>@ObjectModel.representativeKey</code>; every other key field requires an association; rules for <code>@Semantics.businessDate.to</code> and <code>.from</code>. <a href="https://learning.sap.com/courses/developing-analytical-models-with-cds-based-analytical-projection-views/working-with-dimension-and-text-views" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Learning — <em>Working with Hierarchy Views</em>. The five views of a hierarchy and the constraint that the hierarchy view admits no associations. <a href="https://learning.sap.com/courses/developing-analytical-models-with-cds-based-analytical-projection-views/working-with-hierarchy-views" target="_blank" rel="noopener">learning.sap.com</a>',
+              'SAP Help — <em>Analytics Annotations</em> and <em>ObjectModel Annotations</em>: the <code>dataCategory</code> enum, <code>dataExtraction.delta</code>, <code>representativeKey</code>, <code>foreignKey.association</code> and <code>hierarchy.association</code>. <a href="https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/c2/dd92fb83784c4a87e16e66abeeacbd/content.htm" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP — KBA <strong>3219389</strong>: the load process automatically filters by the languages installed in the target system when the DataSource has a field flagged as <em>Language Field</em>; also valid for DataSources based on S/4HANA CDS views. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3219389" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP — KBA <strong>2754750</strong>: <code>RSODP056</code>, <em>cannot derive InfoObject name</em>, when the target view of an association has a compounded characteristic. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/2754750" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP — KBA <strong>3062210</strong>: user-dependent access restrictions on CDS views via DCL and <code>@AccessControl.authorizationCheck</code>. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3062210" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'SAP Help — <em>ABAP Data Models</em>: SAP official ABAP data models guide, whose hierarchies chapter does not cover extraction. <a href="https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP — <em>ABAP CDS: DEFINE HIERARCHY</em>: the hierarchy syntax for analytical consumption, distinct from the extraction path. <a href="https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/abencds_f1_define_hierarchy.htm" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP Community (S. Kranig, SAP) — <em>CDS based data extraction, Part III: Miscellaneous</em>. Node texts come in a separate view and force two external characteristics in the target; <code>RSA3</code> does not apply and <code>RODPS_REPL_TEST</code> is not a simulation. <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/cds-based-data-extraction-part-iii-miscellaneous/ba-p/13452148" target="_blank" rel="noopener">community.sap.com</a>',
+              'SAP Community (RIG) — <em>An Introduction to the Data Transition Validation Tool</em>: reconciliation against the source as the test of success. <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/an-introduction-to-the-data-transition-validation-tool/ba-p/13541524" target="_blank" rel="noopener">community.sap.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {
