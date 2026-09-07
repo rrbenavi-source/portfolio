@@ -1553,6 +1553,45 @@ export const dict = {
             ],
           },
           {
+            type: 'code',
+            label: 'CDS view · cost centre attributes extractor',
+            code: `@AbapCatalog.sqlViewName: 'ZVCOSTCENTER'
+@EndUserText.label: 'BW 0COSTCENTER_ATTR - cost centre attributes'
+
+// The two declarations that make the view extractable
+@Analytics.dataCategory: #DIMENSION
+@Analytics.dataExtraction.enabled: true
+
+// Points at the field alias, not at its source name
+@ObjectModel.representativeKey: 'KOSTL'
+
+define view ZI_CostCenter_Attr_BW
+  as select from I_CostCenter as _CC
+    left outer to one join CSKS as _Z
+      on  _CC.ControllingArea = _Z.KOKRS
+      and _CC.CostCenter      = _Z.KOSTL
+      and _CC.ValidityEndDate = _Z.DATBI
+{
+  // Composite key: controlling area + cost centre + validity
+  key _CC.ControllingArea    as KOKRS,
+  key _CC.CostCenter         as KOSTL,
+
+  // "Valid to" belongs inside the key; "valid from" stays outside
+  @Semantics.businessDate.to: true
+  key _CC.ValidityEndDate    as DATETO,
+
+  @Semantics.businessDate.from: true
+      _CC.ValidityStartDate  as DATEFROM,
+
+  // ... some seventy attributes: org assignments, address, blocks ...
+
+  // The language field: the LANG type is broken and the field renamed (KBA 3219389)
+      cast( left( _Z.SPRAS, 1 ) as abap.char( 1 ) ) as ZZSPRAS
+}`,
+            caption:
+              'Fig. 1 — The cost centre attributes extractor, trimmed down to the lines that decide the result: the two declarations that make it extractable, the composite key with its representative field, and the language field cut. Names and structure are illustrative.',
+          },
+          {
             type: 'prose',
             heading: 'The permission that returns less data',
             body: [
@@ -1586,7 +1625,7 @@ export const dict = {
             type: 'figure',
             src: 'fig-cinco-seis-en.png',
             alt: 'Mapping of the five DataSource segments of a cost centre hierarchy onto the six transformation groups on the target side: header, header texts, nodes, node texts and intervals each find their group, and the sixth group, texts by hierarchy level, is left with no source segment',
-            caption: 'Fig. 1 — Five arrive, six are waiting. The target does not require all six groups to be filled: a load that leaves one empty comes out the same colour as a complete one.',
+            caption: 'Fig. 2 — Five arrive, six are waiting. The target does not require all six groups to be filled: a load that leaves one empty comes out the same colour as a complete one.',
           },
           {
             type: 'prose',

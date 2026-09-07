@@ -1553,6 +1553,45 @@ export const dict = {
             ],
           },
           {
+            type: 'code',
+            label: 'Vista CDS · extractor de atributos de centro de coste',
+            code: `@AbapCatalog.sqlViewName: 'ZVCOSTCENTER'
+@EndUserText.label: 'BW 0COSTCENTER_ATTR — atributos de centro de coste'
+
+// Las dos declaraciones que hacen extraíble la vista
+@Analytics.dataCategory: #DIMENSION
+@Analytics.dataExtraction.enabled: true
+
+// Apunta al alias del campo, no a su nombre de origen
+@ObjectModel.representativeKey: 'KOSTL'
+
+define view ZI_CostCenter_Attr_BW
+  as select from I_CostCenter as _CC
+    left outer to one join CSKS as _Z
+      on  _CC.ControllingArea = _Z.KOKRS
+      and _CC.CostCenter      = _Z.KOSTL
+      and _CC.ValidityEndDate = _Z.DATBI
+{
+  // Llave compuesta: sociedad CO + centro de coste + validez
+  key _CC.ControllingArea    as KOKRS,
+  key _CC.CostCenter         as KOSTL,
+
+  // El «válido hasta» va dentro de la llave; el «válido desde», fuera
+  @Semantics.businessDate.to: true
+  key _CC.ValidityEndDate    as DATETO,
+
+  @Semantics.businessDate.from: true
+      _CC.ValidityStartDate  as DATEFROM,
+
+  // ... setenta y tantos atributos: organización, dirección, bloqueos ...
+
+  // El campo de idioma: se rompe el tipo LANG y se renombra (KBA 3219389)
+      cast( left( _Z.SPRAS, 1 ) as abap.char( 1 ) ) as ZZSPRAS
+}`,
+            caption:
+              'Fig. 1 — El extractor de atributos de centro de coste, recortado a las líneas que deciden el resultado: las dos declaraciones que lo hacen extraíble, la llave compuesta con su campo representativo y el corte del campo de idioma. Nombres y estructura son ilustrativos.',
+          },
+          {
             type: 'prose',
             heading: 'El permiso que devuelve menos datos',
             body: [
@@ -1586,7 +1625,7 @@ export const dict = {
             type: 'figure',
             src: 'fig-cinco-seis.png',
             alt: 'Mapeo de los cinco segmentos del DataSource de una jerarquía de centro de coste hacia los seis grupos de la transformación en el destino: cabecera, textos de cabecera, nodos, textos de nodo e intervalos encuentran su grupo, y el sexto grupo, textos por nivel de jerarquía, se queda sin segmento de origen',
-            caption: 'Fig. 1 — Cinco entran, seis esperan. El destino no exige que sus seis grupos estén llenos: una carga que deja uno vacío sale del mismo color que una completa.',
+            caption: 'Fig. 2 — Cinco entran, seis esperan. El destino no exige que sus seis grupos estén llenos: una carga que deja uno vacío sale del mismo color que una completa.',
           },
           {
             type: 'prose',

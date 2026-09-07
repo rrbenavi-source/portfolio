@@ -14,6 +14,30 @@ function resolveImage(src: string): ImageMetadata {
   return entry.default;
 }
 
+type CodeLineKind = 'annotation' | 'comment' | 'plain';
+
+function classifyCodeLine(line: string): CodeLineKind {
+  const trimmed = line.trim();
+  if (trimmed.startsWith('//')) return 'comment';
+  if (trimmed.startsWith('@')) return 'annotation';
+  return 'plain';
+}
+
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// El <pre> se arma como cadena: cualquier salto de línea del template de Astro
+// dentro de un <pre> se renderiza como línea en blanco.
+function toCodeHtml(code: string): string {
+  const lines = code
+    .replace(/^\n+|\n+$/g, '')
+    .split('\n')
+    .map((text) => `<span class="art-code-line is-${classifyCodeLine(text)}">${escapeHtml(text) || ' '}</span>`)
+    .join('');
+  return `<code>${lines}</code>`;
+}
+
 interface ProseBlock {
   type: 'prose';
   heading?: string;
@@ -23,6 +47,12 @@ interface FigureBlock {
   type: 'figure';
   src: string;
   alt: string;
+  caption?: string;
+}
+interface CodeBlock {
+  type: 'code';
+  label?: string;
+  code: string;
   caption?: string;
 }
 interface QuoteBlock {
@@ -45,7 +75,7 @@ interface DomainsBlock {
   items: readonly { title: string; role: string; body: string }[];
 }
 
-type Block = ProseBlock | FigureBlock | QuoteBlock | ListBlock | StepsBlock | DomainsBlock;
+type Block = ProseBlock | FigureBlock | CodeBlock | QuoteBlock | ListBlock | StepsBlock | DomainsBlock;
 
 interface Props {
   sections: readonly Block[];
@@ -67,6 +97,12 @@ const { sections } = Astro.props;
       ) : s.type === 'figure' ? (
         <figure class="art-fig">
           <Image src={resolveImage(s.src)} alt={s.alt} loading="lazy" />
+          {s.caption && <figcaption set:html={s.caption} />}
+        </figure>
+      ) : s.type === 'code' ? (
+        <figure class="art-code">
+          {s.label && <div class="art-code-bar">{s.label}</div>}
+          <pre set:html={toCodeHtml(s.code)} />
           {s.caption && <figcaption set:html={s.caption} />}
         </figure>
       ) : s.type === 'quote' ? (
@@ -180,6 +216,69 @@ const { sections } = Astro.props;
     color: var(--text-faint);
     font-size: 0.8rem;
     margin-top: 0.8rem;
+    font-family: 'Space Grotesk';
+    letter-spacing: 0.02em;
+  }
+
+  .art-code {
+    margin: 2.4rem 0;
+  }
+
+  .art-code pre {
+    margin: 0;
+    padding: 1.1rem 1.2rem;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 0 0 14px 14px;
+    background: oklch(18% 0.012 250 / 0.75);
+    box-shadow: 0 14px 44px oklch(10% 0.02 250 / 0.35);
+  }
+
+  .art-code-bar {
+    font-family: 'Space Grotesk';
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 14px 14px 0 0;
+    background: oklch(22% 0.012 250 / 0.85);
+  }
+
+  .art-code :global(code) {
+    display: block;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    background: none;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    white-space: pre;
+    color: var(--text-dim);
+  }
+
+  .art-code :global(.art-code-line) {
+    display: block;
+    white-space: pre;
+  }
+
+  .art-code :global(.art-code-line.is-annotation) {
+    color: var(--accent);
+  }
+
+  .art-code :global(.art-code-line.is-comment) {
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  .art-code figcaption {
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    margin-top: 0.8rem;
+    line-height: 1.5;
     font-family: 'Space Grotesk';
     letter-spacing: 0.02em;
   }

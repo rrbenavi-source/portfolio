@@ -119,6 +119,46 @@ Eso es lo que cambió: no eliminamos el trabajo manual, lo **mudamos de un lugar
 que persiste**. El precio es que el nombre técnico deja de coincidir con el del extractor original
 y hay que dejarlo escrito en la matriz de mapeo. Me parece un intercambio barato.
 
+```abap
+@AbapCatalog.sqlViewName: 'ZVCOSTCENTER'
+@EndUserText.label: 'BW 0COSTCENTER_ATTR — atributos de centro de coste'
+
+// Las dos declaraciones que hacen extraíble la vista
+@Analytics.dataCategory: #DIMENSION
+@Analytics.dataExtraction.enabled: true
+
+// Apunta al alias del campo, no a su nombre de origen
+@ObjectModel.representativeKey: 'KOSTL'
+
+define view ZI_CostCenter_Attr_BW
+  as select from I_CostCenter as _CC
+    left outer to one join CSKS as _Z
+      on  _CC.ControllingArea = _Z.KOKRS
+      and _CC.CostCenter      = _Z.KOSTL
+      and _CC.ValidityEndDate = _Z.DATBI
+{
+  // Llave compuesta: sociedad CO + centro de coste + validez
+  key _CC.ControllingArea    as KOKRS,
+  key _CC.CostCenter         as KOSTL,
+
+  // El «válido hasta» va dentro de la llave; el «válido desde», fuera
+  @Semantics.businessDate.to: true
+  key _CC.ValidityEndDate    as DATETO,
+
+  @Semantics.businessDate.from: true
+      _CC.ValidityStartDate  as DATEFROM,
+
+  // ... setenta y tantos atributos: organización, dirección, bloqueos ...
+
+  // El campo de idioma: se rompe el tipo LANG y se renombra (KBA 3219389)
+      cast( left( _Z.SPRAS, 1 ) as abap.char( 1 ) ) as ZZSPRAS
+}
+```
+
+**Fig. 1 — El extractor de atributos de centro de coste**, recortado a las líneas que deciden el
+resultado: las dos declaraciones que lo hacen extraíble, la llave compuesta con su campo
+representativo y el corte del campo de idioma. Nombres y estructura son ilustrativos.
+
 ## El permiso que devuelve menos datos
 
 El segundo hallazgo tiene forma distinta y el mismo desenlace.
