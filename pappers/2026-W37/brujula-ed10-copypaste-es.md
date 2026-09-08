@@ -12,8 +12,8 @@ Cambia de tema respecto a las ediciones 08 y 09 (BW → Business Data Cloud). Es
 1. Crear la edición nueva en el editor de newsletter de LinkedIn.
 2. Pegar **título** y **subtítulo** (abajo).
 3. Subir la **portada**: `brujula-cover-10.png` (1920×1080).
-4. Pegar el **cuerpo** entre los separadores, respetando la marca `[ Sube la figura: … ]`.
-5. Subir la figura en su posición, con el **alt text** que viene más abajo.
+4. Pegar el **cuerpo** entre los separadores, respetando las marcas `[ Sube la figura N: … ]`.
+5. Subir las **dos figuras** en su posición, con el **alt text** que viene más abajo.
 6. Llenar los campos de **SEO** (título y descripción).
 7. Publicar, y de inmediato hacer el **post de lanzamiento** en el feed.
 8. Poner el **primer comentario** con los dos links. LinkedIn penaliza los links externos en el cuerpo del post.
@@ -41,7 +41,8 @@ Migrar extractores clásicos a CDS views mueve el riesgo de la lógica al metada
 ## Alt text de las imágenes
 
 - **Portada:** Portada de la edición 10 del newsletter Brújula, titulada "Cómo validar una migración de extractores a S/4HANA", sobre fondo oscuro con acento teal.
-- **Figura 1** (`fig-cinco-seis.png`): Mapeo de los cinco segmentos del DataSource de una jerarquía de centro de coste hacia los seis grupos de la transformación en el destino. Cabecera, textos de cabecera, nodos, textos de nodo e intervalos encuentran su grupo; el sexto grupo, textos por nivel de jerarquía, se queda sin segmento de origen.
+- **Figura 1** (`fig-codigo-cds.png`): El extractor de atributos de centro de coste en código CDS, recortado a las líneas que deciden el resultado. Resaltadas, las dos anotaciones que habilitan la extracción (@Analytics.dataCategory y @Analytics.dataExtraction.enabled) y la línea que rompe el tipo LANG del campo de idioma y lo renombra. Nombres y estructura son ilustrativos.
+- **Figura 2** (`fig-cinco-seis.png`): Mapeo de los cinco segmentos del DataSource de una jerarquía de centro de coste hacia los seis grupos de la transformación en el destino. Cabecera, textos de cabecera, nodos, textos de nodo e intervalos encuentran su grupo; el sexto grupo, textos por nivel de jerarquía, se queda sin segmento de origen.
 
 ---
 
@@ -99,6 +100,8 @@ Preferimos resolverlo en el origen. La línea que funcionó rompe el tipo con un
 
 Eso es lo que cambió: no eliminamos el trabajo manual, lo **mudamos de un lugar que se borra a uno que persiste**. El precio es que el nombre técnico deja de coincidir con el del extractor original y hay que dejarlo escrito en la matriz de mapeo. Me parece un intercambio barato.
 
+[ Sube la figura 1: fig-codigo-cds.png — "Las líneas que deciden el resultado" ]
+
 El permiso que devuelve menos datos
 
 El segundo hallazgo tiene forma distinta y el mismo desenlace.
@@ -129,7 +132,7 @@ Las jerarquías —centros de coste, plan de cuentas— resultaron el objeto má
 
 La primera es que una jerarquía no es una tabla plana: declararla como jerarquía hace que el objeto nazca **con segmentos**. Cinco, en nuestro caso —cabecera, textos de cabecera, nodos, textos de nodo e intervalos—, y ese formato se deriva de la anotación. Declarar la familia equivocada no produce un error: produce el contenedor equivocado, que hay que borrar y rehacer. Ni siquiera viene todo de la misma vista: los textos de los nodos no los entrega la vista de jerarquía sino otra distinta, así que una sola jerarquía de centro de coste ya necesita **tres vistas en el origen**.
 
-[ Sube la figura: fig-cinco-seis.png — "Cinco entran, seis esperan" ]
+[ Sube la figura 2: fig-cinco-seis.png — "Cinco entran, seis esperan" ]
 
 La segunda es que existen **dos sintaxis de jerarquías en CDS** y la que aparece primero en cualquier búsqueda es la equivocada. La nueva —una entidad propia, declarada con DEFINE HIERARCHY— sirve para consumo analítico y **no** para extracción; la vía de extracción sigue siendo la anotación @ObjectModel.dataCategory: #HIERARCHY. Lo verificamos de la forma dura: las **244 páginas** de la guía oficial de SAP sobre modelos de datos ABAP no mencionan ni una sola vez la extracción hacia el mundo analítico —ni la anotación que la habilita, ni el framework—. Es información correcta aplicada al escenario equivocado, que es la clase de error más difícil de detectar porque todo lo que lees es cierto.
 
@@ -193,7 +196,7 @@ Escribí las cuatro cosas que le pediría a un plan de trabajo —y las dos que 
 
 ## PRIMER COMENTARIO (poner de inmediato)
 
-Edición 10 completa, con la figura de los cinco segmentos que llegan a seis casillas:
+Edición 10 completa, con el código de la vista CDS y la figura de los cinco segmentos que llegan a seis casillas:
 https://rrbenavi-source.github.io/portfolio/publicaciones/validar-migracion-extractores-s4hana
 
 Y la edición 02, que es la que esta retoma —"El diseño es la migración":

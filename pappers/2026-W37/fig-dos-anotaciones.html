@@ -1,0 +1,70 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:70px 64px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:24px;}
+ h2 .em{color:var(--teal);font-style:italic;padding-right:.07em;}
+ .lede{font-size:23px;color:var(--dim);margin-top:16px;line-height:1.42;max-width:46ch;}
+ .sw{margin-top:32px;border:1px solid rgba(43,189,143,.45);border-radius:12px;background:linear-gradient(180deg,rgba(43,189,143,.16),rgba(43,189,143,.03));padding:26px 24px;display:flex;align-items:center;gap:22px;}
+ .sw .n{font-family:"Space Grotesk";font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:600;white-space:nowrap;}
+ .sw .c{font-family:"Space Grotesk";font-size:24px;font-weight:600;color:var(--text);}
+ .sw .t{font-size:18px;color:var(--dim);line-height:1.35;border-left:1px solid rgba(43,189,143,.3);padding-left:20px;}
+ .lanes{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+ .lane{border-radius:12px;padding:30px 24px;display:flex;flex-direction:column;gap:20px;}
+ .lane.a{border:1px solid rgba(43,189,143,.42);background:linear-gradient(180deg,rgba(43,189,143,.13),rgba(43,189,143,.02));}
+ .lane.b{border:1px solid var(--line);background:linear-gradient(180deg,#1b2027,#171a1f);}
+ .ann{font-family:"Space Grotesk";font-size:19px;font-weight:600;color:var(--teal);line-height:1.25;word-break:break-word;}
+ .lane.b .ann{color:#9aa4b0;}
+ .anh{font-family:"Space Grotesk";font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600;}
+ .row{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:9px;}
+ .lane.a .row{border-top-color:rgba(43,189,143,.25);}
+ .val{font-family:"Space Grotesk";font-size:24px;font-weight:600;color:var(--text);}
+ .fam{font-size:22px;color:var(--dim);line-height:1.3;}
+ .sfx{margin-top:5px;font-family:"Space Grotesk";font-size:20px;font-weight:600;color:var(--faint);}
+ .sfx b{color:var(--teal);font-size:20px;}
+ .lane.b .sfx b{color:#c3ccd6;}
+ .note{margin-top:28px;border:1px dashed #4a525e;border-radius:12px;padding:24px 24px;font-size:20px;color:var(--dim);line-height:1.45;}
+ .note b{color:var(--text);} .note code{font-family:"Space Grotesk";color:#c3ccd6;}
+ .kicker{margin-top:30px;border-left:3px solid var(--teal);padding-left:22px;font-size:24px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;margin-bottom:6px;border-top:1px solid var(--line);padding-top:15px;padding-right:150px;font-size:15px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:50px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 10</div>
+  <h2>Dos anotaciones, cuatro <span class="em">destinos</span></h2>
+  <p class="lede">Para que una vista CDS sea extraíble hacen falta dos declaraciones, no una. Y la familia del dato no vive en una sola anotación: vive en dos.</p>
+
+  <div class="sw">
+    <div class="n">Obligatoria</div>
+    <div class="c">@Analytics.dataExtraction.enabled</div>
+    <div class="t">Sin ella la vista existe y se reportea, pero es invisible para la extracción.</div>
+  </div>
+
+  <div class="lanes">
+    <div class="lane a">
+      <div class="anh">Anotación 1</div>
+      <div class="ann">@Analytics.dataCategory</div>
+      <div class="row"><div class="val">#DIMENSION</div><div class="fam">Datos maestros · atributos</div><div class="sfx">ODP <b>$P</b></div></div>
+      <div class="row"><div class="val">#FACT · #CUBE</div><div class="fam">Transaccionales · hechos</div><div class="sfx">ODP <b>$F</b></div></div>
+    </div>
+    <div class="lane b">
+      <div class="anh">Anotación 2</div>
+      <div class="ann">@ObjectModel.dataCategory</div>
+      <div class="row"><div class="val">#TEXT</div><div class="fam">Textos</div><div class="sfx">ODP <b>$T</b></div></div>
+      <div class="row"><div class="val">#HIERARCHY</div><div class="fam">Jerarquías</div><div class="sfx">ODP <b>$H</b></div></div>
+    </div>
+  </div>
+
+  <div class="note"><b>Sin <code>dataCategory</code> el sufijo es <code>$E</code>:</b> la vista es extraíble pero no está clasificada, y del otro lado nace un objeto genérico. Y <code>#MASTER_DATA</code> no existe — una vista de atributos no lleva <code>@ObjectModel.dataCategory</code> en absoluto.</div>
+
+  <div class="kicker">Declarar la familia equivocada no produce un error: produce el contenedor equivocado, que hay que borrar y rehacer. El sufijo del nombre ODP es el chequeo de cinco segundos.</div>
+
+  <div class="src">Fuente: SAP Learning, <i>Working with ODP Context: CDS view based extraction</i>. La condición formal es una dataCategory —de cualquiera de las dos anotaciones— <b>y</b> dataExtraction.enabled.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

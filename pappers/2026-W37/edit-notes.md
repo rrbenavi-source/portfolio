@@ -457,3 +457,27 @@ URLs finales:
 
 Nota: el cuerpo del papper conserva la frase «verde no es evidencia» como tesis interna —sigue
 funcionando como remate, ya no como título.
+
+---
+
+## L. Figuras para LinkedIn (2026-09-08)
+
+La web ganó una **Fig. 1 de código** (commit `2da5ebc`, hecho fuera de esta sesión): un bloque
+`type: 'code'` con la vista CDS del extractor de atributos de centro de coste. En la web funciona
+—el texto es seleccionable— pero **LinkedIn no renderiza bloques de código**, así que el copypaste
+se quedó con una sola imagen.
+
+**Solución:** `fig-codigo-cds.png` / `-en.png` (1080×1350) — el mismo código renderizado como
+imagen de marca, con resaltado sobre las dos anotaciones que habilitan la extracción y sobre la
+línea del `cast`/rename del campo de idioma. Queda como **Figura 1** del material de LinkedIn;
+`fig-cinco-seis` pasa a **Figura 2**. Así LinkedIn y la web quedan con la misma numeración.
+
+La web **no se toca**: ahí el código sigue como bloque de texto, que es mejor para leer y copiar.
+
+### Extra disponible, sin usar
+`fig-dos-anotaciones.png` / `-en.png` — mapa de las anotaciones: la obligatoria
+`@Analytics.dataExtraction.enabled` arriba, y abajo las dos anotaciones `dataCategory`
+repartiéndose las cuatro familias con su sufijo ODP (`$P`/`$F`/`$T`/`$H`), más la nota de que
+`$E` es «sin clasificar» y de que `#MASTER_DATA` no existe. La construí antes de ver el commit
+del código. Es el activo más «guardable» de la edición, pero serían tres figuras: queda
+disponible por si la quieres para la web, para un carrusel aparte o para una edición futura.
