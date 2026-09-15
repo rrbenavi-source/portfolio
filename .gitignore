@@ -6,3 +6,6 @@ web/dist/
 
 # PDFs fuente sueltos en la raíz de pappers/ (material de referencia, no deliverables)
 pappers/*.pdf
+
+# Notas de SAP bajadas de SAP for Me (contenido propietario, repo público)
+notas_sap/

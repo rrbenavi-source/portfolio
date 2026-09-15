@@ -1675,6 +1675,192 @@ define view ZI_CostCenter_Attr_BW
           },
         ],
       },
+      {
+        idx: '13',
+        slug: 'la-aduana',
+        subtitle: 'Arquitectura de Datos · SAP',
+        title: 'La aduana',
+        role: 'Autor: Ricardo Benavides',
+        meta: '2026',
+        hero: 'brujula-cover-11.png',
+        lead: 'Para poder salir de la analítica de SAP, tuvieron que comprar un producto de analítica de SAP. Eso no es un accidente de este proyecto: es la forma que tomó el mercado este año.',
+        summary:
+          'Un cliente que venía de ECC con reporting en BW 7.5 migró a S/4HANA y, del lado analítico, dejó SAP: se fue a Microsoft Fabric y a un lago de datos, integrando por CDS views y replication flows de SAP Datasphere. Esta edición parte de esa arquitectura para defender una tesis: desde junio de 2026 —cuando un parche de seguridad empezó a bloquear técnicamente las llamadas ODP-RFC de aplicaciones no-SAP— la puerta de salida del dato dejó de ser un tema de ETL y pasó a ser uno de arquitectura y de contrato. Cuatro puertas legítimas, un medidor que cobra por gigabyte y no tiene corte, un inventario que no existe hasta el día que lo instalas, y un segundo peaje que no se cobra en gigabytes sino en meses de gente.',
+        tags: ['SAP', 'S/4HANA', 'Microsoft Fabric', 'SAP Datasphere', 'ODP', 'Lakehouse', 'Arquitectura de Datos'],
+        body: [
+          {
+            type: 'prose',
+            body: [
+              'Un cliente con el que trabajamos tomó una decisión que voy a ver muchas veces en los próximos tres años. Venía de un ECC con reporting en <strong>BW 7.5</strong> —la generación previa del data warehouse de SAP, la que sigue viva en media industria— y se fue a S/4HANA. Hasta ahí, la película conocida.',
+              'Lo interesante pasó del otro lado. Cuando llegó el momento de decidir la plataforma analítica, no siguieron el camino de casa. No fueron a BW/4HANA ni a SAC. Se fueron a <strong>Microsoft Fabric</strong> y a un lago de datos. La integración quedó así: <strong>CDS views</strong> en S/4HANA —las vistas que exponen el dato del ERP ya con contexto de negocio, no como tabla cruda—, consumidas por <strong>replication flows de SAP Datasphere</strong>, que las aterrizan listas para Fabric.',
+              'Es una arquitectura defendible y me parece bien resuelta. Pero encierra una paradoja que vale la pena decir en voz alta: <strong>para poder salir de la analítica de SAP, tuvieron que comprar un producto de analítica de SAP.</strong>',
+              'Eso no es un accidente de este proyecto. Es la forma que tomó el mercado este año, y muy poca gente lo tiene en su business case.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Hasta hace poco, la puerta era gratis',
+            body: [
+              'Durante quince años la respuesta a «¿cómo saco mis datos de SAP?» fue prácticamente universal: <strong>ODP</strong> —<em>Operational Data Provisioning</em>, la capa que expone los datos de SAP hacia el mundo analítico— y en particular su interfaz por RFC, <strong>ODP-RFC</strong>. Cualquier herramienta de integración del mercado se conectaba por ahí. Era la puerta de servicio: no estaba en el folleto, pero estaba abierta y todo el mundo la usaba.',
+              'SAP la cerró. Y no lo hizo de golpe ni en silencio.',
+              'La nota <strong>3255746</strong> —<em>Unpermitted usage of ODP Data Replication APIs</em>— se publicó en 2022 diciendo que esas APIs eran de uso interno y no estaban soportadas para terceros. Hoy va en su <strong>versión 12, liberada el 9 de junio de 2026</strong>, y su redacción ya no deja espacio interpretativo:',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'Any use of ODP-RFC by customer or third-party applications to access SAP ABAP applications that contain one of the following components (PI_BASIS, SAP BW, SAP BW/4HANA) that run on-premise or in private-cloud setup is prohibited.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'Y no se quedó en la política. La misma nota anuncia el mecanismo: una nota de seguridad —la <strong>3748819</strong>, del <em>Patch Day</em> de junio de 2026, con las correcciones de código en la <strong>3635619</strong>— que valida las llamadas entrantes contra los tipos de suscriptor permitidos y <strong>bloquea</strong> las que no lo son.',
+              'Hay una válvula de escape, y vale la pena leer sus términos completos. La nota <strong>3731818</strong> entrega un reporte, <code>RODPS_REPL_SECUREACCESS_OPTOUT</code>, que suspende temporalmente ese bloqueo. SAP lo describe como estrictamente limitado en el tiempo, pensado solo para mitigar interrupciones operativas de corto plazo y aplicable <strong>bajo riesgo del propio cliente</strong>. Y cierra así:',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'This temporary exception will expire end of 2026. Upon expiration, SAP will release an SAP note that will reinstate mandatory secure-by-default protections… which will permanently disable the temporary exception mechanism and will be enforced without exception.',
+          },
+          {
+            type: 'prose',
+            body: [
+              '<em>Enforced without exception.</em> Eso no es una fecha objetivo. Es una fecha de vencimiento.',
+              'Y hay dos líneas más en la 3255746 que un CIO debería leer antes que cualquier diagrama de arquitectura: que <strong>SAP se reserva el derecho de modificar los módulos de ODP-RFC en cualquier momento sin aviso previo</strong>, y que <strong>cualquier incidente derivado de un uso fuera de las guías de SAP es responsabilidad exclusiva del cliente</strong>. La segunda no es una advertencia técnica. Es un traslado de responsabilidad.',
+              'La señal de que esto tampoco es folclore de consultoría: <strong>Microsoft lo documenta en su propia guía.</strong> Su conector SAP CDC lleva una advertencia textual que remite a la nota 3255746 «para determinar si es relevante para tu licenciamiento actual de SAP». Y la guía abre, antes de cualquier tema técnico, pidiendo verificar los <em>entitlements</em> de licencia de la organización antes de empezar cualquier extracción. Que el proveedor del destino te recuerde que revises la licencia del origen dice bastante sobre dónde está el riesgo real.',
+              'Conviene leer el cambio sin dramatismo: <strong>no es un deprecation técnico, es una decisión de titularidad.</strong> SAP dejó de tratar la extracción como un detalle de infraestructura y empezó a tratarla como un producto. Es legítimo. Pero cambia la naturaleza de la pregunta: «cómo saco mis datos» dejó de ser un tema de ETL y pasó a ser un tema de arquitectura y de contrato.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El inventario que todavía no existe',
+            body: [
+              'SAP también entregó la herramienta para saber quién está tocando esa puerta hoy: la nota <strong>3439624</strong>, en su versión 34 liberada el 9 de septiembre de 2026, instala el reporte <code>RODPS_REPL_SUBSCRIBER_ASSESS</code>, que clasifica cada llamada en cuatro estados: permitida, no permitida, <em>poco clara</em> (reservado a SAP Data Services y HANA Smart Data Integration, que hay que verificar a mano) y sin información.',
+              'Tiene dos propiedades que cambian por completo <strong>cuándo</strong> hay que actuar.',
+              'La primera: <strong>evalúa las llamadas a partir del momento en que se instala, y no evalúa llamadas históricas.</strong> Tu inventario de uso de ODP-RFC no está esperándote en ningún log. Empieza a existir el día que implementas la nota. Cada semana que se pospone es una semana de ceguera que no se recupera hacia atrás, contra una fecha límite que está en diciembre. Y en un paisaje BW 7.5 eso no es un clic: llega por support package, o sea que tu inventario depende de una ventana de mantenimiento de basis y de su calendario, no del tuyo.',
+              'La segunda es una admisión que hay que agradecerle a SAP, porque es justo la que evita un falso positivo de tranquilidad. Textual:',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'Please note that the above report does not provide conclusive results of the non-existence of unpermitted calls to the ODP-RFC interface.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'El reporte puede decirte que <strong>encontró</strong> llamadas no permitidas. No puede decirte que <strong>no las hay</strong>. Un tablero en verde ahí no es evidencia de cumplimiento: es evidencia de que en la ventana observada no apareció nada. Y como ODP-RFC es dependiente de mandante, hay que correrlo en cada cliente relevante de cada sistema, no una vez por paisaje.',
+              'Es, otra vez, la forma de fallar de la que hablé en la edición anterior: el sistema no te detiene, te entrega verde.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Cuatro puertas y su peaje',
+            body: [
+              'Si hoy tienes que sacar dato de un ABAP —ECC o S/4HANA— hacia una plataforma que no es de SAP, las opciones legítimas se cuentan con los dedos de una mano. Vale la pena verlas juntas, porque la mayoría de los proyectos elige la primera que le presentaron.',
+            ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-cuatro-puertas.png',
+            alt: 'Cuatro puertas y su peaje: Datasphere con Premium Outbound Integration, la API OData de ODP, un conector certificado de partner con Open Mirroring, y SAP Business Data Cloud',
+            caption: 'El peaje de cada puerta es distinto, y dos de ellas lo cobran todos los meses.',
+          },
+          {
+            type: 'prose',
+            body: [
+              'Hay un detalle que se pasa por alto y que sostiene todo el argumento de esta edición: <strong>la nota 3255746 no menciona Datasphere entre las alternativas.</strong> No es un olvido. Datasphere no aparece como alternativa porque no es una alternativa <em>para ti</em>: es una aplicación SAP, y por eso su tráfico está permitido por definición. <strong>La prohibición nunca fue sobre el protocolo. Fue sobre quién está del otro lado del cable.</strong>',
+              'Las cuatro puertas son defendibles. Lo que no es defendible es llegar a la cuarta reunión de diseño sin haber escrito <strong>por qué</strong> se eligió una.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El medidor',
+            body: [
+              'Aquí es donde el business case se rompe casi siempre, y la mecánica está en la documentación pública de SAP.',
+              'Para usar <strong>cualquier destino no-SAP</strong> en un replication flow de Datasphere —Azure Data Lake Storage Gen2, Amazon S3, Google Cloud Storage, BigQuery, Kafka, SFTP— necesitas <strong>Premium Outbound Integration</strong>, y tu administrador tiene que asignar al menos un bloque. La unidad es clara: <em>«Each block gives you 20 GB of data volume for transfer.»</em> Un bloque, 20 GB, al mes. Microsoft lo confirma del lado del destino, en su página de mirroring para SAP: el precio de Premium Outbound Integration aplica cuando haces mirroring de datos de SAP vía Datasphere.',
+              'Y ahora la línea que a mi juicio debería estar en la primera diapositiva de cualquier plan de migración de este tipo. Es de SAP, textual, sobre qué pasa cuando te pasas del volumen asignado:',
+            ],
+          },
+          {
+            type: 'quote',
+            text: 'If you exceed the assigned volume, your data integration processes (such as replication flow runs) continues running to avoid interrupting critical integration scenarios, which can result in additional costs (depending on your plan).',
+          },
+          {
+            type: 'prose',
+            body: [
+              'Léela otra vez. <strong>El medidor no tiene corte.</strong> Y está bien diseñado así: cortar la integración de una empresa a mitad de un cierre mensual sería peor. Pero significa que el costo de salida es <strong>recurrente, variable y sin tope técnico</strong>, y que la única protección es organizacional: que alguien esté mirando el consumo.',
+              'Hay una consecuencia de segundo orden que casi nadie modela. <strong>Este costo crece con el éxito del proyecto.</strong> Cada nuevo caso de uso en Fabric, cada tabla que alguien pide «por si acaso», cada histórico que se recarga porque cambió una regla, cruza la puerta y se cobra. En BW, servir un reporte más costaba prácticamente cero al margen. En esta arquitectura, no.',
+              'Visto de frente, eso no es solo un riesgo: también es un incentivo sano. Es la primera vez en mi carrera que el diseño de extracción tiene un <strong>precio directo y visible</strong>. Extraer lo que se usa, con la granularidad con la que se usa, dejó de ser una buena práctica de ingeniería para convertirse en una línea del presupuesto. Los equipos que ya trabajaban así no van a notar el cambio. Los que extraían tablas completas «para tener todo disponible» lo van a notar en la factura del tercer mes.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'Datasphere como aduana, no como warehouse',
+            body: [
+              'Este es el reencuadre que quiero dejar, y es el que me parece más útil para quien está diseñando algo parecido.',
+              'En esta arquitectura, <strong>Datasphere no es el data warehouse. Es la aduana.</strong> Es la capa de tránsito donde el dato acredita que puede salir, paga su derecho de paso y sigue su camino. No es donde se modela, no es donde se gobierna el significado, no es de donde se reportea. Todo eso vive del otro lado, en Fabric y en el lago.',
+              'La primera consecuencia: <strong>una aduana es un sistema en operación, no un componente pasivo.</strong> Tiene monitoreo, tiene ventanas de carga, se cae, tiene dueño. En el papel del diagrama es una flecha; en la realidad es un sistema más que alguien opera de guardia. Si tu organigrama de la nueva plataforma no tiene a nadie sentado ahí, lo vas a descubrir el primer lunes de cierre.',
+              'La segunda es más incómoda: <strong>hay que decidir explícitamente que la aduana no va a crecer.</strong> El comportamiento por defecto de cualquier organización que ya compró una herramienta es empezar a usarla. Alguien va a proponer «ya que tenemos Datasphere, modelemos aquí esta dimensión». Y en seis meses tienes dos capas semánticas, cada una a medias, y la conversación de gobierno que creías haber cerrado al elegir Fabric vuelve a abrirse, ahora con dos dueños. La disciplina de mantener la aduana como aduana es una decisión que se escribe, se comunica y se defiende. No se sostiene sola.',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El segundo peaje: lo que no viaja',
+            body: [
+              'El peaje del que nadie habla no se cobra en gigabytes. Se cobra en meses de gente.',
+              '<strong>Un replication flow mueve filas. No mueve significado.</strong> Una parte del significado sí cruza, y por eso la elección de CDS views como punto de extracción es correcta: una CDS view ya trae el contexto de negocio del ERP —los joins, los filtros, las descripciones, la lógica de qué es una orden abierta—. Eso es exactamente lo que no tienes cuando lees tablas crudas.',
+              'Pero el otro contexto, el que vivía en BW, no viaja. Veinte años de key figures calculados y restringidos, jerarquías, reglas de consolidación, autorizaciones analíticas. Nada de eso está en la CDS view ni cabe en un archivo Parquet. Alguien lo tiene que volver a escribir del otro lado.',
+              'En este caso <strong>las reglas de negocio se rehicieron a mano, y en muchos casos no estaban 100&nbsp;% documentadas.</strong> Quiero ser preciso con lo que eso significa, porque suena a un problema de documentación y es otra cosa: buena parte de ese trabajo no fue migración, fue <strong>arqueología</strong>. Abrir la query vieja, leer la fórmula, encontrar a quien se acuerde de por qué en 2014 se excluyeron ciertos tipos de documento, y decidir si esa regla sigue siendo correcta o simplemente sigue viva.',
+              'Y aquí hay un reloj que casi nadie mira. <strong>BW 7.5 tiene mantenimiento mainstream hasta fin de 2027 y extendido hasta 2030.</strong> Mientras ese sistema siga prendido, las reglas no documentadas todavía se pueden leer: están en las queries, en las transformaciones, en la cabeza de la gente que las mantiene. El día que se apaga, lo que no se documentó deja de ser recuperable. La ventana para hacer esa arqueología con red de seguridad es finita, y se está cerrando en paralelo a la migración, no después.',
+            ],
+          },
+          {
+            type: 'list',
+            heading: 'Qué le pediría a un business case',
+            items: [
+              '<strong>Que el egress esté modelado como gasto recurrente y creciente, no como costo de proyecto.</strong> Con la cifra del estimador de capacidad de SAP y, mínimo, tres escenarios: año 1, año 3, y el año en que el 80&nbsp;% de tus reportes ya vive en la nueva plataforma. La pregunta correcta no es cuántos GB cruzan hoy; es cuántos van a cruzar cuando el proyecto haya tenido éxito.',
+              '<strong>Que el medidor tenga alarma y dueño con nombre.</strong> SAP dejó escrito que no corta. Entonces la protección tiene que existir de tu lado: umbral, alerta y una persona que responda por ella.',
+              '<strong>Que la elección de puerta esté escrita, con su razón.</strong> Cuál de las cuatro, por qué, y qué pasa si SAP vuelve a mover la línea. Es un anexo de dos párrafos que te ahorra una discusión de seis meses.',
+              '<strong>Que el autodiagnóstico de ODP-RFC quede instalado este trimestre, no el próximo.</strong> No lo pidas como tarea de cumplimiento; pídelo porque es la única forma de que el inventario <strong>exista</strong>: el reporte no ve hacia atrás. Y pídelo con la advertencia puesta —verde ahí significa «no vi nada en la ventana observada», no «no hay nada»—. La válvula temporal vence a fin de 2026 y SAP ya dejó escrito que después se aplica <em>sin excepción</em>. Si tienes integraciones viejas apuntando a esa interfaz, no se van a degradar: se van a detener.',
+              '<strong>Que la reconstrucción de reglas de negocio aparezca con nombre, estimación y calendario</strong>, y que se ejecute <strong>mientras el sistema origen sigue encendido</strong>. No es una tarea de cierre del proyecto. Es la tarea que más depende de que el sistema viejo todavía exista.',
+            ],
+          },
+          {
+            type: 'prose',
+            body: [
+              'Lo digo desde una región donde esto es rutina, no hipótesis. Buena parte de la operación de las multinacionales instaladas en el noreste corre sobre SAP, y muchas de ellas están decidiendo justo ahora dónde va a vivir su analítica. En esas conversaciones, la puerta de salida se trata como un detalle de implementación que se resuelve después de firmar. Es exactamente al revés: <strong>es de las pocas decisiones que se negocian bien una sola vez, al principio, y se pagan todos los meses si se negocian mal.</strong>',
+            ],
+          },
+          {
+            type: 'prose',
+            heading: 'El norte',
+            body: [
+              'La arquitectura de este cliente me parece correcta. CDS views como contrato de extracción, un solo formato de aterrizaje, un lago abierto del otro lado, y una plataforma analítica que eligieron por sus razones y no por inercia de proveedor. Volvería a firmar ese diseño.',
+              'Lo que cambió no es el diseño. Es que <strong>«salimos de SAP del lado analítico» dejó de ser una decisión de plataforma.</strong> Es una decisión sobre quién es dueño de la puerta por la que va a pasar tu dato durante los próximos diez años, cuánto cobra por abrirla, y qué parte del significado se queda de este lado cuando el dato cruza.',
+            ],
+          },
+          {
+            type: 'quote',
+            text: '¿Cuántos gigabytes al mes van a cruzar tu aduana el año en que el proyecto ya haya funcionado? Si nadie en la sala puede responderla, todavía no tienes un business case. Tienes una preferencia de herramienta.',
+          },
+          {
+            type: 'list',
+            heading: 'Fuentes',
+            items: [
+              'SAP Note <strong>3255746</strong> — <em>Unpermitted usage of ODP Data Replication APIs</em>, versión 12, liberada el 09-jun-2026 (componente BC-BW-ODP). Prohibición del uso de ODP-RFC por el cliente o por aplicaciones de terceros contra sistemas ABAP con PI_BASIS, SAP BW o SAP BW/4HANA, on-premise o private cloud; reserva de SAP para modificar los módulos sin aviso previo; responsabilidad del cliente ante incidentes; alternativas nombradas: SAP Business Data Cloud y la API OData de ODP. Consultada en SAP for Me.',
+              'SAP Note <strong>3748819</strong> — nota de seguridad del <em>Patch Day</em> de junio de 2026, que valida las llamadas entrantes contra los tipos de suscriptor permitidos y bloquea las no permitidas. Correcciones de código en la SAP Note <strong>3635619</strong>.',
+              'SAP Note <strong>3731818</strong> — <em>Temporary suspension for automated assessment of subscriber types</em>, versión 4, liberada el 27-jul-2026. Reporte <code>RODPS_REPL_SECUREACCESS_OPTOUT</code>; excepción temporal bajo riesgo del cliente; expira a fin de 2026 y después se aplica <em>without exception</em>. Consultada en SAP for Me.',
+              'SAP Note <strong>3439624</strong> — <em>Self-Assessment for data access to ODP Data Replication APIs</em>, versión 34, liberada el 09-sep-2026. Reporte <code>RODPS_REPL_SUBSCRIBER_ASSESS</code>; cuatro estados de evaluación; sin evaluación de llamadas históricas; dependiente de mandante; y la advertencia textual de que el reporte «does not provide conclusive results of the non-existence of unpermitted calls». Entrega para SAP BW 7.50 vía Support Package 36. Consultada en SAP for Me.',
+              'Microsoft Learn — <em>Microsoft Fabric Mirrored Databases From SAP</em>: el proceso de dos pasos (replication flow de Datasphere → contenedor ADLS Gen2 → motor de mirroring → OneLake) y la nota de que el precio de Premium Outbound Integration aplica al hacer mirroring vía Datasphere. <a href="https://learn.microsoft.com/en-us/fabric/mirroring/sap" target="_blank" rel="noopener">learn.microsoft.com</a>',
+              'Microsoft Learn — <em>Tutorial: Configure Microsoft Fabric Mirrored Databases to Mirror SAP via SAP Datasphere</em>: Premium Outbound Integration como prerrequisito, el contenedor origen <code>CDS_EXTRACTION</code>, el target en Parquet con <em>Group Delta</em> en <em>None</em>, y los tipos de carga soportados. <a href="https://learn.microsoft.com/en-us/fabric/mirroring/sap-datasphere-tutorial" target="_blank" rel="noopener">learn.microsoft.com</a>',
+              'Microsoft Learn — <em>Extract SAP data to Microsoft Fabric</em>: la advertencia sobre <em>entitlements</em> de licencia antes de extraer, la nota del conector SAP CDC remitiendo a la SAP Note 3255746, y los socios certificados para Open Mirroring (DAB, ASAPIO, Theobald, Simplement, SNP Glue). <a href="https://learn.microsoft.com/en-us/azure/sap/workloads/extract-sap-data" target="_blank" rel="noopener">learn.microsoft.com</a>',
+              'SAP Help — <em>Premium Outbound Integration</em>: necesaria para todo target no-SAP (ADLS Gen2, Amazon S3, Google Cloud Storage, BigQuery, Kafka, Confluent, SFTP), un bloque por cada 20 GB. <a href="https://help.sap.com/docs/sap_datasphere/c8a54ee704e94e15926551293243fd1d/4e9c6acb5d6a43fa9a6471837399e71c.html" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP Help — <em>Configure the Size of Your SAP Datasphere Tenant</em>: «Each block gives you 20 GB of data volume for transfer» y la nota textual de que al exceder el volumen los procesos continúan corriendo con costo adicional. <a href="https://help.sap.com/docs/SAP_DATASPHERE/9f804b8efa8043539289f42f372c4862/33f8ef4ec359409fb75925a68c23ebc3.html" target="_blank" rel="noopener">help.sap.com</a>',
+              'SAP — KBA <strong>3456481</strong>: <em>Replication Flow - There is no outbound volume available for this month</em>, el error que aparece cuando no hay bloques de Premium Outbound Integration asignados. <a href="https://userapps.support.sap.com/sap/support/knowledge/en/3456481" target="_blank" rel="noopener">userapps.support.sap.com</a>',
+              'Comunidad SAP — <em>SAP NetWeaver 7.5 Maintenance Strategy</em>: mantenimiento mainstream de NetWeaver 7.5 y BW 7.5 hasta fin de 2027; extendido hasta 2030. <a href="https://pages.community.sap.com/topics/abap/netweaver-maintenance-strategy" target="_blank" rel="noopener">pages.community.sap.com</a>',
+            ],
+          },
+        ],
+      },
     ],
   },
   contacto: {
