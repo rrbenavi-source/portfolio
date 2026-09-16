@@ -1698,6 +1698,12 @@ define view ZI_CostCenter_Attr_BW
             ],
           },
           {
+            type: 'figure',
+            src: 'fig-camino-del-dato-en.png',
+            alt: 'The data journey in five stops: a CDS view enabled for extraction in S/4HANA, an SAP Datasphere replication flow that charges a toll through Premium Outbound Integration, Parquet files in Azure ADLS Gen2, a shortcut from Microsoft OneLake and a mirrored database in Microsoft Fabric.',
+            caption: 'They left SAP analytics. The data, in order to leave, still goes through an SAP product.',
+          },
+          {
             type: 'prose',
             heading: 'Until recently, the door was free',
             body: [
@@ -1729,6 +1735,12 @@ define view ZI_CostCenter_Attr_BW
               'The sign that none of this is consulting folklore: <strong>Microsoft documents it in its own guidance.</strong> Its SAP CDC connector carries a verbatim caveat pointing to note 3255746 &laquo;to determine if it&rsquo;s relevant for your current SAP licensing&raquo;. And the guide opens, ahead of any technical content, by asking you to verify your organisation&rsquo;s licensing entitlements before beginning any extraction. When the vendor of the destination reminds you to check the licence of the source, that tells you where the real risk sits.',
               'It is worth reading the change without drama: <strong>this is not a technical deprecation, it is a decision about ownership.</strong> SAP stopped treating extraction as an infrastructure detail and started treating it as a product. That is legitimate. But it changes the nature of the question: &laquo;how do I get my data out&raquo; stopped being an ETL topic and became an architecture and contract topic.',
             ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-reloj-odp-en.png',
+            alt: 'Timeline of the ODP-RFC shutdown in 2026: on 9 June note 3255746 reaches version 12 and security note 3748819 begins blocking unpermitted calls; on 27 July note 3731818 ships a temporary escape valve; on 9 September note 3439624 installs the self-assessment; on 31 December the exception expires.',
+            caption: 'The first three moves already happened, this year. The fourth has a date.',
           },
           {
             type: 'prose',

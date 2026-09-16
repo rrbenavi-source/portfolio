@@ -86,7 +86,7 @@ que recortarlo, no ampliarlo**, y guardar el tema completo para una edición fut
 
 - [x] `draft-en.md` — «The customs house»
 - [x] Portadas `brujula-cover-11.png` / `-en.png` (1920×1080)
-- [x] Figura **«Cuatro puertas y su peaje»** ES/EN (1080×1350) — `fig-cuatro-puertas{,-en}.png`
+- [x] Tres figuras ES/EN (1080×1350): `fig-camino-del-dato`, `fig-reloj-odp` y `fig-cuatro-puertas`
 - [x] Publicación **13** en el portfolio, slug `la-aduana` (ES y EN), con hero + figura
 - [x] Build en verde (42 páginas); render verificado a 1280×900 y sin regresión de overflow móvil
       (scrollWidth 485 = 485 contra la publicación 12)

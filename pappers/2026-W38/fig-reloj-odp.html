@@ -1,0 +1,68 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--amber:#e0b341;--red:#e0705a;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:68px 64px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:22px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:23px;color:var(--dim);margin-top:15px;line-height:1.42;max-width:46ch;}
+
+ .tl{margin-top:54px;position:relative;padding-left:44px;}
+ .tl::before{content:"";position:absolute;left:11px;top:10px;bottom:118px;width:2px;background:linear-gradient(180deg,var(--line),var(--line) 62%,rgba(224,112,90,.55));}
+ .ev{position:relative;padding-bottom:48px;}
+ .ev::before{content:"";position:absolute;left:-39px;top:7px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--faint);}
+ .ev.hi::before{border-color:var(--teal);background:var(--teal);}
+ .ev.end::before{border-color:var(--red);background:var(--bg);}
+ .date{font-family:"Space Grotesk";font-size:16px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--faint);}
+ .ev.hi .date{color:var(--teal);}
+ .ev.end .date{color:var(--red);}
+ .hd{font-size:26px;color:var(--text);line-height:1.24;margin-top:7px;font-weight:500;letter-spacing:-.01em;}
+ .bd{font-size:19px;color:var(--dim);line-height:1.45;margin-top:8px;max-width:58ch;}
+ .bd code{font-family:"Space Grotesk";font-size:16.5px;color:var(--teal);}
+ .ev.end .bd strong{color:var(--red);}
+
+ .kicker{margin-top:14px;border-left:3px solid var(--teal);padding-left:22px;font-size:22px;color:var(--text);line-height:1.42;}
+ .src{margin-top:auto;margin-bottom:4px;border-top:1px solid var(--line);padding-top:14px;padding-right:150px;font-size:14.5px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:48px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 11</div>
+  <h2>El reloj de <span class="em">ODP-RFC</span></h2>
+  <p class="lede">La puerta de servicio por la que todo el mundo sacaba datos de SAP se cerró en cuatro movimientos. Los tres primeros ya pasaron, este año.</p>
+
+  <div class="tl">
+    <div class="ev hi">
+      <div class="date">9 de junio de 2026</div>
+      <div class="hd">Deja de estar permitido, y deja de ser posible</div>
+      <div class="bd">La nota <strong>3255746</strong> llega a su versión 12: el uso de ODP-RFC por el cliente o por terceros contra sistemas ABAP queda prohibido. El mismo día, la nota de seguridad <strong>3748819</strong> entrega el mecanismo: valida cada llamada entrante y bloquea las no permitidas.</div>
+    </div>
+
+    <div class="ev">
+      <div class="date">27 de julio de 2026</div>
+      <div class="hd">Una válvula de escape, bajo tu propio riesgo</div>
+      <div class="bd">La nota <strong>3731818</strong> entrega el reporte <code>RODPS_REPL_SECUREACCESS_OPTOUT</code>, que suspende el bloqueo. SAP la describe como estrictamente temporal y aplicable bajo riesgo del cliente.</div>
+    </div>
+
+    <div class="ev">
+      <div class="date">9 de septiembre de 2026</div>
+      <div class="hd">La herramienta para saber quién está tocando la puerta</div>
+      <div class="bd">La nota <strong>3439624</strong>, versión 34, instala el autodiagnóstico. Solo evalúa llamadas <strong>a partir del día que la instalas</strong>: no ve hacia atrás.</div>
+    </div>
+
+    <div class="ev end">
+      <div class="date">31 de diciembre de 2026</div>
+      <div class="hd">Se acaba la excepción</div>
+      <div class="bd">Vence la válvula temporal. SAP ya dejó escrito que después restablece las protecciones y que se aplican <strong>«enforced without exception»</strong>.</div>
+    </div>
+  </div>
+
+  <div class="kicker">Si tienes integraciones viejas apuntando a esa interfaz, no se van a degradar. Se van a detener.</div>
+
+  <div class="src">Fuentes: SAP Notes 3255746 (v12), 3748819, 3731818 (v4) y 3439624 (v34), consultadas en SAP for Me.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

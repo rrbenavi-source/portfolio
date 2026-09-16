@@ -1698,6 +1698,12 @@ define view ZI_CostCenter_Attr_BW
             ],
           },
           {
+            type: 'figure',
+            src: 'fig-camino-del-dato.png',
+            alt: 'El camino del dato en cinco paradas: una CDS view habilitada para extracción en S/4HANA, un replication flow de SAP Datasphere que cobra peaje por Premium Outbound Integration, archivos Parquet en Azure ADLS Gen2, un shortcut desde Microsoft OneLake y una mirrored database en Microsoft Fabric.',
+            caption: 'Salieron de la analítica de SAP. El dato, para salir, sigue pasando por un producto de SAP.',
+          },
+          {
             type: 'prose',
             heading: 'Hasta hace poco, la puerta era gratis',
             body: [
@@ -1729,6 +1735,12 @@ define view ZI_CostCenter_Attr_BW
               'La señal de que esto tampoco es folclore de consultoría: <strong>Microsoft lo documenta en su propia guía.</strong> Su conector SAP CDC lleva una advertencia textual que remite a la nota 3255746 «para determinar si es relevante para tu licenciamiento actual de SAP». Y la guía abre, antes de cualquier tema técnico, pidiendo verificar los <em>entitlements</em> de licencia de la organización antes de empezar cualquier extracción. Que el proveedor del destino te recuerde que revises la licencia del origen dice bastante sobre dónde está el riesgo real.',
               'Conviene leer el cambio sin dramatismo: <strong>no es un deprecation técnico, es una decisión de titularidad.</strong> SAP dejó de tratar la extracción como un detalle de infraestructura y empezó a tratarla como un producto. Es legítimo. Pero cambia la naturaleza de la pregunta: «cómo saco mis datos» dejó de ser un tema de ETL y pasó a ser un tema de arquitectura y de contrato.',
             ],
+          },
+          {
+            type: 'figure',
+            src: 'fig-reloj-odp.png',
+            alt: 'Línea de tiempo del cierre de ODP-RFC en 2026: el 9 de junio la nota 3255746 llega a su versión 12 y la nota de seguridad 3748819 empieza a bloquear las llamadas no permitidas; el 27 de julio la nota 3731818 entrega una válvula de escape temporal; el 9 de septiembre la nota 3439624 instala el autodiagnóstico; el 31 de diciembre vence la excepción.',
+            caption: 'Los tres primeros movimientos ya pasaron, este año. El cuarto tiene fecha.',
           },
           {
             type: 'prose',

@@ -12,8 +12,8 @@ Continúa la línea SAP de las ediciones 08–10, pero cambia el eje: ya no es c
 1. Crear la edición nueva en el editor de newsletter de LinkedIn.
 2. Pegar **título** y **subtítulo** (abajo).
 3. Subir la **portada**: `brujula-cover-11.png` (1920×1080).
-4. Pegar el **cuerpo** entre los separadores, respetando la marca `[ Sube la figura: … ]`.
-5. Subir la **figura** en su posición, con el **alt text** que viene más abajo.
+4. Pegar el **cuerpo** entre los separadores, respetando las tres marcas `[ Sube la figura N: … ]`.
+5. Subir las **tres figuras** en su posición, con el **alt text** que viene más abajo.
 6. Llenar los campos de **SEO** (título y descripción).
 7. Publicar, y de inmediato hacer el **post de lanzamiento** en el feed.
 8. Poner el **primer comentario** con los links. LinkedIn penaliza los links externos en el cuerpo del post.
@@ -41,7 +41,9 @@ Desde junio de 2026 un parche de SAP bloquea técnicamente las llamadas ODP-RFC 
 ## Alt text de las imágenes
 
 - **Portada:** Portada de la edición 11 del newsletter Brújula, titulada "La aduana", sobre fondo oscuro con acento teal y la aguja del compás.
-- **Figura** (`fig-cuatro-puertas.png`): Las cuatro rutas legítimas para sacar datos de un sistema ABAP hacia una plataforma que no es de SAP, con el peaje de cada una. SAP Datasphere con Premium Outbound Integration, que cobra bloques de 20 GB al mes y no corta al excederse; la API OData de ODP, sin costo por gigabyte pero limitada por throughput; un conector certificado de partner con Open Mirroring, que cambia el peaje por una licencia de software; y SAP Business Data Cloud, una suscripción a una plataforma nueva.
+- **Figura 1** (`fig-camino-del-dato.png`): El camino del dato en cinco paradas. Una CDS view habilitada para extracción en S/4HANA; un replication flow de SAP Datasphere que lee del contenedor CDS_EXTRACTION y cobra peaje por Premium Outbound Integration; archivos Parquet en un contenedor de Azure ADLS Gen2; un shortcut desde Microsoft OneLake; y una mirrored database en Microsoft Fabric con tablas Delta y un SQL analytics endpoint.
+- **Figura 2** (`fig-reloj-odp.png`): Línea de tiempo del cierre de ODP-RFC durante 2026. El 9 de junio la nota 3255746 llega a su versión 12 y la nota de seguridad 3748819 empieza a bloquear las llamadas no permitidas. El 27 de julio la nota 3731818 entrega una válvula de escape temporal bajo riesgo del cliente. El 9 de septiembre la nota 3439624 instala el autodiagnóstico, que no evalúa llamadas históricas. El 31 de diciembre vence la excepción y las protecciones se aplican sin excepción.
+- **Figura 3** (`fig-cuatro-puertas.png`): Las cuatro rutas legítimas para sacar datos de un sistema ABAP hacia una plataforma que no es de SAP, con el peaje de cada una. SAP Datasphere con Premium Outbound Integration, que cobra bloques de 20 GB al mes y no corta al excederse; la API OData de ODP, sin costo por gigabyte pero limitada por throughput; un conector certificado de partner con Open Mirroring, que cambia el peaje por una licencia de software; y SAP Business Data Cloud, una suscripción a una plataforma nueva.
 
 ---
 
@@ -54,6 +56,8 @@ Lo interesante pasó del otro lado. Cuando llegó el momento de decidir la plata
 Es una arquitectura defendible y me parece bien resuelta. Pero encierra una paradoja que vale la pena decir en voz alta: **para poder salir de la analítica de SAP, tuvieron que comprar un producto de analítica de SAP.**
 
 Eso no es un accidente de este proyecto. Es la forma que tomó el mercado este año, y muy poca gente lo tiene en su business case.
+
+[ Sube la figura 1: fig-camino-del-dato.png ]
 
 Hasta hace poco, la puerta era gratis
 
@@ -75,6 +79,8 @@ La señal de que esto tampoco es folclore de consultoría: **Microsoft lo docume
 
 Conviene leer el cambio sin dramatismo: **no es un deprecation técnico, es una decisión de titularidad.** SAP dejó de tratar la extracción como un detalle de infraestructura y empezó a tratarla como un producto. Es legítimo. Pero cambia la naturaleza de la pregunta: "cómo saco mis datos" dejó de ser un tema de ETL y pasó a ser un tema de arquitectura y de contrato.
 
+[ Sube la figura 2: fig-reloj-odp.png ]
+
 El inventario que todavía no existe
 
 SAP también entregó la herramienta para saber quién está tocando esa puerta hoy: la nota **3439624**, en su versión 34 liberada el 9 de septiembre de 2026, instala un reporte que clasifica cada llamada en cuatro estados: permitida, no permitida, "poco clara" (reservado a SAP Data Services y HANA Smart Data Integration, que hay que verificar a mano) y sin información.
@@ -93,7 +99,7 @@ Cuatro puertas y su peaje
 
 Si hoy tienes que sacar dato de un ABAP —ECC o S/4HANA— hacia una plataforma que no es de SAP, las opciones legítimas se cuentan con los dedos de una mano. Vale la pena verlas juntas, porque la mayoría de los proyectos elige la primera que le presentaron.
 
-[ Sube la figura: fig-cuatro-puertas.png ]
+[ Sube la figura 3: fig-cuatro-puertas.png ]
 
 Hay un detalle que se pasa por alto y que sostiene todo el argumento de esta edición: **la nota 3255746 no menciona Datasphere entre las alternativas.** No es un olvido. Datasphere no aparece como alternativa porque no es una alternativa para ti: es una aplicación SAP, y por eso su tráfico está permitido por definición. **La prohibición nunca fue sobre el protocolo. Fue sobre quién está del otro lado del cable.**
 
@@ -195,7 +201,7 @@ La edición de esta semana desarrolla las cuatro puertas, el medidor y lo que le
 
 ## PRIMER COMENTARIO (poner de inmediato)
 
-Edición 11 completa, con la figura de las cuatro puertas y su peaje:
+Edición 11 completa, con el camino del dato, el reloj de ODP-RFC y las cuatro puertas con su peaje:
 https://rrbenavi-source.github.io/portfolio/publicaciones/la-aduana
 
 Y la edición anterior, que trata la otra cara del mismo proyecto —cómo validar que el dato llegó completo cuando el sistema ya no te avisa:
