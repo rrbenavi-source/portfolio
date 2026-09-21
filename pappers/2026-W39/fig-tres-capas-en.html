@@ -1,0 +1,82 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--code:#c9ced6;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:64px 64px 60px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:20px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:21px;color:var(--dim);margin-top:12px;line-height:1.4;max-width:50ch;}
+ .layers{margin-top:26px;display:flex;flex-direction:column;gap:14px;}
+ .layer{display:grid;grid-template-columns:230px 1fr;gap:0 18px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#1b2027,#171a1f);padding:14px 18px;}
+ .layer.q{border-color:rgba(43,189,143,.5);background:linear-gradient(180deg,rgba(43,189,143,.13),rgba(43,189,143,.02));}
+ .meta .n{font-family:"Space Grotesk";font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--teal);}
+ .meta .t{font-size:22px;color:var(--text);font-weight:500;line-height:1.15;margin-top:6px;letter-spacing:-.01em;}
+ .meta .d{font-size:15px;color:var(--dim);line-height:1.35;margin-top:8px;}
+ pre{font-family:"JetBrains Mono",monospace;font-size:14.6px;line-height:1.42;color:var(--code);white-space:pre;margin:0;}
+ .an{color:var(--teal);font-weight:600;}
+ .kw{color:#8fa3bf;}
+ .cm{color:var(--faint);font-style:italic;}
+ .kicker{margin-top:22px;border-left:3px solid var(--teal);padding-left:22px;font-size:21px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;margin-bottom:0;border-top:1px solid var(--line);padding-top:12px;padding-right:150px;font-size:14px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:44px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Issue 12</div>
+  <h2>Three layers, three <span class="em">responsibilities</span></h2>
+  <p class="lede">This is how a CDS view consumed live by SAC is built. Each layer carries its own annotations; none does the work of another.</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="meta"><div class="n">Layer 1</div><div class="t">Dimension</div><div class="d">One master per view. Key and text declared. No reporting logic.</div></div>
+<pre><span class="an">@Analytics.dataCategory: #DIMENSION</span>
+<span class="an">@ObjectModel.representativeKey: 'Customer'</span>
+<span class="kw">define view</span> ZI_Customer <span class="kw">as select from</span> kna1 {
+  <span class="kw">key</span> kunnr <span class="kw">as</span> Customer,
+  <span class="an">@Semantics.text: true</span>
+      name1 <span class="kw">as</span> CustomerName
+}</pre>
+    </div>
+
+    <div class="layer">
+      <div class="meta"><div class="n">Layer 2</div><div class="t">Cube</div><div class="d">The facts, with associations to the dimensions. Every amount with its currency; every measure with its aggregation.</div></div>
+<pre><span class="an">@Analytics.dataCategory: #CUBE</span>
+<span class="kw">define view</span> ZI_SalesCube <span class="kw">as select from</span> ZI_BillingItem
+  <span class="kw">association</span> [0..1] <span class="kw">to</span> ZI_Customer <span class="kw">as</span> _Customer
+    <span class="kw">on</span> $projection.Customer = _Customer.Customer {
+  <span class="an">@ObjectModel.foreignKey.association: '_Customer'</span>
+  Customer,
+  <span class="an">@Semantics.amount.currencyCode: 'TransactionCurrency'</span>
+  <span class="an">@DefaultAggregation: #SUM</span>
+  NetAmount,
+  <span class="an">@Semantics.currencyCode: true</span>
+  TransactionCurrency,
+  _Customer
+}</pre>
+    </div>
+
+    <div class="layer q">
+      <div class="meta"><div class="n">Layer 3</div><div class="t">Query</div><div class="d">The only one SAC sees. It carries presentation decisions, not new joins. Tested in RSRT as 2CZCSALESQ.</div></div>
+<pre><span class="an">@AbapCatalog.sqlViewName: 'ZCSALESQ'</span>   <span class="cm">-- name in the engine: 2CZCSALESQ</span>
+<span class="an">@Analytics.query: true</span>
+<span class="kw">define view</span> ZC_SalesQuery <span class="kw">as select from</span> ZI_SalesCube {
+  <span class="an">@AnalyticsDetails.query.axis: #ROWS</span>
+  <span class="an">@AnalyticsDetails.query.display: #KEY_TEXT</span>
+  Customer,
+  <span class="an">@AnalyticsDetails.query.axis: #COLUMNS</span>
+  NetAmount,
+  <span class="an">@AnalyticsDetails.query.formula: 'NetAmount / BillingQuantity'</span>
+  0 <span class="kw">as</span> AveragePrice
+}</pre>
+    </div>
+  </div>
+
+  <div class="kicker">If Sales asks for another price, you touch the query. If Finance asks for another currency, you touch the cube. If the customer name changes, you touch nothing.</div>
+
+  <div class="src">Sources: SAP Help, <i>Analytics Annotations</i> (SAP NetWeaver 7.5) · SAP Help, <i>Live Data Connections to SAP S/4HANA</i>. Example code, simplified.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

@@ -9,3 +9,6 @@ pappers/*.pdf
 
 # Notas de SAP bajadas de SAP for Me (contenido propietario, repo público)
 notas_sap/
+
+# research de cada edición: trae nombres de cliente, horas y montos
+pappers/**/research.md

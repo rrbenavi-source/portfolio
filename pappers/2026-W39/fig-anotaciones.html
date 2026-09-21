@@ -1,0 +1,49 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:68px 64px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:22px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:22px;color:var(--dim);margin-top:14px;line-height:1.42;max-width:48ch;}
+ .chead{margin-top:30px;display:grid;grid-template-columns:44px 1fr 330px;gap:0 16px;font-family:"Space Grotesk";font-size:13.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);padding:0 4px 8px;}
+ .chead .r{color:var(--teal);}
+ .rows{display:flex;flex-direction:column;gap:9px;}
+ .row{display:grid;grid-template-columns:44px 1fr 330px;gap:0 16px;align-items:center;border:1px solid var(--line);border-radius:9px;background:linear-gradient(180deg,#1b2027,#171a1f);padding:11px 16px;min-height:88px;}
+ .num{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk";font-weight:700;font-size:17px;color:var(--teal);}
+ .an{font-family:"JetBrains Mono",monospace;font-size:16.5px;color:var(--text);line-height:1.3;}
+ .an b{color:var(--teal);font-weight:600;}
+ .wh{font-size:14.5px;color:var(--dim);line-height:1.3;margin-top:4px;}
+ .brk{font-size:16px;color:var(--dim);line-height:1.32;border-left:2px solid #4a3134;padding-left:12px;}
+ .brk b{color:#e0b341;font-weight:600;}
+ .kicker{margin-top:24px;border-left:3px solid var(--teal);padding-left:22px;font-size:21px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;margin-bottom:4px;border-top:1px solid var(--line);padding-top:13px;padding-right:150px;font-size:14px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:48px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 12</div>
+  <h2>Las ocho anotaciones que <span class="em">sí importan</span></h2>
+  <p class="lede">Hay cientos de anotaciones CDS. Para reportear en SAC, estas son las que de plano no pueden faltar, y lo que se rompe cuando faltan.</p>
+
+  <div class="chead"><div></div><div>Anotación · dónde va</div><div class="r">Qué pasa si falta</div></div>
+  <div class="rows">
+    <div class="row"><div class="num">1</div><div><div class="an"><b>@Analytics.dataCategory</b>: #DIMENSION · #CUBE</div><div class="wh">Maestros como dimensión, hechos como cubo.</div></div><div class="brk">El motor <b>no sabe</b> qué es estrella y qué es centro.</div></div>
+    <div class="row"><div class="num">2</div><div><div class="an"><b>@Analytics.query</b>: true</div><div class="wh">Solo en la capa de consumo.</div></div><div class="brk">La vista <b>no aparece</b> en la conexión live de SAC.</div></div>
+    <div class="row"><div class="num">3</div><div><div class="an"><b>@ObjectModel.representativeKey</b></div><div class="wh">En cada dimensión.</div></div><div class="brk">Con varias llaves, el motor <b>escoge mal</b> cuál usar.</div></div>
+    <div class="row"><div class="num">4</div><div><div class="an"><b>@Semantics.text</b>: true · <b>@ObjectModel.text.association</b></div><div class="wh">Descripción en la misma vista o en otra.</div></div><div class="brk">SAC te muestra <b>puros códigos</b>.</div></div>
+    <div class="row"><div class="num">5</div><div><div class="an"><b>@Semantics.amount.currencyCode</b> · <b>@Semantics.quantity.unitOfMeasure</b></div><div class="wh">En cada importe y cantidad, con su campo pareja.</div></div><div class="brk">Se suman <b>pesos con dólares</b>, piezas con toneladas.</div></div>
+    <div class="row"><div class="num">6</div><div><div class="an"><b>@DefaultAggregation</b>: #SUM · #MAX · #NONE</div><div class="wh">En cada medida.</div></div><div class="brk">Cada cifra hereda un comportamiento que <b>nadie eligió</b>.</div></div>
+    <div class="row"><div class="num">7</div><div><div class="an"><b>@AnalyticsDetails.query</b>.axis · .display · .totals · .formula</div><div class="wh">En la query. Lo que antes se configuraba en BEx.</div></div><div class="brk">Layout, textos y fórmulas se rehacen <b>en cada story</b>.</div></div>
+    <div class="row"><div class="num">8</div><div><div class="an"><b>@AccessControl.authorizationCheck</b>: #CHECK + DCL</div><div class="wh">Vista por vista. El motor la aplica en cada petición.</div></div><div class="brk">Todos ven <b>todo</b>. En BW lo hacía el analysis authorization.</div></div>
+  </div>
+
+  <div class="kicker">La novena, @Analytics.dataExtraction.enabled, no es para SAC: es la puerta de replicación por ODP hacia un warehouse o un lago. Otra puerta, otro contrato.</div>
+
+  <div class="src">Fuentes: SAP Help, <i>Analytics Annotations</i> y <i>AnalyticsDetails Annotations</i> (SAP NetWeaver 7.5) · SAP Help, <i>Live Data Connections to SAP S/4HANA</i>.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

@@ -1,0 +1,74 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--red:#d9534f;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:68px 64px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:60px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:22px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:23px;color:var(--dim);margin-top:15px;line-height:1.42;max-width:46ch;}
+ .cols{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+ .col h3{font-family:"Space Grotesk";font-size:14px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);padding:0 4px 10px;}
+ .col.now h3{color:var(--teal);}
+ .chain{display:flex;flex-direction:column;}
+ .st{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#1b2027,#171a1f);padding:18px 22px;min-height:128px;display:flex;flex-direction:column;justify-content:center;}
+ .st .nm{font-size:23.5px;color:var(--text);font-weight:500;line-height:1.2;letter-spacing:-.01em;}
+ .st .ds{font-size:17.5px;color:var(--dim);line-height:1.38;margin-top:6px;}
+ .st.gone{border-style:dashed;border-color:#4a3134;background:#191719;}
+ .st.gone .nm{color:#8f8a8c;text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;}
+ .st.same{border-color:rgba(43,189,143,.55);background:linear-gradient(180deg,rgba(43,189,143,.16),rgba(43,189,143,.03));}
+ .st.same .nm{color:var(--teal);}
+ .arr{height:36px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px;}
+ .col.old .arr{color:#4f555e;}
+ .tag{display:inline-block;margin-top:6px;font-family:"Space Grotesk";font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--teal);border:1px solid rgba(43,189,143,.4);border-radius:4px;padding:2px 7px;align-self:flex-start;}
+ .tag.g{color:#b98a8d;border-color:#4a3134;}
+ .kicker{margin-top:40px;border-left:3px solid var(--teal);padding-left:22px;font-size:22px;color:var(--text);line-height:1.42;}
+ .src{margin-top:auto;margin-bottom:4px;border-top:1px solid var(--line);padding-top:14px;padding-right:150px;font-size:14.5px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:48px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 12</div>
+  <h2>Quitamos BW. El <span class="em">motor</span> se quedó.</h2>
+  <p class="lede">Lo que pasa cuando SAC abre una story con conexión live a S/4HANA. Cambió la persistencia y cambió el lenguaje. El motor que ejecuta la query es el mismo.</p>
+
+  <div class="cols">
+    <div class="col old">
+      <h3>Antes · ECC + BW + BusinessObjects</h3>
+      <div class="chain">
+        <div class="st gone"><div class="nm">Reporte Web Intelligence</div><div class="ds">Filtros y fórmulas del universo de BO.</div><span class="tag g">Apagado</span></div>
+        <div class="arr">↓</div>
+        <div class="st gone"><div class="nm">Query BEx</div><div class="ds">Diseñada en BEx Query Designer.</div><span class="tag g">Apagado</span></div>
+        <div class="arr">↓</div>
+        <div class="st same"><div class="nm">Motor OLAP de BW</div><div class="ds">Agrega, calcula fórmulas, resuelve textos y jerarquías.</div><span class="tag">Sigue aquí</span></div>
+        <div class="arr">↓</div>
+        <div class="st gone"><div class="nm">InfoProviders · cargas nocturnas</div><div class="ds">Copia del dato en un sistema aparte.</div><span class="tag g">Apagado</span></div>
+        <div class="arr">↓</div>
+        <div class="st gone"><div class="nm">Extractores desde ECC</div><div class="ds">DataSources, ODP, deltas.</div><span class="tag g">Apagado</span></div>
+      </div>
+    </div>
+
+    <div class="col now">
+      <h3>Hoy · S/4HANA + SAC live</h3>
+      <div class="chain">
+        <div class="st"><div class="nm">Story de SAC</div><div class="ds">Cliente delgado: pide y muestra. Habla por el protocolo InA.</div></div>
+        <div class="arr">↓</div>
+        <div class="st"><div class="nm">Transient query 2C…</div><div class="ds">La genera S/4HANA al anotar la vista con @Analytics.query: true.</div></div>
+        <div class="arr">↓</div>
+        <div class="st same"><div class="nm">Analytic engine embebido</div><div class="ds">El mismo motor OLAP, dentro del ERP. Se prueba en RSRT.</div><span class="tag">El mismo motor</span></div>
+        <div class="arr">↓</div>
+        <div class="st"><div class="nm">Cubo CDS · #CUBE</div><div class="ds">Hechos + asociaciones a dimensiones.</div></div>
+        <div class="arr">↓</div>
+        <div class="st"><div class="nm">Tablas de S/4HANA</div><div class="ds">Sin copia. Cada clic le pega al ERP.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kicker">Se fueron la persistencia y BEx. Se quedaron el motor, el protocolo y la transacción para probarlo. Lo que cambió es el lenguaje: ahora se le habla con anotaciones CDS.</div>
+
+  <div class="src">Fuentes: SAP Help, <i>Live Data Connections to SAP S/4HANA</i> (transient query 2C&lt;sqlViewName&gt;) · SAP Community, M. Ishii (SAP), <i>Analytics in S/4HANA</i> · P. Reddy (SAP), <i>Define the Analytical Query CDS View</i>.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>
