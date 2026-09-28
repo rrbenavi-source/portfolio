@@ -59,7 +59,7 @@ FIG1 = {
         "rows": [
             ("Power BI / Fabric", "Certified", "Que un revisor autorizado <b>dio fe</b> de que cumple los estándares de la organización.", "Si el modelo cambia mañana, <b>el sello se queda</b> donde estaba."),
             ("Databricks Unity Catalog", "certification_status", "Que el activo <b>cumplió estándares internos</b>. A mano o con reglas de uso, dueño o antigüedad.", "Ninguna regla <b>revisa si el número cuadra</b>."),
-            ("Genie", "benchmarks", "Hasta 500 preguntas con su <b>SQL de referencia</b>; califica bueno, malo o revisión manual.", "Corre <b>cuando alguien lo lanza</b>. Si el SQL de referencia está mal, califica contra otro error."),
+            ("Genie", "benchmarks", "Hasta 500 preguntas con su <b>SQL de referencia</b>; califica bueno, malo o revisión manual.", "Corre <b>solo cuando alguien lo ejecuta</b>. Si el SQL de referencia está mal, califica contra otro error."),
             ("Snowflake", "Data Metric Functions", "Nulos, duplicados, frescura, con <b>calendario propio</b>: cada hora por default.", "Mide <b>calidad del dato</b>, no si el KPI cuadra contra la contabilidad."),
             ("SAP Datasphere", "catálogo · glosario", "Que el KPI tiene <b>una definición</b> escrita y el activo está publicado.", "Una buena definición <b>no prueba</b> que el número de hoy la cumpla."),
         ],
@@ -173,7 +173,7 @@ FIG2 = {
             ("MX03", "2026-08", "12,775,300", "12,775,300", "OK"),
             ("MX04 · nueva", "2026-08", "0", "6,420,880", "EXCEPCION"),
         ],
-        "kicker": "La consulta es lo de menos. Lo que importa es que corre sola después de cada cambio y que el tablero dice si hoy cuadra.",
+        "kicker": "Más que la consulta, importa que corra sola después de cada cambio y que el tablero indique si hoy cuadra.",
         "src": "Código de ejemplo, simplificado; cifras ilustrativas. Tolerancia de ejemplo: 0.01 %. Fuente de un reporte desde S/4HANA: ACDOCA.",
     },
     "en": {
@@ -245,7 +245,7 @@ FIG3 = {
             ("Revisar que el control funcione", ["o:Opina", "o:Opina", ":Se entera", "a:Responde y hace"]),
         ],
         "legend": ("Responde por el resultado", "Hace el trabajo", "Opina / Se entera"),
-        "kicker": "TI construye el testigo; el negocio es dueño del significado. Si falta uno de los dos, la palomita queda colgando de nadie.",
+        "kicker": "TI construye el testigo; el negocio es dueño del significado. Si falta uno de los dos, la palomita no tiene quién la respalde.",
         "src": "Fuentes: BCBS 239 (2013), ¶34, roles de negocio y de TI · DAMA-DMBOK: data owner, data steward, data custodian. Matriz simplificada.",
     },
     "en": {

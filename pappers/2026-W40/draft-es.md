@@ -1,6 +1,6 @@
 # Cuadró en el go-live. ¿Y hoy?
 
-## Casi todas las plataformas de datos ya te dejan ponerle a un modelo la palomita de «certificado». Ninguna te obliga a demostrar que hoy la merece. Los proyectos cuadran el número el día del go-live y luego no dejan nada que lo siga cuadrando. De ese testigo que falta va esta edición, y de quién lo debería firmar.
+## Casi todas las plataformas de datos ya permiten marcar un modelo con la palomita de «certificado». Ninguna obliga a demostrar que hoy la merece. Los proyectos cuadran el número el día del go-live y después no dejan nada que lo siga cuadrando. Esta edición trata de ese testigo que falta y de quién debería firmarlo.
 
 Esta edición no la planeé yo. La pidió una pregunta.
 
@@ -15,23 +15,21 @@ problema de fondo mejor que yo:
 > contra la fuente, celda por celda, algo que en la práctica casi nadie hace después de la puesta en
 > marcha inicial.»
 
-Luego preguntó si la edición tocaba la validación periódica, no nomás la de la migración. No la
-tocaba. Esta es la otra mitad.
+Después preguntó si la edición abordaba también la validación periódica, además de la validación durante la migración. No la abordaba, y esta edición es la continuación.
 
-Conforme lo fui investigando me quedó claro que no es un tema de SAP. Da igual si el dato vive en
+Al investigarlo, confirmé que no es un tema exclusivo de SAP. Da igual si el dato vive en
 BW/4HANA, en Databricks o en Snowflake, y si lo consumes en SAP Analytics Cloud, en Power BI o
 preguntándole en español a un asistente como Genie. La duda del negocio es la misma y casi ningún
 proyecto la contesta: **¿cómo sé que el número con el que estoy decidiendo hoy es el correcto?**
 
 ## El dashboard que se ve sano
 
-Te pongo un escenario ilustrativo. No es un cliente; es la suma de lo que he visto en varios
+Propongo un escenario ilustrativo. No corresponde a un cliente; es la suma de lo que he visto en varios
 go-lives.
 
 Un tablero de costos sale a productivo en marzo. Antes de liberarlo, el equipo lo cuadra contra el
-mayor, el libro contable donde vive la cifra oficial: sociedad por sociedad, mes por mes, al peso.
-Contraloría firma la validación, se cierra el proyecto y todos contentos. Con razón: el número
-cuadraba.
+mayor, el libro contable donde vive la cifra oficial: sociedad por sociedad, mes por mes, sin diferencias.
+Contraloría firma la validación, se cierra el proyecto y todos quedan satisfechos, con razón: el número cuadraba.
 
 En mayo, un transporte (el paquete con el que un cambio pasa de desarrollo a productivo) corrige un
 filtro de la query y, sin querer, cambia la base de la variación contra el año anterior. En julio
@@ -42,8 +40,8 @@ Nada de eso rompe el tablero. Abre rápido y trae números que se ven razonables
 alerta, porque técnicamente todo funciona. Lo que se descompuso fue el significado.
 
 Un día de octubre, en la junta de presupuesto, alguien del comité trae impreso el dato del mayor y
-no coincide con el de la pantalla. A la mera hora ya nadie discute el presupuesto; discuten cuál de
-los dos números es el bueno. La confianza que costó un proyecto entero se va en diez minutos.
+no coincide con el de la pantalla. A partir de ese momento ya nadie discute el presupuesto; discuten cuál de
+los dos números es el bueno. La confianza que costó un proyecto entero se pierde en diez minutos.
 
 Que los números se descuadren no tiene nada de raro; los sistemas cambian. Lo raro es que el
 proyecto cuadró una vez y no dejó nada que siguiera cuadrando. **No dejó un testigo**: un control que
@@ -52,13 +50,13 @@ acordar.
 
 ## La palomita no es un cuadre
 
-Aquí viene la parte incómoda para los que vendemos y construimos plataformas. Casi todas traen ya
-algún mecanismo de «certificación» o de calidad. Vale la pena leer qué certifica cada uno.
+Esta es la parte incómoda para quienes vendemos y construimos plataformas. Casi todas incluyen ya
+algún mecanismo de «certificación» o de calidad. Conviene revisar qué certifica cada uno.
 
 **Power BI y Microsoft Fabric** tienen el *endorsement*, un sello que se le pone al modelo: *Promoted*
 o *Certified*. Según la documentación de Microsoft, *Certified* quiere decir que un revisor
 autorizado por la organización dio fe de que el elemento *«cumple los estándares de calidad de la
-organización»*, y solo pueden otorgarlo las personas que designa el administrador. O sea, certifica
+organización»*, y solo pueden otorgarlo las personas que designa el administrador. Es decir, certifica
 que alguien lo revisó en algún momento. Si mañana cambia el modelo, el sello se queda donde estaba.
 
 **Databricks** tiene en Unity Catalog, su capa de gobierno, una etiqueta de sistema,
@@ -112,13 +110,11 @@ reportes y datos de la empresa, o los controles sobre ellos. Casi uno de cada se
 con una norma que se lo exige. Un proyecto de BI no tiene ninguna.
 
 El mismo reporte describe lo que hacen las firmas que sí lo resuelven: un repositorio central de
-reportes, con la aplicación de donde sale cada uno, cómo se prueba y con qué conclusión. Literal, un
-inventario de testigos.
+reportes, con la aplicación de donde sale cada uno, cómo se prueba y con qué conclusión. En otras palabras, un inventario de testigos.
 
-Y esto nos toca más de lo que parece. Muchas empresas del noreste, sobre todo en manufactura y en
+Y esto nos afecta más de lo que parece. Muchas empresas del noreste, sobre todo en manufactura y en
 centros de servicios compartidos, reportan a un corporativo que cotiza en Estados Unidos. El tablero
-que el controller abre aquí el lunes muchas veces es el mismo reporte que acaba en el paquete de
-cierre mensual de allá. Esto es observación mía, no estadística; no conozco una cifra para México y
+que el controller abre en México el lunes muchas veces es el mismo reporte que acaba en el paquete de cierre mensual del corporativo. Esto es observación mía, no estadística; no conozco una cifra para México y
 no la voy a inventar.
 
 **El segundo mundo es la banca.** En 2013 el Comité de Supervisión Bancaria de Basilea publicó el
@@ -151,7 +147,7 @@ unidades facturadas del mes, el total de la nómina. Por cada KPI crítico hay q
 contra qué se concilia, a qué nivel y con qué tolerancia. La tolerancia no la pone TI; la pone y la
 firma el dueño del número.
 
-**2. Conciliación por evento, no nomás por calendario.** Correr el cuadre cada mes está bien, pero
+**2. Conciliación por evento, no solo por calendario.** Correr el cuadre cada mes está bien, pero
 el tablero del escenario no se rompió en una fecha: se rompió con un transporte, una reorganización y
 un upgrade. El testigo tiene que correr también después de cada carga, de cada cambio al modelo
 semántico (la capa donde viven las definiciones de los KPI), de cada transporte y de cada upgrade. En
@@ -161,7 +157,7 @@ migración nueva.
 **3. Celdas testigo y un usuario canario.** No hay que cuadrar celda por celda. Hay que escoger las
 pocas intersecciones que se rompen primero: la variación contra el año anterior, un KPI con filtros
 restringidos, el total por sociedad y un periodo ya cerrado, que nunca debería moverse. Las
-autorizaciones fallan más callado que las fórmulas, así que para ellas va un usuario canario por
+autorizaciones fallan de forma más silenciosa que las fórmulas, así que para ellas va un usuario canario por
 perfil: un usuario de prueba con los permisos de, digamos, un gerente regional, que corre el mismo
 reporte en cada ciclo y compara lo que ve contra lo que debería ver.
 
@@ -177,7 +173,7 @@ lectora. Si el controller no tiene forma de saber desde el tablero si el número
 tablero se lo diga: «Conciliado contra cifras control el 23-sep: 4 de 4 OK». Y si ayer no cuadró,
 que lo diga también. La palomita se gana cada día.
 
-El testigo no necesita una herramienta nueva. Se echa a andar con lo que ya tienes: una consulta
+El testigo no necesita una herramienta nueva. Se puede implementar con lo que ya existe: una consulta
 que compara el KPI del modelo contra el total del mayor y escribe el resultado en una tabla de
 control.
 
@@ -211,16 +207,16 @@ JOIN      control.tolerancias         t ON t.kpi = 'VENTAS_NETAS';
 [ FIGURA 2 — «El testigo, en código»: la consulta anotada (la cifra control, la tolerancia que firma
 el negocio, el estado que se publica) y abajo cómo se ve el resultado en el tablero. ]
 
-La consulta es lo de menos. Fíjate en tres cosas, más un detalle de signo: parte del mayor y no del modelo, para que la
+Más que la consulta, importan tres decisiones de diseño y un detalle de signo: parte del mayor y no del modelo, para que la
 sociedad que no entró al filtro salga como excepción en vez de desaparecer; `control.tolerancias`
-es una decisión de negocio guardada como dato; y la columna `estado` es la que acaba en el tablero. El detalle: en contabilidad las ventas son abonos y en ACDOCA viven con signo negativo, así que el testigo invierte el signo del mayor antes de comparar. Sin eso, todo sale como excepción el primer día y el testigo pierde credibilidad a la primera.
+es una decisión de negocio guardada como dato; y la columna `estado` es la que acaba en el tablero. El detalle: en contabilidad las ventas son abonos y en ACDOCA viven con signo negativo, así que el testigo invierte el signo del mayor antes de comparar. Sin eso, todo sale como excepción el primer día y el testigo pierde credibilidad desde el inicio.
 En Snowflake esto puede vivir como una *Data Metric Function* propia, programada para correr cada
 vez que cambia la tabla; en Databricks, como un job después de cada carga. Si el reporte sale de una
 vista CDS de S/4HANA, la fuente del cuadre es ACDOCA, la tabla de partidas contables del sistema.
 
 ## ¿Quién firma?
 
-Esta es la otra pregunta que deja el comentario, y se me hace que es la que más discusión va a
+Esta es la otra pregunta que deja el comentario, y considero que es la que más discusión va a
 generar.
 
 Mi respuesta corta: **TI es responsable de que el testigo exista y corra. El negocio es dueño de que
@@ -234,7 +230,7 @@ marco más citado, separa lo mismo: el *data owner*, de negocio, responde por el
 el *data steward* cuida definiciones y calidad en el día a día; el *data custodian*, de TI, se
 encarga de lo técnico.
 
-Aterrizado en una matriz de responsabilidades (quién hace, quién responde por el resultado, a quién
+Llevado a una matriz de responsabilidades (quién hace, quién responde por el resultado, a quién
 se consulta y a quién se informa), con un papel más que sí aparece en los proyectos: el dueño del
 producto de datos, que responde por el entregable completo, del modelo al tablero.
 
@@ -251,11 +247,11 @@ producto de datos, que responde por el entregable completo, del modelo al tabler
 negocio es dueño del significado». ]
 
 Hay una trampa en la que caemos casi todos los que venimos del lado técnico: asumir que, como
-nosotros construimos el tablero, nos toca garantizar que el número sea correcto. Suena responsable,
+nosotros construimos el tablero, nos corresponde garantizar que el número sea correcto. Suena responsable,
 pero no funciona. Desde TI puedo garantizar que el cálculo hace lo que dice la especificación. No
 puedo garantizar que la especificación siga siendo lo que el negocio necesita después de una
 reorganización que decidió dirección comercial. Por eso la alineación del KPI es del negocio y el
-mecanismo que la vigila es de TI. Si falta uno de los dos, la palomita queda colgando de nadie.
+mecanismo que la vigila es de TI. Si falta uno de los dos, la palomita no tiene quién la respalde.
 
 ## Y con la analítica conversacional, más
 
@@ -269,7 +265,7 @@ está mal, el benchmark califica una respuesta contra otra respuesta. La segunda
 después de cada cambio al espacio. Hoy la documentación los plantea como algo que alguien con
 permiso de edición lanza cuando quiere, y así se corren cuando alguien se acuerda.
 
-## Lo que se lleva de aquí quien firma
+## Lo que debe llevarse quien firma
 
 Si firmas el presupuesto o el contrato de un proyecto de datos, tres cosas concretas:
 
