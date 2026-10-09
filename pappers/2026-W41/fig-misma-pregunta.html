@@ -1,0 +1,55 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--code:#c9ced6;--red:#E0785F;--amber:#D9B45A;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:64px 64px 60px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:20px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:21px;color:var(--dim);margin-top:12px;line-height:1.4;max-width:52ch;}
+ .kicker{margin-top:22px;border-left:3px solid var(--teal);padding-left:22px;font-size:21px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;padding-right:150px;font-size:14px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:44px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+ 
+ .stack{margin-top:28px;display:flex;flex-direction:column;gap:16px;}
+ .blk{display:grid;grid-template-columns:180px 1fr;gap:0 16px;border:1px solid var(--line);border-radius:10px;background:#101216;padding:20px 16px;align-items:start;}
+ .blk.w{border-color:rgba(43,189,143,.6);}
+ .who{font-family:"Space Grotesk";font-size:20px;font-weight:600;color:var(--text);line-height:1.2;}
+ .who small{display:block;font-family:Inter;font-size:14px;font-weight:400;color:var(--dim);margin-top:4px;line-height:1.35;}
+ .who .lg{display:inline-block;margin-bottom:6px;font-family:"JetBrains Mono";font-size:12px;color:var(--teal);border:1px solid rgba(43,189,143,.45);border-radius:6px;padding:2px 7px;}
+ pre{font-family:"JetBrains Mono",monospace;font-size:14.5px;line-height:1.6;font-variant-ligatures:none;color:var(--code);white-space:pre;}
+ .kw{color:#8fa3bf;} .cm{color:var(--faint);font-style:italic;} .st{color:#c7b27a;}
+ .hl{background:rgba(43,189,143,.16);border-radius:3px;color:var(--text);}
+
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edición 14</div>
+  <h2>La misma pregunta, <span class="em">cuatro</span> lenguajes</h2>
+  <p class="lede">«Venta del trimestre contra el mismo trimestre del año pasado, por región.» Cambia quién la escribe. Sigue habiendo que decidir qué es «año pasado».</p>
+  <div class="stack"><div class="blk"><div class="who"><span class="lg">SQL</span><br/>La sábana y el universo<small>Lo escribe sistemas, o el universo lo genera.</small></div><pre><span class="kw">SELECT</span> r.region,
+       <span class="kw">SUM</span>(<span class="kw">CASE WHEN</span> f.anio = 2026 <span class="kw">THEN</span> f.venta_neta <span class="kw">END</span>) <span class="kw">AS</span> venta_2026,
+       <span class="kw">SUM</span>(<span class="kw">CASE WHEN</span> <span class="hl">f.anio = 2025</span> <span class="kw">THEN</span> f.venta_neta <span class="kw">END</span>) <span class="kw">AS</span> venta_2025
+<span class="kw">FROM</span>   fact_ventas f <span class="kw">JOIN</span> dim_region r <span class="kw">ON</span> r.region_id = f.region_id
+<span class="kw">WHERE</span>  f.trimestre = 3 <span class="kw">AND</span> f.anio <span class="kw">IN</span> (2025, 2026)
+<span class="kw">GROUP BY</span> r.region;</pre></div><div class="blk"><div class="who"><span class="lg">MDX</span><br/>El cubo<small>«Año anterior» es una función del motor.</small></div><pre><span class="kw">WITH MEMBER</span> [Measures].[Venta AA] <span class="kw">AS</span>
+  ( [Measures].[Venta Neta],
+    <span class="hl"><span class="kw">PARALLELPERIOD</span>([Fecha].[Fiscal].[Año], 1,</span>
+    <span class="hl">               [Fecha].[Fiscal].<span class="kw">CurrentMember</span>)</span> )
+<span class="kw">SELECT</span> { [Measures].[Venta Neta], [Measures].[Venta AA] } <span class="kw">ON COLUMNS</span>,
+       [Región].[Región].<span class="kw">Members ON ROWS</span>
+<span class="kw">FROM</span>   [Ventas] <span class="kw">WHERE</span> [Fecha].[Fiscal].[2026].[T3]</pre></div><div class="blk"><div class="who"><span class="lg">DAX</span><br/>El self-service<small>El analista lo deja como medida en el modelo.</small></div><pre><span class="cm">-- medida en el modelo semántico; el visual pone región y trimestre</span>
+Venta Neta AA =
+<span class="kw">CALCULATE</span> ( [Venta Neta], <span class="hl"><span class="kw">SAMEPERIODLASTYEAR</span> ( 'Fecha'[Fecha] )</span> )</pre></div><div class="blk w"><div class="who"><span class="lg">Verified query</span><br/>El agente<small>Una persona firma la respuesta de referencia.</small></div><pre><span class="kw">verified_queries</span>:
+  - <span class="kw">name</span>: venta_trimestre_vs_aa
+    <span class="kw">question</span>: <span class="st">"¿Cómo va la venta del trimestre vs. el año pasado, por región?"</span>
+    <span class="kw">sql</span>: <span class="st">SELECT region, venta_neta, venta_neta_aa FROM __ventas WHERE …</span>
+    <span class="hl"><span class="kw">verified_by</span>: Contraloría</span>
+    <span class="kw">verified_at</span>: 1759708800</pre></div></div>
+  <div class="kicker">En los tres primeros, la definición vive en el código. En el último, además tiene nombre: alguien la verificó.</div>
+  <div class="src">Código ilustrativo; nombres de tablas y medidas inventados. Sintaxis: MDX <i>PARALLELPERIOD</i>, DAX <i>SAMEPERIODLASTYEAR</i> y <i>verified_queries</i> del modelo semántico de Snowflake Cortex Analyst.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

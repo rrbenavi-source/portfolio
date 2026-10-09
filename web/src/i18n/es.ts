@@ -2314,6 +2314,248 @@ define view ZC_SalesQuery as select from ZI_SalesCube
           }
         ]
       },
+      {
+        "idx": "16",
+        "slug": "de-la-sabana-al-agente",
+        "subtitle": "Analítica · GenBI",
+        "title": "De la sábana al agente",
+        "role": "Autor: Ricardo Benavides",
+        "meta": "2026",
+        "hero": "brujula-cover-14.png",
+        "lead": "En febrero de 2027 Microsoft apaga Power BI Q&A, la función con la que en 2013 prometió que cualquiera podría preguntarle a sus datos en lenguaje natural. Tableau ya retiró Ask Data y SAP, Search to Insight.",
+        "summary": "Ocho generaciones de reporting, producto por producto: la sábana, la hoja de cálculo, el cubo, la capa semántica, el descubrimiento visual, el self-service en la nube, la primera ola de IA y el agente (Copilot, Genie, Snowflake, Just Ask y Joule, Tableau Pulse, Looker). Para cada una, qué análisis permite y qué no. La primera forma de preguntarle a los datos en lenguaje natural ya se retiró, y lo que pedía —sinónimos, relaciones, enseñarle a la herramienta— reaparece casi igual en «Prep data for AI». Los benchmarks muestran que el agente ya escribe buen SQL; lo difícil es que alguien sepa cuál es la respuesta correcta. Cierra con una tabla de qué generación comprar según la pregunta y tres recomendaciones para quien firma el presupuesto.",
+        "tags": [
+          "GenBI",
+          "Analítica",
+          "Capa Semántica",
+          "Power BI",
+          "SAP Analytics Cloud",
+          "Databricks",
+          "Snowflake",
+          "Tableau"
+        ],
+        "body": [
+          {
+            "type": "prose",
+            "body": [
+              "En febrero de 2027, los reportes de Power BI que todavía tengan un visual de Q&A van a mostrar un error donde antes había una respuesta. Microsoft anunció el retiro en diciembre de 2025 para finales de 2026 y en septiembre lo movió a febrero. El reemplazo oficial es Copilot.",
+              "Q&A llegó en septiembre de 2013 al preview de Power BI for Office 365: escribías «ventas por región en 2013» y aparecía una gráfica. Tableau lanzó Ask Data en 2019 y lo retiró en 2024; SAP sustituyó Search to Insight por Just Ask a finales de ese mismo año. Entre 2024 y 2027, los tres fabricantes retiran su primera forma de preguntarle a los datos en lenguaje natural."
+            ]
+          },
+          {
+            "type": "figure",
+            "src": "fig-nlq-retirada.png",
+            "alt": "Línea de tiempo de 2013 a 2027 con tres funciones de pregunta en lenguaje natural: Power BI Q&A (septiembre de 2013 a febrero de 2027, reemplazo Copilot), Tableau Ask Data (2019 a febrero de 2024, reemplazo Tableau Pulse) y SAC Search to Insight (retirado en Q4 2024, reemplazo Just Ask y Joule). Abajo, la tabla de migración de Microsoft: Q&A Setup pasa a Prep data for AI.",
+            "caption": "El buscador por palabras clave se retiró. La tarea de enseñarle el vocabulario del negocio pasó, casi igual, a la generación siguiente."
+          },
+          {
+            "type": "prose",
+            "body": [
+              "Llevo más de veinte años construyendo reportes en casi todas las generaciones que siguen, y el patrón se repite: cada producto nuevo cambia <strong>qué tipo de pregunta</strong> puede hacer el negocio sin pedirle nada a TI. Ninguno ha cambiado quién decide qué significa el número."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Primera generación: la sábana",
+            "body": [
+              "En los equipos de finanzas y operaciones de México le decimos <strong>sábana</strong> al reporte tabular largo: cientos o miles de renglones, impresos o exportados, con todas las columnas que alguien pidió alguna vez. Es el listado en COBOL o RPG de los mainframes, el reporte ALV de SAP y, desde los noventa, Crystal Reports.",
+              "<strong>Qué análisis permite:</strong> operativo. Listar, filtrar, ordenar, subtotalizar: «dame las facturas abiertas de la sucursal 12 con más de 60 días». Es la generación más vieja y la que menos ha muerto: con ella se cuadra un cierre, porque cada renglón se rastrea hasta un documento.",
+              "<strong>Qué no permite:</strong> hacer una pregunta nueva; cada variación es un requerimiento a sistemas. A mediados de los setenta, IBM creó los <em>information centers</em> para atender la fila de solicitudes (el <em>backlog</em>) que sistemas no alcanzaba a resolver. El backlog de reportes es más viejo que la PC."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Segunda generación: la hoja de cálculo",
+            "body": [
+              "VisiCalc (1979, Apple II) suele citarse como la aplicación que convirtió a la computadora personal en herramienta de negocio. Después vinieron Lotus 1-2-3 y Excel. Con Excel 5, en 1993, llegó la <strong>tabla dinámica</strong> (<em>PivotTable</em>), una idea que Lotus había probado en Improv (1991).",
+              "<strong>Qué análisis permite:</strong> escenarios y resúmenes cruzados sin escribir código: «¿qué pasa con el margen si el precio sube 3 %?» o «ventas por producto contra mes». Por primera vez, el usuario de negocio arma su propio análisis.",
+              "<strong>Qué no permite:</strong> que dos personas lleguen al mismo número. La hoja trabaja sobre una extracción, y cada extracción es una copia. Desde entonces, la pregunta más cara en una junta de dirección es «¿cuál de los dos archivos es el bueno?»."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Tercera generación: el cubo",
+            "body": [
+              "En 1993, Edgar F. Codd —el creador del modelo relacional— publicó con dos coautores el documento que bautizó el <strong>OLAP</strong> (<em>Online Analytical Processing</em>): bases de datos organizadas para analizar, no para registrar transacciones. A esa familia pertenecen Essbase (1992), Cognos PowerPlay, Microsoft Analysis Services y, desde 1998, SAP BW con su herramienta de consultas BEx.",
+              "<strong>Qué análisis permite:</strong> multidimensional. Cortar el dato por cualquier eje (<em>slice and dice</em>), bajar por una jerarquía (región → zona → cliente) y comparar contra el mismo periodo del año anterior. Lo que en la hoja era una fórmula frágil, en el cubo es una función del motor.",
+              "<strong>Qué no permite:</strong> preguntar lo que no se modeló. El cubo contesta rápido, pero solo dentro de las dimensiones y medidas diseñadas por adelantado; una pregunta fuera del diseño regresa a la fila de requerimientos."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Cuarta generación: la capa semántica",
+            "body": [
+              "El 27 de noviembre de 1991, Business Objects —hoy parte de SAP— solicitó en Estados Unidos la patente 5,555,403, otorgada en 1996. Su objetivo, en palabras del documento: que los usuarios consulten bases de datos relacionales «sin conocer la estructura relacional ni el lenguaje SQL». La pieza central se llamaba <strong>universo</strong>: una representación de la base de datos, fácil de entender, diseñada para un grupo de usuarios. Hoy le decimos <em>semantic layer</em>.",
+              "<strong>Qué análisis permite:</strong> consulta <em>ad hoc</em> (armada en el momento) y gobernada. El usuario arrastra objetos de negocio («Cliente», «Ingreso», «Región») y la herramienta escribe el SQL: «clientes con más de tres devoluciones este trimestre», sin esperar a nadie y con la definición de «ingreso» que aprobó finanzas.",
+              "<strong>Qué no permite:</strong> que el universo se mantenga solo. Alguien de TI tiene que agregar cada objeto, cada sinónimo y cada regla. Esta idea reaparece al final."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Quinta generación: el descubrimiento visual",
+            "body": [
+              "En 2002, Chris Stolte, Diane Tang y Pat Hanrahan publicaron en Stanford Polaris, un sistema para consultar y graficar al mismo tiempo arrastrando campos; de ahí nació Tableau. En paralelo, QlikView llevó un motor asociativo que mostraba lo que coincidía con un filtro y también lo que quedaba fuera.",
+              "<strong>Qué análisis permite:</strong> exploratorio. Ver dónde se concentra la caída, encontrar un valor atípico en un mapa, descubrir una relación que nadie había pedido. Es la primera generación en la que el análisis empieza por mirar, no por preguntar.",
+              "<strong>Qué no permite:</strong> una sola verdad. Cada analista construye su propio libro de trabajo con sus propios cálculos. El descubrimiento visual multiplicó los análisis y también las definiciones."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Sexta generación: el self-service en la nube",
+            "body": [
+              "Power BI salió a disponibilidad general el 24 de julio de 2015. Looker llevó el modelo semántico a código con LookML, su lenguaje de modelado, y SAP Analytics Cloud juntó BI, planeación y predicción en un solo producto.",
+              "<strong>Qué análisis permite:</strong> modelado propio y dashboards compartidos. El analista de negocio construye su modelo, escribe sus medidas (en Power BI, con el lenguaje DAX) y publica para su área. En SAC, además, planea sobre el mismo modelo con el que reporta.",
+              "<strong>Qué no permite:</strong> controlar la proliferación. La facilidad que democratizó el reporte produjo cientos de modelos con la misma medida calculada de formas distintas. El sello de «certificado» que analicé en la edición anterior busca poner orden aquí."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Séptima generación: la primera ola de inteligencia artificial",
+            "body": [
+              "Aquí entran Q&A, Ask Data y Search to Insight, que intentaron que el usuario escribiera su pregunta. Junto con ellos llegó la <strong>analítica aumentada</strong>: funciones que buscaban explicaciones solas, como Key Influencers en Power BI, Explain Data en Tableau o Smart Insights en SAC.",
+              "<strong>Qué análisis permite:</strong> diagnóstico automatizado. «¿Qué factores explican que este cliente se vaya?» o «¿por qué este punto se sale de la tendencia?», sin que el analista arme el modelo estadístico.",
+              "<strong>Qué no permite:</strong> conversar. Estos motores reconocían palabras clave y las asociaban a columnas. Para que funcionaran, alguien tenía que capturar sinónimos y relaciones a mano; en Power BI, con <em>Q&A Setup</em> y la opción de «enseñarle» a Q&A. Si el usuario escribía «facturación» y el sinónimo no existía, no había respuesta. La idea no era mala; el método no escalaba."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "Octava generación: el agente",
+            "body": [
+              "La generación actual usa modelos de lenguaje grandes (LLM) para entender la intención de la pregunta, escribir la consulta, ejecutarla y explicar el resultado. Se le dice <em>GenBI</em> (BI generativo) o, cuando el sistema encadena varios pasos por su cuenta, analítica agéntica. Estos son los productos que hoy compiten, con una pregunta de ejemplo:"
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              "<strong>Copilot en Power BI.</strong> Contesta sobre el modelo semántico, crea páginas de reporte y escribe consultas DAX; desde abril de 2025 funciona a partir de la capacidad Fabric más pequeña (F2). <em>«Resúmeme qué cambió en el reporte de ventas esta semana.»</em>",
+              "<strong>Databricks Genie.</strong> Disponible de forma general desde junio de 2025. Contesta con texto, tabla y gráfica y enseña el SQL que usó; Databricks anunció además un modo de investigación que prueba varias hipótesis. <em>«¿Por qué cayó el margen en el norte en agosto?»</em>",
+              "<strong>El agente de Snowflake.</strong> Disponible de forma general desde noviembre de 2025 como Snowflake Intelligence (hoy la documentación lo llama Snowflake CoWork). Usa Cortex Analyst para convertir preguntas en SQL sobre <em>semantic views</em>, vistas con las métricas y relaciones del negocio. <em>«¿Cuáles son los diez clientes que más crecieron contra el año pasado?»</em>",
+              "<strong>SAP Analytics Cloud: Just Ask y Joule.</strong> Just Ask contesta sobre modelos de SAC previamente indexados; Joule recuerda el contexto de la pregunta anterior. <em>«Ahora muéstramelo solo para el canal moderno.»</em>",
+              "<strong>Tableau Pulse.</strong> No espera la pregunta: vigila métricas definidas una sola vez en su capa de métricas y avisa cuando algo cambia y por qué. <em>«Tu métrica de devoluciones subió 12 %; el principal factor es la región occidente.»</em>",
+              "<strong>Looker Conversational Analytics.</strong> Usa Gemini, el modelo de Google, y se apoya en LookML para que la respuesta use el mismo cálculo que el resto de la empresa."
+            ]
+          },
+          {
+            "type": "prose",
+            "body": [
+              "<strong>Qué análisis permite:</strong> conversacional y de varios pasos. Una sola pregunta puede combinar lo descriptivo (qué pasó), lo diagnóstico (por qué) y una proyección (qué pasa si sigue así), con las palabras del negocio y no con las del modelo.",
+              "<strong>Qué no permite, todavía:</strong> garantizar la misma respuesta. Microsoft lo dice en su documentación: la preparación de datos para IA «no puede asegurar un resultado específico cada vez», porque el comportamiento de la IA no es determinista.",
+              "Desde México, un dato: según esa documentación, actualizada en septiembre, la experiencia independiente de Copilot en Power BI todavía no está disponible en la región de Azure de México. Conviene confirmar dónde vive la capacidad antes de diseñar la estrategia."
+            ]
+          },
+          {
+            "type": "prose",
+            "heading": "¿Qué tan bien contesta un agente?",
+            "body": [
+              "La mejor referencia pública es Spider 2.0, un examen académico (<em>benchmark</em>) de <em>text-to-SQL</em> —traducir una pregunta a SQL— presentado en ICLR 2025: 632 problemas sobre bases de datos empresariales reales, muchas con más de mil columnas. Al publicarse, el mejor agente (sobre o1-preview de OpenAI) resolvía el <strong>21.3 %</strong>; el mismo enfoque resolvía el 91.2 % de Spider 1.0, mucho más sencillo. Al 1 de octubre de 2026, en las variantes que hoy mantiene el <em>leaderboard</em> público (no idénticas al examen original), el primer lugar reporta <strong>96.7 %</strong> sobre Snowflake y <strong>76.2 %</strong> en la que mezcla varios motores de base de datos. El avance es real y rápido: menos de dos años.",
+              "En enero de 2026, en la conferencia CIDR, un equipo de la Universidad de Illinois revisó las respuestas de referencia de Spider 2.0 sobre Snowflake y de BIRD, otro benchmark muy usado: encontró errores de anotación en el <strong>66.1 %</strong> y el <strong>52.8 %</strong> de los problemas, respectivamente. Al corregirlos, el desempeño relativo de los sistemas cambió hasta 31 % y el ranking se movió hasta tres lugares. Parte de esas fallas eran de conocimiento de dominio: la respuesta «correcta» no entendía lo que pedía la pregunta de negocio.",
+              "La parte difícil no es que el agente escriba buen SQL, sino que alguien sepa cuál es la respuesta correcta."
+            ]
+          },
+          {
+            "type": "figure",
+            "src": "fig-misma-pregunta.png",
+            "alt": "La misma pregunta, venta del trimestre contra el mismo trimestre del año pasado por región, escrita en cuatro lenguajes: SQL de la sábana y el universo, MDX del cubo con PARALLELPERIOD, una medida DAX con SAMEPERIODLASTYEAR y una verified query del modelo semántico de Snowflake con el campo verified_by resaltado.",
+            "caption": "En los tres primeros, la definición vive en el código. En el último, además tiene nombre: alguien la verificó."
+          },
+          {
+            "type": "prose",
+            "heading": "Lo que no cambió en ocho generaciones",
+            "body": [
+              "La documentación de los productos de la octava generación pide lo mismo antes de prometer nada:"
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              "<strong>Power BI</strong>, en «Prep data for AI», pide preparar el modelo semántico con un esquema de datos para IA, <strong>respuestas verificadas</strong> (un visual que se devuelve ante cierta pregunta) e <strong>instrucciones de IA</strong> con la lógica y el vocabulario del negocio, y luego marcar el modelo como «aprobado para Copilot».",
+              "<strong>Databricks</strong> dice que quien arma un agente de Genie «necesita entender los datos» y que los analistas que dominan SQL «normalmente tienen el conocimiento» para curarlo.",
+              "<strong>Snowflake</strong> reconoce que las soluciones genéricas «tienen dificultades» para convertir texto a SQL «cuando solo tienen el esquema de la base de datos», porque al esquema le faltan las definiciones del proceso de negocio y de las métricas.",
+              "<strong>SAP</strong> ofrece una revisión de preparación (<em>readiness</em>) del modelo antes de que Just Ask y Joule lo usen."
+            ]
+          },
+          {
+            "type": "prose",
+            "body": [
+              "Gartner lo resumió en mayo: los modelos de datos basados solo en esquemas «ya no son suficientes» para la IA agéntica, porque les falta contexto de negocio y significado. En marzo había previsto que para 2030 las capas semánticas universales se tratarán como infraestructura crítica, al nivel de la plataforma de datos y la ciberseguridad.",
+              "El universo de 1991 resolvía el mismo problema: traducir el lenguaje del negocio a la estructura de la base de datos. Lo que pedía Q&A Setup —sinónimos, relaciones, enseñarle a la herramienta— es casi lo mismo que pide hoy Prep data for AI; en la tabla de migración de Microsoft, uno es el reemplazo oficial del otro. <strong>El producto cambió ocho veces. La tarea de decidir qué significa cada palabra del negocio nunca se fue.</strong>"
+            ]
+          },
+          {
+            "type": "figure",
+            "src": "fig-escalera.png",
+            "alt": "Escalera de ocho generaciones de reporting —la sábana, la hoja de cálculo, el cubo, la capa semántica, el descubrimiento visual, el self-service, la primera ola de IA y el agente— con productos de ejemplo, el análisis que permite cada una y lo que no permite.",
+            "caption": "El producto cambió ocho veces. La tarea de decidir qué significa cada palabra del negocio nunca se fue."
+          },
+          {
+            "type": "prose",
+            "heading": "Qué comprar según la pregunta",
+            "body": [
+              "Ninguna generación eliminó a la anterior: la sábana sigue cuadrando cierres, Excel sigue en finanzas y el cubo sigue siendo la forma más rápida de comparar periodos. Para quien decide la inversión, la pregunta útil no es «¿cuál es la herramienta más nueva?», sino «¿qué tipo de pregunta necesita contestar el negocio?»."
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              "«Dame el detalle para conciliar» → <strong>Operativo, rastreable</strong> → Sábana / reporte tabular",
+              "«¿Qué pasa si…?» con supuestos propios → <strong>Escenarios</strong> → Hoja de cálculo o planeación (SAC)",
+              "«Compárame contra el año pasado por jerarquía» → <strong>Multidimensional</strong> → Cubo / modelo semántico",
+              "«Quiero ver dónde está el problema» → <strong>Exploratorio</strong> → Descubrimiento visual",
+              "«Cada mañana, los mismos indicadores» → <strong>Monitoreo</strong> → Dashboard o métricas con alerta (Pulse)",
+              "«¿Por qué pasó y qué sigue?», sin saber de antemano qué cruzar → <strong>Conversacional, de varios pasos</strong> → Agente (Copilot, Genie, Snowflake, Joule)"
+            ]
+          },
+          {
+            "type": "prose",
+            "body": [
+              "Tres recomendaciones para quien firma el presupuesto:"
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              "<strong>Antes de comprar el agente, haz el inventario de tu vocabulario.</strong> Si «venta neta» se calcula de tres formas en tres modelos, el agente va a escoger una, y con mucha seguridad. La capa semántica no es opcional: es lo que en realidad estás comprando.",
+              "<strong>Presupuesta al curador, no solo la licencia.</strong> Cada producto de la octava generación supone a alguien que escribe instrucciones, valida respuestas y mantiene ejemplos. Ese rol existe desde el universo de 1991; lo nuevo es que ahora su trabajo se puede medir.",
+              "<strong>Exige un examen y revísalo.</strong> Genie tiene <em>benchmarks</em>, Power BI tiene respuestas verificadas y Snowflake, <em>verified queries</em>. Úsalos, pero recuerda el estudio de Illinois: la respuesta de referencia también se equivoca, y quien la escriba tiene que conocer el negocio, no solo el SQL."
+            ]
+          },
+          {
+            "type": "prose",
+            "body": [
+              "Si tu organización todavía tiene visuales de Q&A, tienes hasta febrero de 2027 para migrarlos. Es buena ocasión para preguntarte algo más de fondo: no qué herramienta los reemplaza, sino quién va a decidir qué significa cada pregunta que el negocio le haga al agente."
+            ]
+          },
+          {
+            "type": "list",
+            "heading": "Fuentes",
+            "items": [
+              "Microsoft Fabric Community, Power BI Updates Blog — <em>Power BI Q&A retirement reminder: February 2027 timeline update</em> (Mohammad Ali, Power BI Team, sep-2026): retiro extendido de dic-2026 a feb-2027; tabla de reemplazos (Q&A Setup → Prep Data for AI); Copilot desde capacidad F2. <a href=\"https://community.fabric.microsoft.com/blog/fbc_pbiupdatesblog/power-bi-qa-retirement-reminder-february-2027-timeline-update/5365841\" target=\"_blank\" rel=\"noopener\">community.fabric.microsoft.com</a>",
+              "Microsoft Power BI Blog — <em>Deprecating Power BI Q&A</em> (anuncio, dic-2025; retiro previsto para dic-2026). <a href=\"https://powerbi.microsoft.com/blog/deprecating-power-bi-qa\" target=\"_blank\" rel=\"noopener\">powerbi.microsoft.com</a>",
+              "Microsoft Fabric Updates Blog — <em>Copilot and AI capabilities now accessible to all paid SKUs in Microsoft Fabric</em> (abr-2025): Copilot desde F2 a partir del 30-abr-2025. <a href=\"https://blog.fabric.microsoft.com/en-us/blog/copilot-and-ai-capabilities-now-accessible-to-all-paid-skus-in-microsoft-fabric\" target=\"_blank\" rel=\"noopener\">blog.fabric.microsoft.com</a>",
+              "Microsoft 365 Message Center — MC1218421, <em>Retirement of Power BI Q&A</em> (16-ene-2026). <a href=\"https://mc.merill.net/message/MC1218421\" target=\"_blank\" rel=\"noopener\">mc.merill.net</a>",
+              "Microsoft SQL Server Blog — <em>Microsoft Updates Power BI for Office 365 Preview with New Natural Language Search…</em> (25-sep-2013). <a href=\"https://www.microsoft.com/en-us/sql-server/blog/2013/09/25/microsoft-updates-power-bi-for-office-365-preview-with-new-natural-language-search-mapping-capabilities/\" target=\"_blank\" rel=\"noopener\">microsoft.com</a>",
+              "Microsoft Learn — <em>Prepare your data for AI to improve Copilot results</em> (act. 16-sep-2026): AI data schema, verified answers, AI instructions, «Approved for Copilot», no determinismo, disponibilidad regional. <a href=\"https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-prepare-data-ai\" target=\"_blank\" rel=\"noopener\">learn.microsoft.com</a>",
+              "Microsoft — <em>Power BI is Generally Available today</em> (24-jul-2015) y Official Microsoft Blog (10-jul-2015), anuncio de la fecha de GA. <a href=\"https://blogs.microsoft.com/blog/2015/07/10/over-500000-unique-users-from-45000-companies-across-185-countries-helped-shape-the-new-power-bi/\" target=\"_blank\" rel=\"noopener\">blogs.microsoft.com</a>",
+              "Tableau Help — <em>Automatically Build Views with Ask Data</em>: retiro en Tableau Cloud (feb-2024) y Tableau Server 2024.2. <a href=\"https://help.tableau.com/current/pro/desktop/en-us/ask_data.htm\" target=\"_blank\" rel=\"noopener\">help.tableau.com</a>",
+              "SAP Knowledge Base Article 3532315 — <em>Deprecation of Search to Insight feature in SAP Analytics Cloud</em> (deprecación desde QRC Q4 2024; sucesor Just Ask). <a href=\"https://userapps.support.sap.com/sap/support/knowledge/en/3532315\" target=\"_blank\" rel=\"noopener\">userapps.support.sap.com</a>",
+              "SAP Help Portal — <em>Check Your Model's Readiness for Just Ask and Joule Analytical Insights</em>. <a href=\"https://help.sap.com/docs/SAP_ANALYTICS_CLOUD/18850a0e13944f53aa8a8b7c094ea29e/121c342e23124efb8295f1bb785b2cc0.html\" target=\"_blank\" rel=\"noopener\">help.sap.com</a>",
+              "SAP Learning — <em>Managing Conversations with Joule</em> (Joule conserva el contexto de la conversación). <a href=\"https://learning.sap.com/courses/getting-started-with-joule-for-business-users/managing-conversations-with-joule\" target=\"_blank\" rel=\"noopener\">learning.sap.com</a>",
+              "Databricks — <em>AI/BI Genie is now Generally Available</em> (12-jun-2025). <a href=\"https://www.databricks.com/blog/aibi-genie-now-generally-available\" target=\"_blank\" rel=\"noopener\">databricks.com</a>",
+              "Databricks — <em>Curate an effective Genie space</em> (best practices, act. 11-sep-2026). <a href=\"https://docs.databricks.com/aws/en/genie/best-practices\" target=\"_blank\" rel=\"noopener\">docs.databricks.com</a>",
+              "Snowflake — Release note <em>Nov 04, 2025: Snowflake CoWork (General availability)</em> y documentación de <em>Cortex Analyst</em> (semantic views, verified queries). <a href=\"https://docs.snowflake.com/en/release-notes/2025/other/2025-11-04-snowflake-intelligence\" target=\"_blank\" rel=\"noopener\">docs.snowflake.com</a> · <a href=\"https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst\" target=\"_blank\" rel=\"noopener\">docs.snowflake.com</a>",
+              "Google Cloud — <em>Conversational Analytics in Looker overview</em>. <a href=\"https://docs.cloud.google.com/looker/docs/conversational-analytics-overview\" target=\"_blank\" rel=\"noopener\">docs.cloud.google.com</a>",
+              "Tableau — <em>Now Available in 2024.1 Release: Tableau Pulse, Metrics Layer…</em> <a href=\"https://www.tableau.com/blog/release-tableau-pulse-metrics-layer-viz-navigation\" target=\"_blank\" rel=\"noopener\">tableau.com</a>",
+              "Cambot, J.-M. y Liautaud, B. — US Patent 5,555,403, <em>Relational database access system using semantically dynamic objects</em> (presentada 27-nov-1991, otorgada 10-sep-1996). <a href=\"https://patents.google.com/patent/US5555403A/en\" target=\"_blank\" rel=\"noopener\">patents.google.com</a>",
+              "Stolte, C., Tang, D. y Hanrahan, P. — <em>Polaris: A System for Query, Analysis, and Visualization of Multidimensional Relational Databases</em>. IEEE TVCG 8(1):52-65, 2002. ",
+              "Codd, E. F., Codd, S. B. y Salley, C. T. — <em>Providing OLAP to User-Analysts: An IT Mandate</em> (1993). ",
+              "Carr, H. H. — <em>Information Centers: The IBM Model vs. Practice</em>. MIS Quarterly 11(3):325-338, 1987. <a href=\"https://aisel.aisnet.org/misq/vol11/iss3/5/\" target=\"_blank\" rel=\"noopener\">aisel.aisnet.org</a>",
+              "Lei, F. et al. — <em>Spider 2.0: Evaluating Language Models on Real-World Enterprise Text-to-SQL Workflows</em>. ICLR 2025. Leaderboard consultado el 1-oct-2026. <a href=\"https://spider2-sql.github.io/\" target=\"_blank\" rel=\"noopener\">spider2-sql.github.io</a>",
+              "Jin, T., Choi, Y., Zhu, Y. y Kang, D. — <em>Text-to-SQL Benchmarks are Broken: An In-Depth Analysis of Annotation Errors</em>. CIDR 2026 (18-21 ene-2026), University of Illinois Urbana-Champaign. <a href=\"https://www.vldb.org/cidrdb/papers/2026/p5-jin.pdf\" target=\"_blank\" rel=\"noopener\">vldb.org</a>",
+              "Gartner — <em>Gartner Announces Top Predictions for Data and Analytics in 2026</em> (11-mar-2026) y <em>Gartner Says Lack of Semantics Causes Inaccurate AI Agents and Wasted Spending</em> (11-may-2026). <a href=\"https://www.gartner.com/en/newsroom/press-releases/2026-03-11-gartner-announces-top-predictions-for-data-and-analytics-in-2026\" target=\"_blank\" rel=\"noopener\">gartner.com</a> · <a href=\"https://www.gartner.com/en/newsroom/press-releases/2026-05-11-gartner-says-lack-of-semantics-causes-inaccurate-artificial-intelligence-agents-and-wasted-spending\" target=\"_blank\" rel=\"noopener\">gartner.com</a>"
+            ]
+          }
+        ]
+      },
     ],
   },
   contacto: {

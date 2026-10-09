@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--code:#c9ced6;--red:#E0785F;--amber:#D9B45A;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:64px 64px 60px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:20px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:21px;color:var(--dim);margin-top:12px;line-height:1.4;max-width:52ch;}
+ .kicker{margin-top:22px;border-left:3px solid var(--teal);padding-left:22px;font-size:21px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;padding-right:150px;font-size:14px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:44px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+ 
+ .tl{margin-top:48px;display:flex;flex-direction:column;gap:30px;}
+ .lane{display:grid;grid-template-columns:250px 640px;gap:0 20px;align-items:center;}
+ .lab{font-size:23px;font-weight:600;color:var(--text);line-height:1.2;}
+ .lab small{display:block;font-weight:400;font-size:15px;color:var(--dim);margin-top:4px;}
+ .track{position:relative;height:90px;}
+ .bar{position:absolute;top:20px;height:34px;border-radius:6px;background:linear-gradient(90deg,rgba(162,166,173,.35),rgba(224,120,95,.55));}
+ .bar.unk{background:linear-gradient(90deg,transparent,rgba(224,120,95,.55) 70%);}
+ .end{position:absolute;top:10px;width:3px;height:54px;background:var(--red);}
+ .tag{position:absolute;top:64px;font-family:"JetBrains Mono";font-size:15px;color:var(--dim);white-space:nowrap;}
+ .tag.r{color:var(--red);}
+ .axis{display:grid;grid-template-columns:250px 640px;gap:0 20px;}
+ .ticks{position:relative;height:30px;border-top:1px solid var(--line);}
+ .ticks span{position:absolute;top:8px;transform:translateX(-50%);font-family:"JetBrains Mono";font-size:15px;color:var(--faint);}
+ .now{position:absolute;top:-336px;bottom:0;width:0;border-left:1px dashed rgba(43,189,143,.6);}
+ .now b{position:absolute;top:-22px;left:6px;font-family:"Space Grotesk";font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);white-space:nowrap;}
+ .map{margin-top:56px;border:1px solid rgba(43,189,143,.6);border-radius:10px;background:linear-gradient(180deg,rgba(43,189,143,.14),rgba(43,189,143,.02));padding:26px 24px;}
+ .map .t{font-family:"Space Grotesk";font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--teal);}
+ .pair{margin-top:14px;display:grid;grid-template-columns:1fr 50px 1fr;align-items:center;gap:0 12px;}
+ .box{border:1px solid var(--line);border-radius:8px;background:#15181d;padding:16px 18px;font-size:19px;line-height:1.35;color:var(--dim);}
+ .box b{display:block;color:var(--text);font-size:22px;margin-bottom:4px;}
+ .arrow{text-align:center;font-size:28px;color:var(--teal);}
+
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edition 14</div>
+  <h2>The first NLQ, <span class="em">retired</span></h2>
+  <p class="lede">Between 2024 and 2027 all three vendors retire their first way of asking data questions in natural language (NLQ).</p>
+  <div class="tl"><div class="lane"><div class="lab">Power BI Q&amp;A<small>replacement: Copilot</small></div><div class="track"><div class="bar" style="left:68px;width:536px"></div><div class="end" style="left:604px"></div><span class="tag" style="left:68px">Sep 2013</span><span class="tag r" style="left:574px">Feb 2027</span></div></div><div class="lane"><div class="lab">Tableau Ask Data<small>replacement: Tableau Pulse</small></div><div class="track"><div class="bar" style="left:280px;width:204px"></div><div class="end" style="left:484px"></div><span class="tag" style="left:280px">2019</span><span class="tag r" style="left:454px">Feb 2024</span></div></div><div class="lane"><div class="lab">SAC Search to Insight<small>replacement: Just Ask + Joule</small></div><div class="track"><div class="bar unk" style="left:240px;width:274px"></div><div class="end" style="left:514px"></div><span class="tag r" style="left:484px">Q4 2024</span></div></div></div><div class="axis"><div></div><div class="ticks"><span style="left:40px">2013</span><span style="left:120px">2015</span><span style="left:200px">2017</span><span style="left:280px">2019</span><span style="left:360px">2021</span><span style="left:440px">2023</span><span style="left:520px">2025</span><span style="left:600px">2027</span><div class="now" style="left:591px"><b>today · Oct 2026</b></div></div></div><div class="map"><div class="t">Microsoft's migration table</div><div class="pair"><div class="box"><b>Q&amp;A Setup</b>synonyms, linguistic relationships, “teaching” Q&amp;A</div><div class="arrow">→</div><div class="box"><b>Prep data for AI</b>AI data schema, verified answers, AI instructions</div></div></div>
+  <div class="kicker">The keyword search engine was retired. The job of teaching it the business vocabulary moved, almost unchanged, to the next generation.</div>
+  <div class="src">Sources: Microsoft SQL Server Blog (Sep 25, 2013) · Power BI Updates Blog, <i>Q&amp;A retirement reminder: February 2027</i> · Tableau Help, <i>Ask Data</i> · SAP KBA 3532315. Search to Insight launch date not shown.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>

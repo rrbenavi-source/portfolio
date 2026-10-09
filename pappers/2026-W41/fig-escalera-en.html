@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+ :root{--bg:#14161a;--teal:#2BBD8F;--text:#ECEAE4;--dim:#A2A6AD;--faint:#71767f;--line:#2c3038;--code:#c9ced6;--red:#E0785F;--amber:#D9B45A;}
+ *{box-sizing:border-box;margin:0;padding:0;} body{width:1080px;height:1350px;}
+ .f{width:1080px;height:1350px;padding:64px 64px 60px;display:flex;flex-direction:column;font-family:Inter,sans-serif;position:relative;overflow:hidden;
+   background:radial-gradient(760px 560px at 108% -8%,rgba(43,189,143,.15),transparent 58%),var(--bg);}
+ .eyebrow{font-family:"Space Grotesk";color:var(--teal);font-weight:600;font-size:19px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:16px;}
+ .eyebrow .ln{width:44px;height:2px;background:var(--teal);}
+ h2{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.06;letter-spacing:-.02em;color:var(--text);margin-top:20px;}
+ h2 .em{color:var(--teal);font-style:italic;}
+ .lede{font-size:21px;color:var(--dim);margin-top:12px;line-height:1.4;max-width:52ch;}
+ .kicker{margin-top:22px;border-left:3px solid var(--teal);padding-left:22px;font-size:21px;color:var(--text);line-height:1.4;}
+ .src{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;padding-right:150px;font-size:14px;color:var(--faint);line-height:1.5;}
+ .wm{position:absolute;right:60px;bottom:44px;font-family:Fraunces,serif;font-size:23px;color:#3a4048;}
+ 
+ .tbl{margin-top:30px;display:flex;flex-direction:column;gap:10px;}
+ .hdr,.row{display:grid;grid-template-columns:44px 250px 1fr 1fr;gap:0 18px;align-items:center;}
+ .hdr{font-family:"Space Grotesk";font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--faint);padding:0 16px;}
+ .row{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#1b2027,#171a1f);padding:19px 16px;}
+ .num{font-family:Fraunces,serif;font-size:30px;color:var(--faint);}
+ .gen{font-size:21px;color:var(--text);font-weight:600;line-height:1.15;}
+ .prod{display:block;margin-top:4px;font-family:"JetBrains Mono";font-size:12.5px;font-weight:400;color:var(--teal);line-height:1.35;}
+ .yes{font-size:17.5px;line-height:1.35;color:var(--text);} .yes b{color:var(--teal);font-weight:600;}
+ .no{font-size:17.5px;line-height:1.35;color:#d9c9c3;}
+ .row.w{border-color:rgba(43,189,143,.6);background:linear-gradient(180deg,rgba(43,189,143,.16),rgba(43,189,143,.03));}
+ .row.w .num{color:var(--teal);}
+
+</style></head><body>
+<div class="f">
+  <div class="eyebrow"><span class="ln"></span>Brújula · Edition 14</div>
+  <h2>Eight generations, <span class="em">one</span> job</h2>
+  <p class="lede">Each product changed what question the business could ask without asking IT. None changed who decides what the number means.</p>
+  <div class="tbl"><div class="hdr"><div></div><div>Generation</div><div>Analysis it enables</div><div>What it doesn't allow</div></div><div class="row"><div class="num">1</div><div class="gen">The bedsheet<span class="prod">COBOL · ALV · Crystal</span></div><div class="yes"><b>Operational:</b> list, filter, trace back to the document</div><div class="no">Asking a new question without a request to IT</div></div><div class="row"><div class="num">2</div><div class="gen">The spreadsheet<span class="prod">VisiCalc 1979 · Excel 5 1993</span></div><div class="yes"><b>Scenarios</b> and pivot tables without code</div><div class="no">Two people arriving at the same number</div></div><div class="row"><div class="num">3</div><div class="gen">The cube<span class="prod">Essbase · SSAS · BW/BEx</span></div><div class="yes"><b>Multidimensional:</b> slice, drill down, year over year</div><div class="no">Asking what wasn't modeled</div></div><div class="row"><div class="num">4</div><div class="gen">The semantic layer<span class="prod">BO universe 1991</span></div><div class="yes"><b>Governed ad hoc</b> with business objects</div><div class="no">Maintaining itself: someone adds every object</div></div><div class="row"><div class="num">5</div><div class="gen">Visual discovery<span class="prod">Polaris/Tableau 2002 · Qlik</span></div><div class="yes"><b>Exploratory:</b> look before you ask</div><div class="no">A single truth: every workbook, its own math</div></div><div class="row"><div class="num">6</div><div class="gen">Self-service<span class="prod">Power BI 2015 · Looker · SAC</span></div><div class="yes"><b>Self-built models</b> and shared dashboards</div><div class="no">Controlling model sprawl</div></div><div class="row"><div class="num">7</div><div class="gen">The first AI wave<span class="prod">Q&amp;A · Ask Data · Search to Insight</span></div><div class="yes"><b>Automated diagnosis</b> and keyword phrases</div><div class="no">Conversation: synonyms captured by hand</div></div><div class="row w"><div class="num">8</div><div class="gen">The agent<span class="prod">Copilot · Genie · Cortex · Joule · Pulse</span></div><div class="yes"><b>Conversational</b> and multi-step</div><div class="no">Guaranteeing the same answer every time</div></div></div>
+  <div class="kicker">The product changed eight times. The job of deciding what each business word means never went away.</div>
+  <div class="src">Sources: Codd et al. (1993) · US Patent 5,555,403 · Stolte, Tang and Hanrahan (2002) · Microsoft, Tableau, SAP, Databricks and Snowflake documentation. Reference dates, not exhaustive.</div>
+  <div class="wm">Brújula</div>
+</div></body></html>
